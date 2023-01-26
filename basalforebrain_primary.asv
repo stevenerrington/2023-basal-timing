@@ -97,7 +97,6 @@ for ii = 1:length(datamap)
         % Calculate Fano Factor
         fano = get_fano(Rasters, trials, params);
         
-        % Output extracted data into a table
         test(ii,:) = table({filename}, {trials}, {Rasters},{SDFcs_n},fano,...
             'VariableNames',{'filename','trials','rasters','sdf','fano'});
         
@@ -107,17 +106,6 @@ for ii = 1:length(datamap)
 
 end
 
-
-
-
-
-
-
-
-
-
-
-%%
 
 for ii = 1:length(datamap)
     
@@ -135,11 +123,9 @@ for ii = 1:length(datamap)
 end
 
 
+a = nanmean(test(ii,:).sdf{1}(test(ii,:).trials{1}.prob50,5000+))
 
-
-
-
-
+%% 
 
 % > This script may be the next place to look
 %       FANOplot_2575_BF_cs1500
