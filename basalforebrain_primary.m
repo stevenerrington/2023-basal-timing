@@ -2,8 +2,11 @@
 clear all; close all; clc; beep off;
 
 % Define paths & key directories
-dirs.root = 'D:\projectCode\2023-basal-timing\';
-dirs.inherit = 'C:\Users\Steven\Desktop\temp\BasalForebrain_Zhang_Chen_Monosov\BasalForebrain_Zhang_Chen_Monosov';
+dirs.root = 'C:\Users\Steven\Documents\GitHub\2023-basal-timing\';
+% dirs.root = 'D:\projectCode\2023-basal-timing\';
+
+dirs.inherit = 'C:\Users\Steven\Documents\GitHub\2023-basal-timing\src\BasalForebrain_Zhang_Chen_Monosov\';
+% dirs.inherit = 'C:\Users\Steven\Desktop\temp\BasalForebrain_Zhang_Chen_Monosov\BasalForebrain_Zhang_Chen_Monosov';
 addpath(genpath(dirs.root));
 addpath(genpath(dirs.inherit));
 
@@ -108,83 +111,7 @@ for ii = 1:length(datamap)
 end
 
 
-
-
-
-
-
-
-
-
-
 %%
-
-for ii = 1:length(datamap)
-    
-    figure; hold on
-    plot(-5000:5000,nanmean(test(ii,:).sdf{1}(test(ii,:).trials{1}.prob0,:)))
-    plot(-5000:5000,nanmean(test(ii,:).sdf{1}(test(ii,:).trials{1}.prob25,:)))
-    plot(-5000:5000,nanmean(test(ii,:).sdf{1}(test(ii,:).trials{1}.prob50,:)))
-    plot(-5000:5000,nanmean(test(ii,:).sdf{1}(test(ii,:).trials{1}.prob75,:)))
-    plot(-5000:5000,nanmean(test(ii,:).sdf{1}(test(ii,:).trials{1}.prob100,:)))
-    
-    vline(0,'k'); vline(2500,'k'); 
-    xlim([-500 3500])
-
-
-end
-
-
-
-
-
-
-
-
-% > This script may be the next place to look
-%       FANOplot_2575_BF_cs1500
-
-
-
-
-
-%%
-Timing2575Group
-
-%xxx=xxx+1;
-%ProbAmtDataStruct(xxx) = savestruct(1); %if you want to add
-
-%clear savestruct
-%% Get averaged spike density functions
-% If there are enough trials (4), then calculate the average spike density
-% % functions for the conditions
-% 
-% if isempty(find(trialtypes_all < 4))==1
-%     
-%     %savestruct(1).filename=D(1).name;
-%     fano(1).SDF75omit = nanmean(SDFcs_n(trials.prob75nd,analysis_win));
-%     fano(1).SDF50omit = nanmean(SDFcs_n(trials.prob50nd,analysis_win));
-%     fano(1).SDF25omit = nanmean(SDFcs_n(trials.prob25nd,analysis_win));
-%     fano(1).SDF0omit = nanmean(SDFcs_n(trials.prob0,analysis_win));
-%     
-%     fano(1).AllSDFomit = nanmean(SDFcs_n([trials.prob25nd trials.prob50nd trials.prob75nd],analysis_win));
-%     
-%     fano(1).SDF100= nanmean(SDFcs_n(trials.prob100,analysis_win));
-%     fano(1).SDF75= nanmean(SDFcs_n(trials.prob75,analysis_win));
-%     fano(1).SDF50= nanmean(SDFcs_n(trials.prob50,analysis_win));
-%     fano(1).SDF25= nanmean(SDFcs_n(trials.prob25,analysis_win));
-%     fano(1).SDF0= nanmean(SDFcs_n(trials.prob0,analysis_win));
-%     
-%     fano(1).AllSDF= nanmean(SDFcs_n([trials.prob25 trials.prob50 trials.prob75],analysis_win));
-%     
-% end
-% 
-% 
-% 
-% 
-% 
-
-
 
 
 
