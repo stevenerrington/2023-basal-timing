@@ -2,13 +2,8 @@
 clear all; close all; clc; beep off;
 
 % Define paths & key directories
-dirs.root = 'C:\Users\Steven\Documents\GitHub\2023-basal-timing\';
-% dirs.root = 'D:\projectCode\2023-basal-timing\';
+dirs = get_dirs_bf('mac');
 
-dirs.inherit = 'C:\Users\Steven\Documents\GitHub\2023-basal-timing\src\BasalForebrain_Zhang_Chen_Monosov\';
-% dirs.inherit = 'C:\Users\Steven\Desktop\temp\BasalForebrain_Zhang_Chen_Monosov\BasalForebrain_Zhang_Chen_Monosov';
-addpath(genpath(dirs.root));
-addpath(genpath(dirs.inherit));
 
 % Define analysis parameters
 % % Figures
@@ -26,7 +21,7 @@ params.stats.stat_bin = 101; % UNKNOWN (2023-01-23; BinForStat)
 
 %% Curation: load in datasheet
 % Read in curated neuron datasheet
-[~,~,neuronsheet] = xlsread(fullfile(dirs.root,'docs','\BF_neuron_sheet'));
+[~,~,neuronsheet] = xlsread(fullfile(dirs.root,'docs','BF_neuron_sheet'));
 
 % Find relevant columns from datasheet
 excel_celltype = find(strcmp(neuronsheet(1,:),'Cell Type'));
@@ -54,7 +49,8 @@ for ii = 2:size(neuronsheet,1)
         tp.MONKEYID = neuronsheet{ii,excel_monkeyid};
         
         % Add the raw data directory to the matlab path for future calls
-        addpath(tp.folder);
+        addpath(fullfile(tp.folder));
+        
         if exist(tp.name)
             datamap = [datamap,tp];
         else
