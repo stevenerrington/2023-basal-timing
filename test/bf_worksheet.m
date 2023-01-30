@@ -92,7 +92,7 @@ RangeforearlyCS=[3051-500:3051];
     Group2=ProbAmtDataStruct(find(idx3==2)); % Ramping
     
     % Just focus on ramping neurons
-        savestruct = Group2;
+        savestruct = Group1;
 
     
 savestructS=savestruct(find([savestruct(:).idstruct]==1));

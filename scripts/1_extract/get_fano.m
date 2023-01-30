@@ -2,7 +2,7 @@ function fano = get_fano(Rasters, trials, params)
 
 % Define windows and times
 Rasterscs = Rasters;
-range_window = [-1500 2500]; event_zero = 5000;
+range_window = [-4999 5001]; event_zero = 5000;
 analysis_win = event_zero+range_window(1):event_zero+range_window(2);
 
 % Clip the raster to the appropriate analysis window
@@ -38,6 +38,7 @@ for x = 1:size(RastersFano,2)-params.fano.bin_size
     
     % Get the array indices for the bin
     binAnalysis=[x:x+params.fano.bin_size];
+    time(x) = median(binAnalysis) - event_zero;
     
     % Find all spikes within the bin window for each trial
     % % On non-delivered trials -------------------------
@@ -113,6 +114,7 @@ fano(1).raw_FanoSaveAll= FanoSaveAllinc';
 fano(1).raw_FanoSave75= FanoSave75inc';
 fano(1).raw_FanoSave50= FanoSave50inc';
 fano(1).raw_FanoSave25= FanoSave25inc';
+fano(1).time = time;
 
 end
 
