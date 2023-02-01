@@ -22,21 +22,20 @@ strcmp(file(1:3),'han')
 
 clc; clear all; beep off;
 addpath('X:\Kaining\HELPER_GENERAL')
-addpath('C:\Users\Ilya Monosov\Dropbox\HELPER\HELPER_GENERAL')
 
 doprint=1;
 
 RangeforearlyCS=[3051-500:3051];
 
 
-    load Data15_V2.mat
+    load('D:\projectCode\2023-basal-timing\data\Data15.mat')
     temp = ProbAmtDataStruct;
     
     for x=1:length(temp)
         temp(x).idstruct=1;
     end
     
-    load Data25_V2.mat
+    load('D:\projectCode\2023-basal-timing\data\Data25_V2.mat')
     for x=1:length(ProbAmtDataStruct)
         ProbAmtDataStruct(x).idstruct=2;
     end
@@ -92,7 +91,7 @@ RangeforearlyCS=[3051-500:3051];
     Group2=ProbAmtDataStruct(find(idx3==2)); % Ramping
     
     % Just focus on ramping neurons
-        savestruct = Group1;
+        savestruct = Group2;
 
     
 savestructS=savestruct(find([savestruct(:).idstruct]==1));
@@ -400,5 +399,60 @@ Timing2575Group
 
 
 
+[~,~,neuronsheet] = xlsread(fullfile(dirs.root,'docs','BF_neuron_sheet'));
+
+% Find relevant columns from datasheet
+excel_celltype = find(strcmp(neuronsheet(1,:),'Cell Type'));
+excel_Area = find(strcmp(neuronsheet(1,:),'Area'));
+excel_monkeyid = find(strcmp(neuronsheet(1,:),'Monkey'));
+excel_ProbAmt = find(strcmp(neuronsheet(1,:),'ProbAmt2575'));
+excel_ProbAmtdir = find(strcmp(neuronsheet(1,:),'ProbAmt2575dir'));
+excel_TimingP = find(strcmp(neuronsheet(1,:),'Timingprocedure'));
+excel_TimingPdir = find(strcmp(neuronsheet(1,:),'Timingproceduredir'));
+
+%% Curation: extract relevant neurons from datasheet
+datamap = []; datamap_error = [];
+
+% For each neuron
+for ii = 2:size(neuronsheet,1)
+    % If the neuron is: 
+    if strcmp(neuronsheet{ii,excel_Area},'BF') && ... % in the basal forebrain (BF)...
+            strcmp(neuronsheet{ii,excel_celltype},'Ramping') && ...  % and is identified as a ramping neuron (Zhang et al., 2019)
+            length(neuronsheet{ii,excel_ProbAmt})>1 % and has a relevant datafile
+        
+        % Collate information
+        tp.name = [neuronsheet{ii,excel_ProbAmt},'.mat'];
+        tp.folder = neuronsheet{ii,excel_ProbAmtdir};
+        tp.celltype = neuronsheet{ii,excel_celltype};
+        tp.MONKEYID = neuronsheet{ii,excel_monkeyid};
+        
+        % Add the raw data directory to the matlab path for future calls
+        addpath(fullfile(tp.folder));
+        
+        if exist(tp.name)
+            datamap = [datamap,tp];
+        else
+            datamap_error = [datamap_error,tp]; % but log if an error occurs.
+        end
+        clear tp;
+    end
+end
 
 
+
+%%
+x= rand(1000,5,100);
+clist = colormap(flipud(cool(5)));
+figure,hold on
+for ind = 1:10
+    plot(x(ind,:),'color',clist(ind,:))
+end
+legend show
+
+x= rand(10,5,10);
+clist = colormap(flipud(summer(5)));
+figure,hold on
+for ind = 1:10
+    plot(x(ind,:),'color',clist(ind,:))
+end
+legend on

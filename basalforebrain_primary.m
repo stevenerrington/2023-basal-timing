@@ -1,9 +1,8 @@
 % Clear workspace
-clear all; close all; clc; beep off;
+clear all; close all; clc; beep off; warning off;
 
 % Define paths & key directories
-dirs = get_dirs_bf('wustl');
-
+dirs = get_dirs_bf('home');
 
 % Define analysis parameters
 % % Figures
@@ -20,45 +19,68 @@ params.stats.corr_thresh = 0.01; % Statistical threshold for correlational analy
 params.stats.stat_bin = 101; % UNKNOWN (2023-01-23; BinForStat)
 
 %% Curation: load in datasheet
-% Read in curated neuron datasheet
-[~,~,neuronsheet] = xlsread(fullfile(dirs.root,'docs','BF_neuron_sheet'));
+% Read in curated neuron datastructs
+nih_datastruct = load(fullfile(dirs.root,'data','DATA15.mat'));
+wustl_datastruct = load(fullfile(dirs.root,'data','DATA25_V2.mat'));
+joint_datastruct = [nih_datastruct.ProbAmtDataStruct wustl_datastruct.ProbAmtDataStruct];
 
-% Find relevant columns from datasheet
-excel_celltype = find(strcmp(neuronsheet(1,:),'Cell Type'));
-excel_Area = find(strcmp(neuronsheet(1,:),'Area'));
-excel_monkeyid = find(strcmp(neuronsheet(1,:),'Monkey'));
-excel_ProbAmt = find(strcmp(neuronsheet(1,:),'ProbAmt2575'));
-excel_ProbAmtdir = find(strcmp(neuronsheet(1,:),'ProbAmt2575dir'));
-excel_TimingP = find(strcmp(neuronsheet(1,:),'Timingprocedure'));
-excel_TimingPdir = find(strcmp(neuronsheet(1,:),'Timingproceduredir'));
+% Import excel datasheets
+% XLS Sheet: WUSTL Neurons
+[~,~,wustl_neuronsheet] = xlsread(fullfile(dirs.root,'docs','BF_neuron_sheet'));
 
-%% Curation: extract relevant neurons from datasheet
-datamap = []; datamap_error = [];
+% XLS Sheet: NIH Neurons
+[~,~,nih_neuronsheet] = xlsread(fullfile(dirs.root,'docs','septumprobamt.xls'));
 
-% For each neuron
-for ii = 2:size(neuronsheet,1)
-    % If the neuron is: 
-    if strcmp(neuronsheet{ii,excel_Area},'BF') && ... % in the basal forebrain (BF)...
-            strcmp(neuronsheet{ii,excel_celltype},'Ramping') && ...  % and is identified as a ramping neuron (Zhang et al., 2019)
-            length(neuronsheet{ii,excel_ProbAmt})>1 % and has a relevant datafile
+%
+clear bf_datasheet
+
+for ii = 1:size(joint_datastruct,2)
+    clear file monkey date ap_loc ml_loc depth area site dir
+
+    file = {joint_datastruct(ii).name};
+    monkey = {lower(joint_datastruct(ii).monkey)};
+    
+    % WUSTL Data
+    if ~isempty( find(strcmp(wustl_neuronsheet(:,15),file{1}(1:end-4))))
+        xls_index = find(strcmp(wustl_neuronsheet(:,15),file{1}(1:end-4)));
         
-        % Collate information
-        tp.name = [neuronsheet{ii,excel_ProbAmt},'.mat'];
-        tp.folder = neuronsheet{ii,excel_ProbAmtdir};
-        tp.celltype = neuronsheet{ii,excel_celltype};
-        tp.MONKEYID = neuronsheet{ii,excel_monkeyid};
+        date = {wustl_neuronsheet{xls_index,12}};
+        ap_loc = wustl_neuronsheet{xls_index,10};
+        ml_loc = wustl_neuronsheet{xls_index,11};
+        depth = wustl_neuronsheet{xls_index,3};
+        area = wustl_neuronsheet(xls_index,14);
+        site = {'wustl'};
+        dir = wustl_neuronsheet(xls_index,16);
         
-        % Add the raw data directory to the matlab path for future calls
-        addpath(fullfile(tp.folder));
+    % NIH Data
+    elseif ~isempty(find(strcmp(nih_neuronsheet(:,2),file{1}(4:end)))) || ...
+            ~isempty(find(strcmp(nih_neuronsheet(:,2),file{1}(5:end))))
         
-        if exist(tp.name)
-            datamap = [datamap,tp];
-        else
-            datamap_error = [datamap_error,tp]; % but log if an error occurs.
+        xls_index = find(strcmp(nih_neuronsheet(:,2),file{1}(4:end)));
+        
+        if isempty(xls_index)
+            xls_index = find(strcmp(nih_neuronsheet(:,2),file{1}(5:end)));
         end
-        clear tp;
+        
+        
+        date = {'?'};
+        ap_loc = nih_neuronsheet{xls_index,5};
+        ml_loc = nih_neuronsheet{xls_index,6};
+        depth = nih_neuronsheet{xls_index,4};
+        area = {'BF'};
+        site = {'nih'};   
+        dir = {'X:\MONKEYDATA\NIHBFrampingdata2575\MRDR\'};
+        
+    else
+        continue
     end
+    
+    
+    bf_datasheet(ii,:) = table(file, monkey, date, ap_loc, ml_loc, depth, area, site, dir);
+    
 end
+
+clear nih_datastruct wustl_datastruct joint_datastruct
 
 %% Analysis:
 
@@ -71,38 +93,43 @@ test = table();
 
 % For each identified neuron meeting the criteria, we will loop through,
 % load the experimental data file, and extract the event aligned raster.
-for ii = 1:length(datamap)
+for ii = 1:size(bf_datasheet,1)
     
     % Clear variables, console, and figures
     clear PDS trials Rasters SDFcs_n fano; clc; close all;
-    filename = datamap(ii).name;
-    fprintf('Extracting data from neuron %i of %i   |  %s   \n',ii,length(datamap), filename)
+    filename = bf_datasheet.file{ii};
+    fprintf('Extracting data from neuron %i of %i   |  %s   \n',ii,size(bf_datasheet,1), filename)
     
-    % If the processed experimental file can be found
-    if exist(filename)
-        
-        % Load the data (PDS structure)
-        load(filename,'PDS'); 
-        
-        % Get trial indices
-        trials = get_trials(PDS);
-        
-        % Get event aligned rasters
-        Rasters = get_raster(PDS, trials, params); % Derived from Timing2575Group.m
-
-        % Get event aligned spike-density function
-        SDFcs_n = plot_mean_psth({Rasters},params.sdf.gauss_ms,1,size(Rasters,2),1); 
-        
-        % Calculate Fano Factor
-        fano = get_fano(Rasters, trials, params);
-        
-        % Output extracted data into a table
-        test(ii,:) = table({filename}, {trials}, {Rasters},{SDFcs_n},fano,...
-            'VariableNames',{'filename','trials','rasters','sdf','fano'});
-        
-    else
-        errorfile{end+1,1}=datamap(ii).name;
+    switch bf_datasheet.site{ii}
+        case 'nih' % NIH data
+            
+            
+            
+            
+            
+        case 'wustl' % WUSTL data
+            % Load the data (PDS structure)
+            load(filename,'PDS');
+            
+            % Get trial indices
+            trials = get_trials(PDS);
+            
+            % Get event aligned rasters
+            Rasters = get_raster(PDS, trials, params); % Derived from Timing2575Group.m
+            
+            % Get event aligned spike-density function
+            SDFcs_n = plot_mean_psth({Rasters},params.sdf.gauss_ms,1,size(Rasters,2),1);
+            
+            % Calculate Fano Factor
+            fano = get_fano(Rasters, trials, params);
+            
+            % Output extracted data into a table
+            test(ii,:) = table({filename}, {trials}, {Rasters},{SDFcs_n},fano,...
+                'VariableNames',{'filename','trials','rasters','sdf','fano'});
     end
+    
+
+    
 
 end
 
