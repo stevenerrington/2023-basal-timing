@@ -139,11 +139,10 @@ end
 
 %% Analysis: Fano Factor
 
-params.fano.bin_size = 100;
-
 parfor neuron_i = 1:size(bf_datasheet,1)
     
-    fprintf('Calculating Fano Factor for neuron %i of %i   |  %s   \n',...
+    params.fano.bin_size = [50, 1
+    fprintf('Extracting data from neuron %i of %i   |  %s   \n',...
         neuron_i,size(bf_datasheet,1), bf_data.filename{neuron_i})
 
     % Calculate Fano Factor
@@ -155,25 +154,6 @@ end
 bf_data.fano = fano'; clear fano
 
 
-
 %% Analysis: epoched Fano Factor
-% In progress - 1539, Feb 1st
-
-zero_times.fix = -1000; zero_times.cs = 0; zero_times.outcome = [1500 2500];
-zero_align = find(bf_data.fano(neuron_i).time == 0);
-
-
-
-epoch_labels = fieldnames(epoch);
-
-for neuron_i = 1:size(bf_data,1)
-    for epoch_i = 1:length(epoch_labels)
-        epoch_index = [];
-        epoch_index = find(ismember(bf_data.fano(neuron_i).time,epoch.(epoch_labels{epoch_i})));
-
-        test(neuron_i,epoch_i) = mean(bf_data.fano(neuron_i).FanoSaveAll(epoch_index))
-    end
-    
-end
 
 

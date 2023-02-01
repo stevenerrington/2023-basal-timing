@@ -5,8 +5,6 @@ function trials = get_trials(PDS)
 
 % Initialise relevant variables %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % ????  <<< UNKNOWN: task relevant measures
-freereward = find(PDS.freeoutcometype==1 & PDS.timesoffreeoutcomes_first>0);
-freeflash = find(PDS.freeoutcometype==34 & PDS.timesoffreeoutcomes_first>0);
 durationsuntilreward=PDS(1).timeoutcome-PDS(1).timetargeton;
 durationsuntilreward=round(durationsuntilreward*10)./10;
 

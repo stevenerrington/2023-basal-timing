@@ -1,34 +1,76 @@
-function Rasters = get_raster(PDS, trials, params)
+function Rasters = get_rex_raster(REX, trials, params)
 
 % This function is derived from the Timing2575Group.m script written by
 % Kaining Zhang for Zhang et al., 2019
 
 % Initialise relevant variables %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % ????  <<< UNKNOWN: task relevant measures
-durationsuntilreward=PDS(1).timeoutcome-PDS(1).timetargeton;
-durationsuntilreward=round(durationsuntilreward*10)./10;
+
+%% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%event codes used in C NIH system (REX); also find trials
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+lefttrials=5502; righttrials=4501; centertrials=3500;
+
+prob100=2011; prob75rew=2016; prob50rew=2014; prob25rew=2012; prob0=2018;
+prob75norew=2017; prob50norew=2015; prob25norew=2013;
+amount100=2021; amount75=2022; amount50=2023; amount25=2024; amount0=2025;
+
+all_fractal_codes = [prob100, prob75rew, prob50rew, prob25rew, prob0,...
+    prob75norew, prob50norew, prob25norew, amount100, amount75, amount50, amount25, amount0];
+
+TRIALSTART=1001; CUECD = 1050; REWCD = 1030;
+AIRCD = 1990; TARGONCD = 1100; TARGOFFCD = 1101;
+REWOFFCD = 1037; EYEIN = 5555; EYEATSTIM = 6666;
+
+
+%%
+reward_on = nan(size(REX,2),1); trialstart_on = nan(size(REX,2),1); target_on = nan(size(REX,2),1);
+rwd = nan(size(REX,2),1); endtrial = nan(size(REX,2),1); 
+
+for trl_i = 1:size(REX,2)
+    eventcodes = []; times = [];
+    eventcodes = vertcat(REX(trl_i).Events.Code);
+    times = vertcat(REX(trl_i).Events.Time);
+    
+    rwd(trl_i,1) = ~isempty(find(eventcodes == REWCD));
+    endtrial(trl_i,1) = ~isempty(find(eventcodes == TARGOFFCD));
+    
+    if ~isempty(find(eventcodes == TARGOFFCD,1)) | ~isempty(find(eventcodes == TARGONCD,1))
+    reward_on(trl_i,1) = double(times(find(eventcodes == TARGOFFCD,1)));
+    trialstart_on(trl_i,1) = double(times(find(eventcodes == CUECD,1)));
+    target_on(trl_i,1) = double(times(find(eventcodes == TARGONCD,1)));
+    else
+        continue
+    end
+end
+
+
+% > SOME TIME SAME EVENT CODE IS SENT TWICE? JUST TAKING FIRST INSTANCES
+
 
 %% Get relevant trial indices %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % % General:
-completedtrial=find(durationsuntilreward>0); % Completed trials
-deliv=intersect(find(PDS.timeoutcome>0),find( PDS.rewardduration>0)); % Reward delivered
-ndeliv=intersect(find(PDS.timeoutcome>0),find( PDS.rewardduration==0)); % Reward not delivered
+completedtrial = []; 
+completedtrial=find(endtrial>0); % Completed trials
+deliv=intersect(find(endtrial>0),find(rwd >0)); % Reward delivered
+ndeliv=intersect(find(endtrial>0),find(rwd == 0)); % Reward not delivered
 
 %% Get event-aligned rasters
 % Initialise relevant arrays
-Rasters=[]; RastersFree=[];
+Rasters=[]; 
 
 % Set alignment parameters
 event_zero=6001;
 
 % % ///////////////////////////////////////////// %
-for trl_i = 1:length(durationsuntilreward)
+for trl_i = 1:size(REX,2)
     % Find time of spikes relevant to cue onset
-    spk = PDS(1).sptimes{trl_i}-PDS(1).timetargeton(trl_i);
-    % Change timing to ms, rather than sec
-    spk = (spk*1000)+event_zero-1;
+    
+    spk_times = []; spk_times = REX(trl_i).Units.Times;
+    spk = spk_times - target_on(trl_i,1) + event_zero;
+    
     % Make a spike time an integer
-    spk = fix(spk);
+    spk = double(fix(spk));
     
     % Clean any spike times that occur too late
     spk = spk(find(spk<event_zero*2));
@@ -41,8 +83,6 @@ for trl_i = 1:length(durationsuntilreward)
     % Clear arrays for next loop
     clear temp spk x
 end
-
-
 
 
 %% Generate convolved spike density functions

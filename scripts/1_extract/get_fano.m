@@ -92,7 +92,7 @@ end
 
 %% Smooth Fano Factor
 
-SmoothBin=1;
+SmoothBin=10;
 fano(1).FanoSaveAllomit = smooth(FanoSaveAll',SmoothBin)';
 fano(1).FanoSave0=  smooth(FanoSave0',SmoothBin)';
 fano(1).FanoSave75omit =  smooth(FanoSave75',SmoothBin)';
