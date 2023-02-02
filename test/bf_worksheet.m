@@ -1,5 +1,32 @@
 
+for cluster_i = 1:2
+    cluster_neurons = []; cluster_neurons = find(bf_datasheet.cluster_id == cluster_i);
+    
+    for neuron_i = 1:length(cluster_neurons)
+        neuron_j = cluster_neurons(neuron_i);
+        trials = [];
+        trials = [bf_data.trials{neuron_j}.prob100,...
+            bf_data.trials{neuron_j}.prob75, bf_data.trials{neuron_j}.prob50,...
+            bf_data.trials{neuron_j}.prob25, bf_data.trials{neuron_j}.prob0];
+        sdf{cluster_i}(neuron_i,:) = nanmean(bf_data.sdf{neuron_j}(trials,:));
+        
+        figure;
+        
+        if cluster_i == 1
+            plot(-5000:5000, nanmean(bf_data.sdf{neuron_j}(trials,:)),'r')
+            xlim([-100 3000])
+            title('Phasic neuron')
+        elseif cluster_i == 2
+            plot(-5000:5000, nanmean(bf_data.sdf{neuron_j}(trials,:)),'b')
+            xlim([-100 3000])
+            title('Ramping neuron')
+        end
+        
+    end
+    
+end
 
+%%
 
 
 

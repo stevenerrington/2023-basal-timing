@@ -1,7 +1,7 @@
 function fano = get_fano_window(Rasters, trials, window)
 
 % Define windows and times
-event_zero = 5000;
+event_zero = 6000;
 analysis_win = event_zero+window(1):event_zero+window(2);
 
 % Get list of trial types

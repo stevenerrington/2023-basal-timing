@@ -139,9 +139,23 @@ for ii = 1:size(bf_datasheet,1)
 end
 
 %% Analysis: Categorize neurons as ramping or phasic.
+% Load in previously calculated cluster labels for BF neurons (phasic or
+% ramping)
 load(fullfile(dirs.root,'data','cluster_labels.mat'))
 
+category_label = {'Phasic','Ramping'};
 
+% For each neuron
+for neuron_i = 1:size(bf_datasheet)
+
+    file = bf_datasheet.file{neuron_i};
+    bf_datasheet.cluster_id(neuron_i) = ...
+        cluster_labels.cluster(strcmp(cluster_labels.file, file));
+    
+    bf_datasheet.cluster_label{neuron_i} = ...
+        category_label{bf_datasheet.cluster_id(neuron_i)};
+    
+end
 
 %% Analysis: Calculate the fano factor for each trial condition
 
@@ -164,22 +178,25 @@ roughplot_fanofactor_sdf % < Generate a rough plot of SDF and FF x time
 
 %% Analysis: epoched Fano Factor
 % In progress - 1539, Feb 1st
+clear epoch
+epoch.fixation = [0 200]; epoch.preCS = [-200 0]; epoch.postCS = [0 200];
+epoch.midCS = [650 850]; epoch.preOutcome = [-200 0]; epoch.postOutcome = [0 200];
 
-zero_times.fix = -1000; zero_times.cs = 0; zero_times.outcome = [1500 2500];
-zero_align = find(bf_data.fano(1).time == 0);
-
-
-%%% < HERE - START MAKING A CODE THAT JUST CALCS THE FF WITHIN A WINDOW.
-fano = get_fano_window(Rasters, trials, [-200 0]); % @ moment, centers on 0
+epoch_zero.fixation = [-1000 -1000]; epoch_zero.preCS = [0 0]; epoch_zero.postCS = [0 0];
+epoch_zero.midCS = [0 0]; epoch_zero.preOutcome = [1500 2500]; epoch_zero.postOutcome = [1500 2500];
 
 epoch_labels = fieldnames(epoch);
 
 for neuron_i = 1:size(bf_data,1)
+    
     for epoch_i = 1:length(epoch_labels)
-        epoch_index = [];
-        epoch_index = find(ismember(bf_data.fano(neuron_i).time,epoch.(epoch_labels{epoch_i})));
+        
+        cluster_id = bf_datasheet.cluster_id(neuron_i);
+        
+        fano = get_fano_window(bf_data.rasters{neuron_i},...
+            bf_data.trials{neuron_i},...
+            epoch.(epoch_labels{epoch_i}) + epoch_zero.(epoch_labels{epoch_i})(cluster_id)); % @ moment, centers on 0
 
-        test(neuron_i,epoch_i) = mean(bf_data.fano(neuron_i).FanoSaveAll(epoch_index));
     end
     
 end
