@@ -28,72 +28,92 @@ doprint=1;
 RangeforearlyCS=[3051-500:3051];
 
 
-    load('D:\projectCode\2023-basal-timing\data\Data15.mat')
-    temp = ProbAmtDataStruct;
-    
-    for x=1:length(temp)
-        temp(x).idstruct=1;
-    end
-    
-    load('D:\projectCode\2023-basal-timing\data\Data25_V2.mat')
-    for x=1:length(ProbAmtDataStruct)
-        ProbAmtDataStruct(x).idstruct=2;
-    end
-    
-     ProbAmtDataStruct = [ProbAmtDataStruct temp];
+%     load('D:\projectCode\2023-basal-timing\data\Data15.mat')
+load('Y:\Steven\2023-bf-timing\inherited\BasalForebrain_Zhang_Chen_Monosov\BasalForebrain_Zhang_Chen_Monosov\latest_version&code\Fanofactor_doubletfixed\DATA15.mat')
+temp = ProbAmtDataStruct;
 
-    %%%%%%% cluster phasic and ramping cell
-    Vectors=[];
-    for x=1:length(ProbAmtDataStruct)
-        t=ProbAmtDataStruct(x).Prob_(1001:end);
-        t=t-min(t);
-        t=t./max(t);
-        Vectors=[Vectors; (t)];
-    end
-    clear t;
-    G=Vectors;
-    %[pc, zscores, pcvars] = pca(G,'VariableWeights','variance');
-    [pc, zscores, pcvars] = pca(G);
-    %VarE_=pcvars./sum(pcvars) * 100 %var exp
-    %VarE=cumsum(pcvars./sum(pcvars) * 100); %cum sum of variance
-    
-    meas=zscores(:,[1:10])
-    %rng('default');  % For reproducibility
-    eva = evalclusters(meas,'kmeans','CalinskiHarabasz','KList',[1:6])
-    eva = evalclusters(meas,'kmeans','silhouette','KList',[1:6])
-    idx3 = kmeans(meas,2,'Distance','sqeuclidean');
-    
-    T1=G(find(idx3==1),:); % Ramping
-    T2=G(find(idx3==2),:); % Phasic
-    
+for x=1:length(temp)
+    temp(x).idstruct=1;
+end
 
-    figure; hold on
-    plot(nanmean(T1))
-    plot(nanmean(T2))
+load('Y:\Steven\2023-bf-timing\inherited\BasalForebrain_Zhang_Chen_Monosov\BasalForebrain_Zhang_Chen_Monosov\latest_version&code\Fanofactor_doubletfixed\DATA25_V2.mat')
 
-    
-    figure;
-    NUM=2;
-    D = pdist(T1, 'euclidean');
-    T = linkage(D, 'ward');
-    [H,T,outperm] = dendrogram(T, 0, 'colorthreshold',mean(T(end-NUM+1:end-NUM+2,3)),'Orientation','left');
-    T1=T1(outperm,:); clear T D H outperm;
-    
-    D = pdist(T2, 'euclidean');
-    T = linkage(D, 'ward');
-    [H,T,outperm] = dendrogram(T, 0, 'colorthreshold',mean(T(end-NUM+1:end-NUM+2,3)),'Orientation','left');
-    T2=T2(outperm,:); clear T D H outperm;
-    close(gcf);
-    
-    G=[T1; T2];
-    
-    Group1=ProbAmtDataStruct(find(idx3==1)); % Phasic
-    Group2=ProbAmtDataStruct(find(idx3==2)); % Ramping
-    
-    % Just focus on ramping neurons
-        savestruct = Group2;
+%     load('D:\projectCode\2023-basal-timing\data\Data25_V2.mat')
+for x=1:length(ProbAmtDataStruct)
+    ProbAmtDataStruct(x).idstruct=2;
+end
 
-    
+ProbAmtDataStruct = [ProbAmtDataStruct temp];
+
+%%%%%%% cluster phasic and ramping cell
+Vectors=[];
+for x=1:length(ProbAmtDataStruct)
+    t=ProbAmtDataStruct(x).Prob_(1001:end);
+    t=t-min(t);
+    t=t./max(t);
+    Vectors=[Vectors; (t)];
+end
+clear t;
+G=Vectors;
+%[pc, zscores, pcvars] = pca(G,'VariableWeights','variance');
+[pc, zscores, pcvars] = pca(G);
+%VarE_=pcvars./sum(pcvars) * 100 %var exp
+%VarE=cumsum(pcvars./sum(pcvars) * 100); %cum sum of variance
+
+meas=zscores(:,[1:10])
+%rng('default');  % For reproducibility
+eva = evalclusters(meas,'kmeans','CalinskiHarabasz','KList',[1:6])
+eva = evalclusters(meas,'kmeans','silhouette','KList',[1:6])
+idx3 = kmeans(meas,2,'Distance','sqeuclidean');
+
+T1=G(find(idx3==1),:); % Ramping
+T2=G(find(idx3==2),:); % Phasic
+
+
+figure; hold on
+plot(nanmean(T1))
+plot(nanmean(T2))
+
+
+figure;
+NUM=2;
+D = pdist(T1, 'euclidean');
+T = linkage(D, 'ward');
+[H,T,outperm] = dendrogram(T, 0, 'colorthreshold',mean(T(end-NUM+1:end-NUM+2,3)),'Orientation','left');
+T1=T1(outperm,:); clear T D H outperm;
+
+D = pdist(T2, 'euclidean');
+T = linkage(D, 'ward');
+[H,T,outperm] = dendrogram(T, 0, 'colorthreshold',mean(T(end-NUM+1:end-NUM+2,3)),'Orientation','left');
+T2=T2(outperm,:); clear T D H outperm;
+close(gcf);
+
+G=[T1; T2];
+
+Group1=ProbAmtDataStruct(find(idx3==1)); % Phasic
+Group2=ProbAmtDataStruct(find(idx3==2)); % Ramping
+
+datatable = struct2table(ProbAmtDataStruct);
+cluster_labels = table(datatable.name, idx3,'VariableNames',{'file','cluster'});
+save('C:\Users\Steven\Documents\GitHub\2023-basal-timing\data\cluster_labels.mat','cluster_labels')
+
+
+
+
+
+
+
+
+
+
+%%
+
+ProbAmtDataStruct.name
+
+% Just focus on ramping neurons
+savestruct = Group2;
+
+
 savestructS=savestruct(find([savestruct(:).idstruct]==1));
 savestructL=savestruct(find([savestruct(:).idstruct]==2));
 
@@ -191,7 +211,7 @@ FanoSave100=[FanoSave100'; t'; FanoSave100e';]';
 FanoSave75=[FanoSave75'; t'; FanoSave75e';]';
 FanoSave50=[FanoSave50'; t'; FanoSave50e';]';
 FanoSave25=[FanoSave25'; t'; FanoSave25e';]';
-FanoSave0=[FanoSave0'; t'; FanoSave0e';]'; 
+FanoSave0=[FanoSave0'; t'; FanoSave0e';]';
 clear t
 %%%%
 
@@ -212,7 +232,7 @@ SDF100=[SDF100'; t'; SDF100e';]';
 SDF75=[SDF75'; t'; SDF75e';]';
 SDF50=[SDF50'; t'; SDF50e';]';
 SDF25=[SDF25'; t'; SDF25e';]';
-SDF0=[SDF0'; t'; SDF0e';]'; 
+SDF0=[SDF0'; t'; SDF0e';]';
 clear t
 
 
@@ -295,21 +315,21 @@ text(1,3.5,['ranksum p = ' mat2str(p,2)]);
 
 
 total=[
-nanmean(FanoSave100(:,RangeforearlyCS)')
-nanmean(FanoSave75(:,RangeforearlyCS)')
-nanmean(FanoSave50(:,RangeforearlyCS)')
-nanmean(FanoSave25(:,RangeforearlyCS)')
-nanmean(FanoSave0(:,RangeforearlyCS)')
-]
+    nanmean(FanoSave100(:,RangeforearlyCS)')
+    nanmean(FanoSave75(:,RangeforearlyCS)')
+    nanmean(FanoSave50(:,RangeforearlyCS)')
+    nanmean(FanoSave25(:,RangeforearlyCS)')
+    nanmean(FanoSave0(:,RangeforearlyCS)')
+    ]
 
 nanmean(nanmean(total))
-% 
+%
 % if doprint==1
 %     set(gcf,'Position',[1 41 2560 1484],'Paperposition',[0 0 26.6667 15.4583], 'Paperpositionmode','auto','Papersize',[26.6667 15.4583]);  % sets the size of the figure and orientation
 %     print('-dpdf', 'AllBFFANO.pdf' );
 %     close all;
 % end
-% 
+%
 
 
 signrank( nanmean(total) , 1)
@@ -332,7 +352,7 @@ signrank( nanmean(total) , 1)
 
 
 
-%% 
+%%
 
 for ii = 1:length(datamap)
     
@@ -343,10 +363,10 @@ for ii = 1:length(datamap)
     plot(-5000:5000,nanmean(test(ii,:).sdf{1}(test(ii,:).trials{1}.prob75,:)))
     plot(-5000:5000,nanmean(test(ii,:).sdf{1}(test(ii,:).trials{1}.prob100,:)))
     
-    vline(0,'k'); vline(2500,'k'); 
+    vline(0,'k'); vline(2500,'k');
     xlim([-500 3500])
-
-
+    
+    
 end
 
 %%
@@ -369,31 +389,31 @@ Timing2575Group
 %% Get averaged spike density functions
 % If there are enough trials (4), then calculate the average spike density
 % % functions for the conditions
-% 
+%
 % if isempty(find(trialtypes_all < 4))==1
-%     
+%
 %     %savestruct(1).filename=D(1).name;
 %     fano(1).SDF75omit = nanmean(SDFcs_n(trials.prob75nd,analysis_win));
 %     fano(1).SDF50omit = nanmean(SDFcs_n(trials.prob50nd,analysis_win));
 %     fano(1).SDF25omit = nanmean(SDFcs_n(trials.prob25nd,analysis_win));
 %     fano(1).SDF0omit = nanmean(SDFcs_n(trials.prob0,analysis_win));
-%     
+%
 %     fano(1).AllSDFomit = nanmean(SDFcs_n([trials.prob25nd trials.prob50nd trials.prob75nd],analysis_win));
-%     
+%
 %     fano(1).SDF100= nanmean(SDFcs_n(trials.prob100,analysis_win));
 %     fano(1).SDF75= nanmean(SDFcs_n(trials.prob75,analysis_win));
 %     fano(1).SDF50= nanmean(SDFcs_n(trials.prob50,analysis_win));
 %     fano(1).SDF25= nanmean(SDFcs_n(trials.prob25,analysis_win));
 %     fano(1).SDF0= nanmean(SDFcs_n(trials.prob0,analysis_win));
-%     
+%
 %     fano(1).AllSDF= nanmean(SDFcs_n([trials.prob25 trials.prob50 trials.prob75],analysis_win));
-%     
+%
 % end
-% 
-% 
-% 
-% 
-% 
+%
+%
+%
+%
+%
 
 
 
@@ -415,7 +435,7 @@ datamap = []; datamap_error = [];
 
 % For each neuron
 for ii = 2:size(neuronsheet,1)
-    % If the neuron is: 
+    % If the neuron is:
     if strcmp(neuronsheet{ii,excel_Area},'BF') && ... % in the basal forebrain (BF)...
             strcmp(neuronsheet{ii,excel_celltype},'Ramping') && ...  % and is identified as a ramping neuron (Zhang et al., 2019)
             length(neuronsheet{ii,excel_ProbAmt})>1 % and has a relevant datafile

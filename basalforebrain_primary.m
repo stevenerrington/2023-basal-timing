@@ -10,8 +10,10 @@ params.plot.ylim = 150; %PLOT YLIM for spike density functions (PlotYm)
 % % SDF
 params.sdf.gauss_ms = 100; % for making a spike density function (fits each spike with a 100ms gauss; gauswindow_ms)
 params.sdf.window = [-500 1000]; % [min max] window for spike density function
+
 % % Fano factor
 params.fano.bin_size = 100; % Bin size for Fano Factor analysis (get_fano)
+params.fano.smooth_bin = 1;
 
 % % Statistics
 params.stats.n_perms = 100; % Number of permutations for permutation tests (NumberofPermutations)
@@ -112,7 +114,7 @@ for ii = 1:size(bf_datasheet,1)
             % Get event aligned rasters
             Rasters = get_rex_raster(REX, trials, params); % Derived from Timing2575Group.m
             % Get event aligned spike-density function
-            SDFcs_n = plot_mean_psth({Rasters},params.sdf.gauss_ms,1,size(Rasters,2),1);
+            SDF = plot_mean_psth({Rasters},params.sdf.gauss_ms,1,size(Rasters,2),1);
             
             
         case 'wustl' % WUSTL data
@@ -125,21 +127,25 @@ for ii = 1:size(bf_datasheet,1)
             % Get event aligned rasters
             Rasters = get_raster(PDS, trials, params); % Derived from Timing2575Group.m
             % Get event aligned spike-density function
-            SDFcs_n = plot_mean_psth({Rasters},params.sdf.gauss_ms,1,size(Rasters,2),1);
+            SDF = plot_mean_psth({Rasters},params.sdf.gauss_ms,1,size(Rasters,2),1);
             
     end
     
     % Output extracted data into a table
-    bf_data(ii,:) = table({filename}, {trials}, {Rasters},{SDFcs_n},...
+    bf_data(ii,:) = table({filename}, {trials}, {Rasters},{SDF},...
         'VariableNames',{'filename','trials','rasters','sdf'});
     
     
 end
 
+%% Analysis: Categorize neurons as ramping or phasic.
+load(fullfile(dirs.root,'data','cluster_labels.mat'))
 
-%% Analysis: Fano Factor
 
-params.fano.bin_size = 100;
+
+%% Analysis: Calculate the fano factor for each trial condition
+
+params.fano.bin_size = 25;
 
 parfor neuron_i = 1:size(bf_datasheet,1)
     
@@ -154,15 +160,17 @@ end
 
 bf_data.fano = fano'; clear fano
 
-
+roughplot_fanofactor_sdf % < Generate a rough plot of SDF and FF x time
 
 %% Analysis: epoched Fano Factor
 % In progress - 1539, Feb 1st
 
 zero_times.fix = -1000; zero_times.cs = 0; zero_times.outcome = [1500 2500];
-zero_align = find(bf_data.fano(neuron_i).time == 0);
+zero_align = find(bf_data.fano(1).time == 0);
 
 
+%%% < HERE - START MAKING A CODE THAT JUST CALCS THE FF WITHIN A WINDOW.
+fano = get_fano_window(Rasters, trials, [-200 0]); % @ moment, centers on 0
 
 epoch_labels = fieldnames(epoch);
 
@@ -171,7 +179,7 @@ for neuron_i = 1:size(bf_data,1)
         epoch_index = [];
         epoch_index = find(ismember(bf_data.fano(neuron_i).time,epoch.(epoch_labels{epoch_i})));
 
-        test(neuron_i,epoch_i) = mean(bf_data.fano(neuron_i).FanoSaveAll(epoch_index))
+        test(neuron_i,epoch_i) = mean(bf_data.fano(neuron_i).FanoSaveAll(epoch_index));
     end
     
 end

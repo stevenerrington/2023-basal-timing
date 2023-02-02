@@ -10,8 +10,10 @@ params.plot.ylim = 150; %PLOT YLIM for spike density functions (PlotYm)
 % % SDF
 params.sdf.gauss_ms = 100; % for making a spike density function (fits each spike with a 100ms gauss; gauswindow_ms)
 params.sdf.window = [-500 1000]; % [min max] window for spike density function
+
 % % Fano factor
 params.fano.bin_size = 100; % Bin size for Fano Factor analysis (get_fano)
+params.fano.smooth_bin = 1;
 
 % % Statistics
 params.stats.n_perms = 100; % Number of permutations for permutation tests (NumberofPermutations)
@@ -136,13 +138,53 @@ for ii = 1:size(bf_datasheet,1)
     
 end
 
+%% Analysis: Categorize neurons as ramping or phasic.
 
-%% Analysis: Fano Factor
+%%%%%%% cluster phasic and ramping cell
+Vectors=[];
+cluster_win = [1001:2001]+5000;
+
+for neuron_i = 1:size(bf_data,1)
+    % Get all probability trials
+    p_trials_all = [];
+    p_trials_all = [bf_data.trials{neuron_i}.prob100, bf_data.trials{neuron_i}.prob75,...
+        bf_data.trials{neuron_i}.prob50, bf_data.trials{neuron_i}.prob25,...
+        bf_data.trials{neuron_i}.prob0];
+    % Get average SDF across all probability trials
+    t = nanmean(bf_data.sdf{neuron_i}(p_trials_all,cluster_win));
+    
+    t = t-min(t);
+    t = t./max(t);
+    Vectors=[Vectors; (t)];
+end
+clear t;
+G=Vectors;
+%[pc, zscores, pcvars] = pca(G,'VariableWeights','variance');
+[pc, zscores, pcvars] = pca(G);
+%VarE_=pcvars./sum(pcvars) * 100 %var exp
+%VarE=cumsum(pcvars./sum(pcvars) * 100); %cum sum of variance
+
+meas=zscores(:,[1:10])
+%rng('default');  % For reproducibility
+eva = evalclusters(meas,'kmeans','CalinskiHarabasz','KList',[1:6])
+eva = evalclusters(meas,'kmeans','silhouette','KList',[1:6])
+idx3 = kmeans(meas,2,'Distance','sqeuclidean');
+
+T1=G(find(idx3==1),:);
+T2=G(find(idx3==2),:);
+
+
+
+
+
+
+%% Analysis: Calculate the fano factor for each trial condition
+
+params.fano.bin_size = 25;
 
 parfor neuron_i = 1:size(bf_datasheet,1)
     
-    params.fano.bin_size = [50, 1
-    fprintf('Extracting data from neuron %i of %i   |  %s   \n',...
+    fprintf('Calculating Fano Factor for neuron %i of %i   |  %s   \n',...
         neuron_i,size(bf_datasheet,1), bf_data.filename{neuron_i})
 
     % Calculate Fano Factor
@@ -153,7 +195,28 @@ end
 
 bf_data.fano = fano'; clear fano
 
+roughplot_fanofactor_sdf % < Generate a rough plot of SDF and FF x time
 
 %% Analysis: epoched Fano Factor
+% In progress - 1539, Feb 1st
+
+zero_times.fix = -1000; zero_times.cs = 0; zero_times.outcome = [1500 2500];
+zero_align = find(bf_data.fano(1).time == 0);
+
+
+%%% < HERE - START MAKING A CODE THAT JUST CALCS THE FF WITHIN A WINDOW.
+fano = get_fano_window(Rasters, trials, [-200 0]); % @ moment, centers on 0
+
+epoch_labels = fieldnames(epoch);
+
+for neuron_i = 1:size(bf_data,1)
+    for epoch_i = 1:length(epoch_labels)
+        epoch_index = [];
+        epoch_index = find(ismember(bf_data.fano(neuron_i).time,epoch.(epoch_labels{epoch_i})));
+
+        test(neuron_i,epoch_i) = mean(bf_data.fano(neuron_i).FanoSaveAll(epoch_index));
+    end
+    
+end
 
 
