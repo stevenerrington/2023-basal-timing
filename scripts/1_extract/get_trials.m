@@ -37,6 +37,8 @@ trials.prob25d=intersect(trials.prob25,deliv); % 25% probability, delivered
 trials.prob25nd=intersect(trials.prob25,ndeliv); % 25% probability, not-delivered
 
 
+trials.probAll = [trials.prob0, trials.prob25, trials.prob50, trials.prob75, trials.prob100];
+trials.aAll = [trials.a0, trials.a25, trials.a50, trials.a75, trials.a100];
 
 
 end

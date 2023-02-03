@@ -92,29 +92,33 @@ SDFFREE = plot_mean_psth({Rasters},params.sdf.gauss_ms,1,size(Rasters,2),1); %ma
 SDFFREE = SDFFREE(:,event_zero+params.sdf.window(1):event_zero+params.sdf.window(2));
 
 %% Clean rasters (reward artifact)
-% % Define periods of interest
-%   For uncertain trials (25, 50, 75% probability)
-time_win_contam_a = [7500-45 7500+15];
-time_win_clean_a = [7500-45 7500+15];
 
-%   For uncertain trials (25, 50, 75% probability)
-time_win_contam_b = [7500-15 7500+15];
-time_win_clean_b = [7500-15-30 7500-15];
-
-% % Define trials (reward artifact removal)
-cleanreward75n = intersect(trials.prob75,ndeliv); cleanreward75 = intersect(trials.prob75,deliv);
-cleanreward50n = intersect(trials.prob50,ndeliv); cleanreward50 = intersect(trials.prob50,deliv);
-cleanreward25n = intersect(trials.prob25,ndeliv); cleanreward25 = intersect(trials.prob25,deliv);
-
-% % Clean trials (reward artifact removal)
-Rasters = clean_spk_artifact(Rasters,cleanreward75n,cleanreward75,time_win_contam_a,time_win_clean_a);
-Rasters = clean_spk_artifact(Rasters,cleanreward50n,cleanreward50,time_win_contam_a,time_win_clean_a);
-Rasters = clean_spk_artifact(Rasters,cleanreward25n,cleanreward25,time_win_contam_a,time_win_clean_a);
-Rasters = clean_spk_artifact(Rasters,trials.prob100,trials.prob100,time_win_contam_b,time_win_clean_b);
-Rasters = clean_spk_artifact(Rasters,trials.a100,trials.a100,time_win_contam_b,time_win_clean_b);
-Rasters = clean_spk_artifact(Rasters,trials.a75,trials.a75,time_win_contam_b,time_win_clean_b);
-Rasters = clean_spk_artifact(Rasters,trials.a50,trials.a50,time_win_contam_b,time_win_clean_b);
-Rasters = clean_spk_artifact(Rasters,trials.a25,trials.a25,time_win_contam_b,time_win_clean_b);
+if params.raster.cleanFlag == 1
+    % % Define periods of interest
+    %   For uncertain trials (25, 50, 75% probability)
+    time_win_contam_a = [7500-45 7500+15];
+    time_win_clean_a = [7500-45 7500+15];
+    
+    %   For uncertain trials (25, 50, 75% probability)
+    time_win_contam_b = [7500-15 7500+15];
+    time_win_clean_b = [7500-15-30 7500-15];
+    
+    % % Define trials (reward artifact removal)
+    cleanreward75n = intersect(trials.prob75,ndeliv); cleanreward75 = intersect(trials.prob75,deliv);
+    cleanreward50n = intersect(trials.prob50,ndeliv); cleanreward50 = intersect(trials.prob50,deliv);
+    cleanreward25n = intersect(trials.prob25,ndeliv); cleanreward25 = intersect(trials.prob25,deliv);
+    
+    % % Clean trials (reward artifact removal)
+    Rasters = clean_spk_artifact(Rasters,cleanreward75n,cleanreward75,time_win_contam_a,time_win_clean_a);
+    Rasters = clean_spk_artifact(Rasters,cleanreward50n,cleanreward50,time_win_contam_a,time_win_clean_a);
+    Rasters = clean_spk_artifact(Rasters,cleanreward25n,cleanreward25,time_win_contam_a,time_win_clean_a);
+    Rasters = clean_spk_artifact(Rasters,trials.prob100,trials.prob100,time_win_contam_b,time_win_clean_b);
+    Rasters = clean_spk_artifact(Rasters,trials.a100,trials.a100,time_win_contam_b,time_win_clean_b);
+    Rasters = clean_spk_artifact(Rasters,trials.a75,trials.a75,time_win_contam_b,time_win_clean_b);
+    Rasters = clean_spk_artifact(Rasters,trials.a50,trials.a50,time_win_contam_b,time_win_clean_b);
+    Rasters = clean_spk_artifact(Rasters,trials.a25,trials.a25,time_win_contam_b,time_win_clean_b);
+    
+end
 
 % % Cut raster to period of interest
 Rasters = Rasters(:,event_zero-5000:event_zero+5000);
