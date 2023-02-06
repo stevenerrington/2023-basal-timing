@@ -10,8 +10,6 @@ gauswindow_ms=100;
 addpath('C:\Users\Ilya\Dropbox\HELPER\HELPER_GENERAL');
 addpath('C:\Users\Ilya Monosov\Dropbox\HELPER\HELPER_GENERAL');
 
-
-
 addpath('C:\Users\Ilya\Desktop\BF\Timing\Robin\BFtonic\');
 addpath('C:\Users\Ilya\Desktop\BF\Timing\Wolverine\tonic\');
 addpath('C:\Users\Ilya\Desktop\BF\Timing\Batman\tonic\');

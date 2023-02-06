@@ -1,30 +1,33 @@
-function Rasters = get_raster(PDS, trials, params)
+function Rasters = get_timing_raster(PDS, trials, params)
 
 % This function is derived from the Timing2575Group.m script written by
 % Kaining Zhang for Zhang et al., 2019
 
 % Initialise relevant variables %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % ????  <<< UNKNOWN: task relevant measures
-durationsuntilreward=PDS(1).timeoutcome-PDS(1).timetargeton;
-durationsuntilreward=round(durationsuntilreward*10)./10;
+n_trls = length(PDS.timetargeton);
 
 %% Get relevant trial indices %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % % General:
-completedtrial=find(durationsuntilreward>0); % Completed trials
-deliv=intersect(find(PDS.timeoutcome>0),find( PDS.rewardduration>0)); % Reward delivered
-ndeliv=intersect(find(PDS.timeoutcome>0),find( PDS.rewardduration==0)); % Reward not delivered
+try
+    deliv=intersect(find(PDS.timeoutcome>0),find( PDS.rewardduration>0)); % Reward delivered
+    ndeliv=intersect(find(PDS.timeoutcome>0),find( PDS.rewardduration==0)); % Reward not delivered
+catch
+    deliv=intersect(find(PDS.timeoutcome>0),find( PDS.rewardDuration>0)); % Reward delivered
+    ndeliv=intersect(find(PDS.timeoutcome>0),find( PDS.rewardDuration==0)); % Reward not delivered
+end
 
 %% Get event-aligned rasters
 % Initialise relevant arrays
-Rasters=[]; RastersFree=[];
+Rasters=[];
 
 % Set alignment parameters
 event_zero=6001;
 
 % % ///////////////////////////////////////////// %
-for trl_i = 1:length(durationsuntilreward)
+for trl_i = 1:n_trls
     % Find time of spikes relevant to cue onset
-    spk = PDS(1).sptimes{trl_i}-PDS(1).timetargeton(trl_i);
+    spk = PDS(1).sptimes{trl_i}(PDS.spikes{trl_i} == 65535)-PDS(1).timetargeton(trl_i);
     % Change timing to ms, rather than sec
     spk = (spk*1000)+event_zero-1;
     % Make a spike time an integer
@@ -41,8 +44,6 @@ for trl_i = 1:length(durationsuntilreward)
     % Clear arrays for next loop
     clear temp spk x
 end
-
-
 
 
 %% Generate convolved spike density functions

@@ -105,7 +105,7 @@ end
 
 %%
 params.fano.bin_size = 25;
-clear fano
+
 parfor neuron_i = 1:size(bf_datasheet_timingExp,1)
     
     fprintf('Calculating Fano Factor for neuron %i of %i   |  %s   \n',...
@@ -148,43 +148,24 @@ epoch_zero.midCS = [0]; epoch_zero.preOutcome = [1500]; epoch_zero.postOutcome =
 epoch_labels = fieldnames(epoch);
 
 fano = struct();
-for neuron_i = 1:size(bf_datasheet_timingExp,1)
+for neuron_i = 1:size(bf_data,1)
     
     for epoch_i = 1:length(epoch_labels)
         
-        fano_windowed = get_fano_window(bf_data_timingTask.rasters{neuron_i},...
+        
+        fano = get_fano_window(bf_data_timingTask.rasters{neuron_i},...
             bf_data_timingTask.trials{neuron_i},...
             epoch.(epoch_labels{epoch_i}) + epoch_zero.(epoch_labels{epoch_i})); % @ moment, centers on 0
 
-        test_prob75(neuron_i,epoch_i) = fano_windowed.window.p75s_25l_short;
-        test_prob50(neuron_i,epoch_i) = fano_windowed.window.p50s_50l_short;
-        test_prob25(neuron_i,epoch_i) = fano_windowed.window.p25s_75l_short;
-
+        
+        test_prob100(neuron_i,epoch_i) = fano(neuron_i).raw.;
+        test_prob75(neuron_i,epoch_i) = fano(neuron_i).raw.prob75;
+        test_prob50(neuron_i,epoch_i) = fano(neuron_i).raw.prob50;
+        test_prob25(neuron_i,epoch_i) = fano(neuron_i).raw.prob25;
+        test_prob0(neuron_i,epoch_i) = fano(neuron_i).raw.prob0;
     end
     
 end
-
-
-figure('Renderer', 'painters', 'Position', [100 100 800 800])
-subplot(1,1,1)
-% Initialize data points
-D1 = nanmean(test_prob75);
-D2 = nanmean(test_prob50);
-D3 = nanmean(test_prob25);
-P = [D1; D2; D3];
-
-AxesPrecision = 0;
-
-% Spider plot
-spider_plot(P,...
-    'AxesLabels', {'Fixation', 'Pre-CS', 'Post-CS', 'Mid', 'Pre-outcome', 'Post-outcome'},...
-    'AxesLimits', [0, 0, 0, 0, 0, 0; 4, 4, 4, 4, 4, 4],... % [min axes limits; max axes limits]
-    'AxesPrecision', [AxesPrecision, AxesPrecision, AxesPrecision, AxesPrecision, AxesPrecision, AxesPrecision]);
-
-My_LGD = legend({'75%','50%','25%'}, 'Location', 'SouthOutside','Orientation','Horizontal');
-My_LGD.NumColumns = 3;
-
-title('Ramping Neurons (Timing Task)')
 
 
 
