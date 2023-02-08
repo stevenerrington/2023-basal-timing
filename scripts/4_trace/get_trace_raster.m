@@ -27,7 +27,7 @@ event_zero=6001;
 % % ///////////////////////////////////////////// %
 for trl_i = 1:n_trls
     % Find time of spikes relevant to cue onset
-    spk = PDS(1).sptimes{trl_i}(PDS.spikes{trl_i} == 65535)-PDS(1).timetargeton(trl_i);
+    spk = PDS(1).sptimes{trl_i}-PDS(1).timetargeton(trl_i);
     % Change timing to ms, rather than sec
     spk = (spk*1000)+event_zero-1;
     % Make a spike time an integer
@@ -35,6 +35,7 @@ for trl_i = 1:n_trls
     
     % Clean any spike times that occur too late
     spk = spk(find(spk<event_zero*2));
+    spk = spk(find(spk>0));
     
     % Convert timings into a 0/1 logical raster array
     temp(1:event_zero*2) = 0;
@@ -54,30 +55,7 @@ SDFFREE = SDFFREE(:,event_zero+params.sdf.window(1):event_zero+params.sdf.window
 
 %% Clean rasters (reward artifact)
 if params.raster.cleanFlag == 1
-    % % Define periods of interest
-    %   For uncertain trials (25, 50, 75% probability)
-    time_win_contam_a = [7500-45 7500+15];
-    time_win_clean_a = [7500-45 7500+15];
-    
-    %   For uncertain trials (25, 50, 75% probability)
-    time_win_contam_b = [7500-15 7500+15];
-    time_win_clean_b = [7500-15-30 7500-15];
-    
-    % % Define trials (reward artifact removal)
-    cleanreward75n = intersect(trials.prob75,ndeliv); cleanreward75 = intersect(trials.prob75,deliv);
-    cleanreward50n = intersect(trials.prob50,ndeliv); cleanreward50 = intersect(trials.prob50,deliv);
-    cleanreward25n = intersect(trials.prob25,ndeliv); cleanreward25 = intersect(trials.prob25,deliv);
-    
-    % % Clean trials (reward artifact removal)
-    Rasters = clean_spk_artifact(Rasters,cleanreward75n,cleanreward75,time_win_contam_a,time_win_clean_a);
-    Rasters = clean_spk_artifact(Rasters,cleanreward50n,cleanreward50,time_win_contam_a,time_win_clean_a);
-    Rasters = clean_spk_artifact(Rasters,cleanreward25n,cleanreward25,time_win_contam_a,time_win_clean_a);
-    Rasters = clean_spk_artifact(Rasters,trials.prob100,trials.prob100,time_win_contam_b,time_win_clean_b);
-    Rasters = clean_spk_artifact(Rasters,trials.a100,trials.a100,time_win_contam_b,time_win_clean_b);
-    Rasters = clean_spk_artifact(Rasters,trials.a75,trials.a75,time_win_contam_b,time_win_clean_b);
-    Rasters = clean_spk_artifact(Rasters,trials.a50,trials.a50,time_win_contam_b,time_win_clean_b);
-    Rasters = clean_spk_artifact(Rasters,trials.a25,trials.a25,time_win_contam_b,time_win_clean_b);
-    
+    fprintf('! Raster cleaning code required. \n')
 end
 % % Cut raster to period of interest
 Rasters = Rasters(:,event_zero-5000:event_zero+5000);
