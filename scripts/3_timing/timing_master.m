@@ -1,5 +1,4 @@
 % Working from DataANALYSIS_timingProcedure
-clear all; clc
 
 %% Curation: generate a datamap
 % > INSERT DESCRIPTION HERE
@@ -122,15 +121,13 @@ for neuron_i = 1:size(bf_datasheet_timingExp,1)
     
     figure(neuron_i);
     subplot(2,1,1); hold on
-    plot(-5000:5000,nanmean(bf_data_timingTask.sdf{neuron_i}(bf_data_timingTask.trials{neuron_i}.p75s_25l_short,:)))
-    plot(-5000:5000,nanmean(bf_data_timingTask.sdf{neuron_i}(bf_data_timingTask.trials{neuron_i}.p50s_50l_short,:)))
-    plot(-5000:5000,nanmean(bf_data_timingTask.sdf{neuron_i}(bf_data_timingTask.trials{neuron_i}.p25s_75l_short,:)))
+    plot(-5000:5000,nanmean(bf_data_timingTask.sdf{neuron_i}(bf_data_timingTask.trials{neuron_i}.fractal6201_d,:)))
+    plot(-5000:5000,nanmean(bf_data_timingTask.sdf{neuron_i}(bf_data_timingTask.trials{neuron_i}.fractal6201_nd,:)))
     xlim([-200 2000]); vline(1500,'k'); vline(0, 'k'); 
         
     subplot(2,1,2); hold on
-    plot(fano(neuron_i).time,fano(neuron_i).raw.p75s_25l_short)
-    plot(fano(neuron_i).time,fano(neuron_i).raw.p50s_50l_short)
-    plot(fano(neuron_i).time,fano(neuron_i).raw.p25s_75l_short)
+    plot(fano(neuron_i).time,fano(neuron_i).raw.fractal6201_d)
+    plot(fano(neuron_i).time,fano(neuron_i).raw.fractal6201_nd)
     xlim([-200 2000]); ylim([0 4]); hline(1,'k'), vline(1500, 'k'); vline(0,'k');
     
 end
