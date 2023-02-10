@@ -11,7 +11,7 @@ params.raster.cleanFlag = 0;
 
 % % Fano factor
 params.fano.bin_size = 100; % Bin size for Fano Factor analysis (get_fano)
-params.fano.smooth_bin = 20;
+params.fano.smooth_bin = 100;
 
 % % Statistics
 params.stats.n_perms = 100; % Number of permutations for permutation tests (NumberofPermutations)

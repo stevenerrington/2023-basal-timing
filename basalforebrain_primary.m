@@ -18,6 +18,10 @@ params = get_params;
 
 pavlovian_master
 
+% Figures:
+plot_ramping_exampleNeuron
+plot_ramping_population % < NEEDS DOING
+
 %% Analysis: Timing task data
 % > INSERT DESCRIPTION HERE
 

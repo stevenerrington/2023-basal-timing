@@ -14,7 +14,7 @@ joint_datastruct = [nih_datastruct.ProbAmtDataStruct wustl_datastruct.ProbAmtDat
 [~,~,nih_neuronsheet] = xlsread(fullfile(dirs.root,'docs','septumprobamt.xls'));
 
 % Create datasheet
-clear bf_data_CSsheet_CS % clear dataframe variable to stop contamination
+clear bf_data_CSsheet % clear dataframe variable to stop contamination
  
 % For each identified datafile
 for ii = 1:size(joint_datastruct,2)
@@ -61,7 +61,7 @@ for ii = 1:size(joint_datastruct,2)
     end
     
     % Save variables to a row in the datatable
-    bf_data_CSsheet_CS(ii,:) = table(file, monkey, date, ap_loc, ml_loc, depth, area, site, dir);
+    bf_data_CSsheet(ii,:) = table(file, monkey, date, ap_loc, ml_loc, depth, area, site, dir);
     
 end
 
@@ -79,19 +79,19 @@ bf_data_CS = table();
 
 % For each identified neuron meeting the criteria, we will loop through,
 % load the experimental data file, and extract the event aligned raster.
-for ii = 1:size(bf_data_CSsheet_CS,1)
+for ii = 1:size(bf_data_CSsheet,1)
     
     % Clear variables, console, and figures
     clear REXPDS trials Rasters SDFcs_n fano; clc; close all;
     
-    filename = bf_data_CSsheet_CS.file{ii};
-    fprintf('Extracting data from neuron %i of %i   |  %s   \n',ii,size(bf_data_CSsheet_CS,1), filename)
+    filename = bf_data_CSsheet.file{ii};
+    fprintf('Extracting data from neuron %i of %i   |  %s   \n',ii,size(bf_data_CSsheet,1), filename)
     
-    switch bf_data_CSsheet_CS.site{ii}
+    switch bf_data_CSsheet.site{ii}
         case 'nih' % NIH data
             
             % Load the data (REX structure)
-            REX = mrdr('-a', '-d', fullfile(bf_data_CSsheet_CS.dir{ii},bf_data_CSsheet_CS.file{ii}));
+            REX = mrdr('-a', '-d', fullfile(bf_data_CSsheet.dir{ii},bf_data_CSsheet.file{ii}));
             
             % Get trial indices
             trials = get_rex_trials(REX);
@@ -104,7 +104,7 @@ for ii = 1:size(bf_data_CSsheet_CS,1)
         case 'wustl' % WUSTL data
             
             % Load the data (PDS structure)
-            load(fullfile(bf_data_CSsheet_CS.dir{ii},bf_data_CSsheet_CS.file{ii}),'PDS');
+            load(fullfile(bf_data_CSsheet.dir{ii},bf_data_CSsheet.file{ii}),'PDS');
             
             % Get trial indices
             trials = get_trials(PDS);
@@ -130,14 +130,14 @@ load(fullfile(dirs.root,'data','cluster_labels.mat'))
 category_label = {'Phasic','Ramping'};
 
 % For each neuron
-for neuron_i = 1:size(bf_data_CSsheet_CS)
+for neuron_i = 1:size(bf_data_CSsheet)
 
-    file = bf_data_CSsheet_CS.file{neuron_i};
-    bf_data_CSsheet_CS.cluster_id(neuron_i) = ...
+    file = bf_data_CSsheet.file{neuron_i};
+    bf_data_CSsheet.cluster_id(neuron_i) = ...
         cluster_labels.cluster(strcmp(cluster_labels.file, file));
     
-    bf_data_CSsheet_CS.cluster_label{neuron_i} = ...
-        category_label{bf_data_CSsheet_CS.cluster_id(neuron_i)};
+    bf_data_CSsheet.cluster_label{neuron_i} = ...
+        category_label{bf_data_CSsheet.cluster_id(neuron_i)};
     
 end
 
@@ -145,10 +145,10 @@ end
 
 params.fano.bin_size = 25;
 
-parfor neuron_i = 1:size(bf_data_CSsheet_CS,1)
+parfor neuron_i = 1:size(bf_data_CSsheet,1)
     
     fprintf('Calculating Fano Factor for neuron %i of %i   |  %s   \n',...
-        neuron_i,size(bf_data_CSsheet_CS,1), bf_data_CS.filename{neuron_i})
+        neuron_i,size(bf_data_CSsheet,1), bf_data_CS.filename{neuron_i})
 
     % Calculate Fano Factor
     fano(neuron_i) = get_fano(bf_data_CS.rasters{neuron_i},...
@@ -158,7 +158,7 @@ end
 
 bf_data_CS.fano = fano'; clear fano
 
-roughplot_fanofactor_sdf % < Generate a rough plot of SDF and FF x time
+% roughplot_fanofactor_sdf % < Generate a rough plot of SDF and FF x time
 
 %% Analysis: epoched Fano Factor
 % In progress - 1539, Feb 1st
@@ -176,7 +176,7 @@ for neuron_i = 1:size(bf_data_CS,1)
     
     for epoch_i = 1:length(epoch_labels)
         
-        cluster_id = bf_data_CSsheet_CS.cluster_id(neuron_i);
+        cluster_id = bf_data_CSsheet.cluster_id(neuron_i);
         
         fano = get_fano_window(bf_data_CS.rasters{neuron_i},...
             bf_data_CS.trials{neuron_i},...
