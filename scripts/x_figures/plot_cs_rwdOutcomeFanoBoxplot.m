@@ -2,7 +2,7 @@
 %% Analysis: epoched Fano Factor
 % In progress - 1539, Feb 1st
 clear epoch
-epoch.postOutcome = [0:200];
+epoch.postOutcome = [0 200];
 epoch_zero.postOutcome = [1500 2500];
 
 clear fano_prob*
@@ -39,15 +39,22 @@ cluster_label = [fano_rwd_class; fano_rwd_class];
 
 outcome_rwd_fano(1,1)= gramm('x',condition_label,'y',figure_data,'color',condition_label,...
     'subset',strcmp(cluster_label,'Ramping'));
-outcome_rwd_fano(1,1).stat_boxplot();
-outcome_rwd_fano(1,1).geom_jitter();
+outcome_rwd_fano(1,1).stat_summary('geom',{'bar','black_errorbar'},'width',1);
+outcome_rwd_fano(1,1).geom_jitter('alpha',0.2);
 outcome_rwd_fano(1,1).no_legend();
-outcome_rwd_fano(1,1).facet_grid([],site_label);
+outcome_rwd_fano(1,1).facet_grid([],[]);
 outcome_rwd_fano(1,1).geom_hline('yintercept',1);
 % stoppingBoxplot_Figure(1,1).axe_property('YLim',[0.08 0.16]);
 
 % Figure parameters & settings
 outcome_rwd_fano.set_names('y','');
 
-figure('Position',[100 100 500 350]);
+outcome_rwd_fano_out = figure('Renderer', 'painters', 'Position', [100 100 200 200]);
 outcome_rwd_fano.draw();
+
+
+filename = fullfile(dirs.root,'results','bf_ramping_outcome_fanocomp.pdf');
+set(outcome_rwd_fano_out,'PaperSize',[20 10]); %set the paper size to what you want
+print(outcome_rwd_fano_out,filename,'-dpdf') % then print it
+close(outcome_rwd_fano_out)
+

@@ -41,60 +41,60 @@ end
 AxesPrecision = 0;
 
 % CS (NIH) data:
-fano_100_nih = nanmean(fano_prob100(bf_data_CSsheet.cluster_id == 2  & strcmp(bf_data_CSsheet.site,'nih'),:));
-fano_75_nih = nanmean(fano_prob75(bf_data_CSsheet.cluster_id == 2 & strcmp(bf_data_CSsheet.site,'nih'),:));
-fano_50_nih = nanmean(fano_prob50(bf_data_CSsheet.cluster_id == 2 & strcmp(bf_data_CSsheet.site,'nih'),:));
-fano_25_nih = nanmean(fano_prob25(bf_data_CSsheet.cluster_id == 2 & strcmp(bf_data_CSsheet.site,'nih'),:));
-fano_0_nih = nanmean(fano_prob0(bf_data_CSsheet.cluster_id == 2 & strcmp(bf_data_CSsheet.site,'nih'),:));
-fano_all_nih = [fano_100_nih; fano_75_nih; fano_50_nih; fano_25_nih; fano_0_nih];
+fano_100_ramping = nanmean(fano_prob100(bf_data_CSsheet.cluster_id == 2,:));
+fano_75_ramping = nanmean(fano_prob75(bf_data_CSsheet.cluster_id == 2,:));
+fano_50_ramping = nanmean(fano_prob50(bf_data_CSsheet.cluster_id == 2,:));
+fano_25_ramping = nanmean(fano_prob25(bf_data_CSsheet.cluster_id == 2,:));
+fano_0_ramping = nanmean(fano_prob0(bf_data_CSsheet.cluster_id == 2,:));
+fano_all_ramping = [fano_100_ramping; fano_75_ramping; fano_50_ramping; fano_25_ramping; fano_0_ramping];
 
 % CS (WUSTL) data:
-fano_100_wustl_cs = nanmean(fano_prob100(bf_data_CSsheet.cluster_id == 2 & strcmp(bf_data_CSsheet.site,'wustl'),:));
-fano_75_wustl_cs = nanmean(fano_prob75(bf_data_CSsheet.cluster_id == 2 & strcmp(bf_data_CSsheet.site,'wustl'),:));
-fano_50_wustl_cs = nanmean(fano_prob50(bf_data_CSsheet.cluster_id == 2 & strcmp(bf_data_CSsheet.site,'wustl'),:));
-fano_25_wustl_cs = nanmean(fano_prob25(bf_data_CSsheet.cluster_id == 2 & strcmp(bf_data_CSsheet.site,'wustl'),:));
-fano_0_wustl_cs = nanmean(fano_prob0(bf_data_CSsheet.cluster_id == 2 & strcmp(bf_data_CSsheet.site,'wustl'),:));
-fano_all_wustl = [fano_100_wustl_cs; fano_75_wustl_cs; fano_50_wustl_cs; fano_25_wustl_cs; fano_0_wustl_cs];
+fano_100_phasic = nanmean(fano_prob100(bf_data_CSsheet.cluster_id == 1,:));
+fano_75_phasic = nanmean(fano_prob75(bf_data_CSsheet.cluster_id == 1,:));
+fano_50_phasic = nanmean(fano_prob50(bf_data_CSsheet.cluster_id == 1 ,:));
+fano_25_phasic = nanmean(fano_prob25(bf_data_CSsheet.cluster_id == 1,:));
+fano_0_phasic = nanmean(fano_prob0(bf_data_CSsheet.cluster_id == 1,:));
+fano_all_phasic = [fano_100_phasic; fano_75_phasic; fano_50_phasic; fano_25_phasic; fano_0_phasic];
 
 
 %% Generate figure space
 spider_fano_cstask_figure = figure('Renderer', 'painters', 'Position', [100 100 800 800]);
 
-% Anteromedial recordings (NIH)
+% Ramping neurons
 % Spider plot
 subplot(2,2,1)
-spider_plot(fano_all_nih,...
+spider_plot(fano_all_ramping,...
     'AxesLabels', epoch_labels,...
     'AxesLimits', [repmat(0,1,length(epoch_labels)); repmat(4,1,length(epoch_labels))],... % [min axes limits; max axes limits]
     'AxesPrecision', repmat(AxesPrecision,1,length(epoch_labels)));
 spider_plot_legend = legend({'100%','75%','50%','25%','0%'}, 'Location', 'SouthOutside','Orientation','Horizontal');
 spider_plot_legend.NumColumns = 3;
 
-title('Anteromedial BF')
+title('Ramping neurons')
 
 % Bar plot
 subplot(2,2,3)
-bar_plot_fano_nih = [fano_100_nih; fano_75_nih; fano_50_nih; fano_25_nih; fano_0_nih]';
-bar(bar_plot_fano_nih)
+bar_plot_fano_ramping = [fano_100_ramping; fano_75_ramping; fano_50_ramping; fano_25_ramping; fano_0_ramping]';
+bar(bar_plot_fano_ramping)
 set(gca,'xticklabel',epoch_labels); set(gca,'TickDir','out');
 hline(1, 'k'); ylim([0 4])
 spider_plot_legend = legend({'100%','75%','50%','25%','0%'}, 'Location', 'SouthOutside','Orientation','Horizontal');
 spider_plot_legend.NumColumns = 3;
 xtickangle(45)
 
-% Posterolateral recordings (NIH)
+% Phasic Neurons
 % Spider plot
 subplot(2,2,2)
-spider_plot(fano_all_wustl,...
+spider_plot(fano_all_phasic,...
     'AxesLabels', epoch_labels,...
     'AxesLimits', [repmat(0,1,length(epoch_labels)); repmat(4,1,length(epoch_labels))],... % [min axes limits; max axes limits]
     'AxesPrecision', repmat(AxesPrecision,1,length(epoch_labels)));
-title('Posterolateral BF')
+title('Phasic neurons')
 spider_plot_legend = legend({'100%','75%','50%','25%','0%'}, 'Location', 'SouthOutside','Orientation','Horizontal');
 spider_plot_legend.NumColumns = 3;
 
 % Bar plot
-bar_plot_fano_wustl = [fano_100_wustl_cs; fano_75_wustl_cs; fano_50_wustl_cs; fano_25_wustl_cs; fano_0_wustl_cs]';
+bar_plot_fano_wustl = [fano_100_phasic; fano_75_phasic; fano_50_phasic; fano_25_phasic; fano_0_phasic]';
 subplot(2,2,4)
 bar(bar_plot_fano_wustl)
 set(gca,'xticklabel',epoch_labels); set(gca,'TickDir','out');

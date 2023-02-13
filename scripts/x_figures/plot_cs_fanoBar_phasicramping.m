@@ -2,7 +2,7 @@
 %% Analysis: epoched Fano Factor
 % In progress - 1539, Feb 1st
 clear epoch
-epoch.fano_window = {[50 250],[-250 50]};
+epoch.fano_window = {[0 500],[-500 0]};
 epoch.alignZero = {[0 0], [1500 2500]};
 
 clear fano_prob*
@@ -57,7 +57,7 @@ site_label = fano_site;
 cluster_label = fano_class;
 
 epoch_fano_class(1,1)= gramm('x',condition_label,'y',fano_x,'color',condition_label);
-epoch_fano_class(1,1).stat_summary('geom',{'bar','black_errorbar'});
+epoch_fano_class(1,1).stat_summary('geom',{'bar','black_errorbar'},'width',3);
 epoch_fano_class(1,1).geom_jitter('alpha',0.2);
 epoch_fano_class(1,1).no_legend();
 epoch_fano_class(1,1).facet_grid(fano_epoch,cluster_label);
