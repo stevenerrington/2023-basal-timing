@@ -3,11 +3,11 @@
 figure('Renderer', 'painters', 'Position', [100 100 800 800])
 subplot(2,2,1)
 % Initialize data points
-D1 = nanmean(test_prob100(bf_datasheet.cluster_id == 2  & strcmp(bf_datasheet.site,'nih'),:));
-D2 = nanmean(test_prob75(bf_datasheet.cluster_id == 2 & strcmp(bf_datasheet.site,'nih'),:));
-D3 = nanmean(test_prob50(bf_datasheet.cluster_id == 2 & strcmp(bf_datasheet.site,'nih'),:));
-D4 = nanmean(test_prob25(bf_datasheet.cluster_id == 2 & strcmp(bf_datasheet.site,'nih'),:));
-D5 = nanmean(test_prob0(bf_datasheet.cluster_id == 2 & strcmp(bf_datasheet.site,'nih'),:));
+D1 = nanmean(test_prob100(bf_data_CSsheet.cluster_id == 2  & strcmp(bf_data_CSsheet.site,'nih'),:));
+D2 = nanmean(test_prob75(bf_data_CSsheet.cluster_id == 2 & strcmp(bf_data_CSsheet.site,'nih'),:));
+D3 = nanmean(test_prob50(bf_data_CSsheet.cluster_id == 2 & strcmp(bf_data_CSsheet.site,'nih'),:));
+D4 = nanmean(test_prob25(bf_data_CSsheet.cluster_id == 2 & strcmp(bf_data_CSsheet.site,'nih'),:));
+D5 = nanmean(test_prob0(bf_data_CSsheet.cluster_id == 2 & strcmp(bf_data_CSsheet.site,'nih'),:));
 P = [D1; D2; D3; D4; D5];
 
 AxesPrecision = 0;
@@ -36,11 +36,11 @@ xtickangle(45)
 
 subplot(2,2,2)
 % Initialize data points
-D1 = nanmean(test_prob100(bf_datasheet.cluster_id == 2 & strcmp(bf_datasheet.site,'wustl'),:));
-D2 = nanmean(test_prob75(bf_datasheet.cluster_id == 2 & strcmp(bf_datasheet.site,'wustl'),:));
-D3 = nanmean(test_prob50(bf_datasheet.cluster_id == 2 & strcmp(bf_datasheet.site,'wustl'),:));
-D4 = nanmean(test_prob25(bf_datasheet.cluster_id == 2 & strcmp(bf_datasheet.site,'wustl'),:));
-D5 = nanmean(test_prob0(bf_datasheet.cluster_id == 2 & strcmp(bf_datasheet.site,'wustl'),:));
+D1 = nanmean(test_prob100(bf_data_CSsheet.cluster_id == 2 & strcmp(bf_data_CSsheet.site,'wustl'),:));
+D2 = nanmean(test_prob75(bf_data_CSsheet.cluster_id == 2 & strcmp(bf_data_CSsheet.site,'wustl'),:));
+D3 = nanmean(test_prob50(bf_data_CSsheet.cluster_id == 2 & strcmp(bf_data_CSsheet.site,'wustl'),:));
+D4 = nanmean(test_prob25(bf_data_CSsheet.cluster_id == 2 & strcmp(bf_data_CSsheet.site,'wustl'),:));
+D5 = nanmean(test_prob0(bf_data_CSsheet.cluster_id == 2 & strcmp(bf_data_CSsheet.site,'wustl'),:));
 P = [D1; D2; D3; D4; D5];
 
 AxesPrecision = 0;
@@ -72,7 +72,7 @@ xtickangle(45)
 %%
 
 for cluster_i = 1:2
-    cluster_neurons = []; cluster_neurons = find(bf_datasheet.cluster_id == cluster_i);
+    cluster_neurons = []; cluster_neurons = find(bf_data_CSsheet.cluster_id == cluster_i);
     
     for neuron_i = 1:length(cluster_neurons)
         neuron_j = cluster_neurons(neuron_i);

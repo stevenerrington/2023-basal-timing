@@ -102,8 +102,8 @@ for ii = 1:size(bf_datasheet_timingExp,1)
 
 end
 
-%%
-params.fano.bin_size = 25;
+%% Analysis: Extract fano factor
+
 clear fano
 parfor neuron_i = 1:size(bf_datasheet_timingExp,1)
     
@@ -116,73 +116,24 @@ parfor neuron_i = 1:size(bf_datasheet_timingExp,1)
 
 end
 
+bf_data_timingTask.fano = fano';
+clear fano
 
-for neuron_i = 1:size(bf_datasheet_timingExp,1)
-    
-    figure(neuron_i);
-    subplot(2,1,1); hold on
-    plot(-5000:5000,nanmean(bf_data_timingTask.sdf{neuron_i}(bf_data_timingTask.trials{neuron_i}.fractal6201_d,:)))
-    plot(-5000:5000,nanmean(bf_data_timingTask.sdf{neuron_i}(bf_data_timingTask.trials{neuron_i}.fractal6201_nd,:)))
-    xlim([-200 2000]); vline(1500,'k'); vline(0, 'k'); 
-        
-    subplot(2,1,2); hold on
-    plot(fano(neuron_i).time,fano(neuron_i).raw.fractal6201_d)
-    plot(fano(neuron_i).time,fano(neuron_i).raw.fractal6201_nd)
-    xlim([-200 2000]); ylim([0 4]); hline(1,'k'), vline(1500, 'k'); vline(0,'k');
-    
-end
-
-
-%% Analysis: epoched Fano Factor
-% In progress - 1539, Feb 1st
-clear epoch
-epoch.fixation = [0 200]; epoch.preCS = [-200 0]; epoch.postCS = [0 200];
-epoch.midCS = [650 850]; epoch.preOutcome = [-200 0]; epoch.postOutcome = [0 200];
-
-epoch_zero.fixation = [-1000]; epoch_zero.preCS = [0]; epoch_zero.postCS = [0];
-epoch_zero.midCS = [0]; epoch_zero.preOutcome = [1500]; epoch_zero.postOutcome = [1500];
-
-epoch_labels = fieldnames(epoch);
-
-fano = struct();
-for neuron_i = 1:size(bf_datasheet_timingExp,1)
-    
-    for epoch_i = 1:length(epoch_labels)
-        
-        fano_windowed = get_fano_window(bf_data_timingTask.rasters{neuron_i},...
-            bf_data_timingTask.trials{neuron_i},...
-            epoch.(epoch_labels{epoch_i}) + epoch_zero.(epoch_labels{epoch_i})); % @ moment, centers on 0
-
-        test_prob75(neuron_i,epoch_i) = fano_windowed.window.p75s_25l_short;
-        test_prob50(neuron_i,epoch_i) = fano_windowed.window.p50s_50l_short;
-        test_prob25(neuron_i,epoch_i) = fano_windowed.window.p25s_75l_short;
-
-    end
-    
-end
-
-
-figure('Renderer', 'painters', 'Position', [100 100 800 800])
-subplot(1,1,1)
-% Initialize data points
-D1 = nanmean(test_prob75);
-D2 = nanmean(test_prob50);
-D3 = nanmean(test_prob25);
-P = [D1; D2; D3];
-
-AxesPrecision = 0;
-
-% Spider plot
-spider_plot(P,...
-    'AxesLabels', {'Fixation', 'Pre-CS', 'Post-CS', 'Mid', 'Pre-outcome', 'Post-outcome'},...
-    'AxesLimits', [0, 0, 0, 0, 0, 0; 4, 4, 4, 4, 4, 4],... % [min axes limits; max axes limits]
-    'AxesPrecision', [AxesPrecision, AxesPrecision, AxesPrecision, AxesPrecision, AxesPrecision, AxesPrecision]);
-
-My_LGD = legend({'75%','50%','25%'}, 'Location', 'SouthOutside','Orientation','Horizontal');
-My_LGD.NumColumns = 3;
-
-title('Ramping Neurons (Timing Task)')
-
-
-
+%% Cuttings
+% 
+% 
+% for neuron_i = 1:size(bf_datasheet_timingExp,1)
+%     
+%     figure(neuron_i);
+%     subplot(2,1,1); hold on
+%     plot(-5000:5000,nanmean(bf_data_timingTask.sdf{neuron_i}(bf_data_timingTask.trials{neuron_i}.fractal6201_d,:)))
+%     plot(-5000:5000,nanmean(bf_data_timingTask.sdf{neuron_i}(bf_data_timingTask.trials{neuron_i}.fractal6201_nd,:)))
+%     xlim([-200 2000]); vline(1500,'k'); vline(0, 'k'); 
+%         
+%     subplot(2,1,2); hold on
+%     plot(fano(neuron_i).time,fano(neuron_i).raw.fractal6201_d)
+%     plot(fano(neuron_i).time,fano(neuron_i).raw.fractal6201_nd)
+%     xlim([-200 2000]); ylim([0 4]); hline(1,'k'), vline(1500, 'k'); vline(0,'k');
+%     
+% end
 

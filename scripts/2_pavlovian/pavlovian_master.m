@@ -143,8 +143,6 @@ end
 
 %% Analysis: Calculate the fano factor for each trial condition
 
-params.fano.bin_size = 25;
-
 parfor neuron_i = 1:size(bf_data_CSsheet,1)
     
     fprintf('Calculating Fano Factor for neuron %i of %i   |  %s   \n',...
@@ -157,37 +155,3 @@ parfor neuron_i = 1:size(bf_data_CSsheet,1)
 end
 
 bf_data_CS.fano = fano'; clear fano
-
-% roughplot_fanofactor_sdf % < Generate a rough plot of SDF and FF x time
-
-%% Analysis: epoched Fano Factor
-% In progress - 1539, Feb 1st
-clear epoch
-epoch.fixation = [0 200]; epoch.preCS = [-200 0]; epoch.postCS = [0 200];
-epoch.midCS = [650 850]; epoch.preOutcome = [-200 0]; epoch.postOutcome = [0 200];
-
-epoch_zero.fixation = [-1000 -1000]; epoch_zero.preCS = [0 0]; epoch_zero.postCS = [0 0];
-epoch_zero.midCS = [0 0]; epoch_zero.preOutcome = [1500 2500]; epoch_zero.postOutcome = [1500 2500];
-
-epoch_labels = fieldnames(epoch);
-
-fano = struct();
-for neuron_i = 1:size(bf_data_CS,1)
-    
-    for epoch_i = 1:length(epoch_labels)
-        
-        cluster_id = bf_data_CSsheet.cluster_id(neuron_i);
-        
-        fano = get_fano_window(bf_data_CS.rasters{neuron_i},...
-            bf_data_CS.trials{neuron_i},...
-            epoch.(epoch_labels{epoch_i}) + epoch_zero.(epoch_labels{epoch_i})(cluster_id)); % @ moment, centers on 0
-
-        
-        test_prob100(neuron_i,epoch_i) = fano.window.prob100;
-        test_prob75(neuron_i,epoch_i) = fano.window.prob75;
-        test_prob50(neuron_i,epoch_i) = fano.window.prob50;
-        test_prob25(neuron_i,epoch_i) = fano.window.prob25;
-        test_prob0(neuron_i,epoch_i) = fano.window.prob0;
-    end
-    
-end

@@ -1,10 +1,10 @@
 % Input variables
 data_in = []; data_in = bf_data_CS;
-example_neuron_i = 16;
+example_neuron_i = 47; %49
 plot_trial_types = {'prob0','prob25','prob50','prob75','prob100'};
 
-xlim_input = [-500 1500];
-ylim_input = [0 50];
+xlim_input = [-500 2500];
+ylim_input = [0 100];
 
 % Initialize plot data structures
 plot_sdf_data = [];
@@ -47,6 +47,7 @@ figure_plot(1,1).axe_property('XLim',xlim_input);
 figure_plot(1,1).set_names('x','Time from CS Onset (ms)','y','Trial');
 figure_plot(1,1).set_color_options('map',color_scheme);
 figure_plot(1,1).geom_vline('xintercept',0,'style','k-');
+figure_plot(1,1).geom_vline('xintercept',1500,'style','k-');
 
 % Spike density function
 figure_plot(2,1)=gramm('x',plot_time,'y',plot_sdf_data,'color',plot_label);
@@ -55,15 +56,24 @@ figure_plot(2,1).axe_property('XLim',xlim_input,'YLim',ylim_input);
 figure_plot(2,1).set_names('x','Time from CS Onset (ms)','y','Firing rate (spk/sec)');
 figure_plot(2,1).set_color_options('map',color_scheme);
 figure_plot(2,1).geom_vline('xintercept',0,'style','k-');
+figure_plot(2,1).geom_vline('xintercept',1500,'style','k-');
 
 % Fano factor
 figure_plot(3,1)=gramm('x',data_in.fano(example_neuron_i).time,'y',plot_fano_data,'color',plot_fano_label);
 figure_plot(3,1).geom_line();
-figure_plot(3,1).axe_property('XLim',xlim_input,'YLim',[0 4]);
+figure_plot(3,1).axe_property('XLim',xlim_input,'YLim',[0 10]);
 figure_plot(3,1).set_names('x','Time from CS Onset (ms)','y','Fano Factor');
 figure_plot(3,1).set_color_options('map',color_scheme);
 figure_plot(3,1).geom_vline('xintercept',0,'style','k-');
+figure_plot(3,1).geom_vline('xintercept',1500,'style','k-');
 figure_plot(3,1).geom_hline('yintercept',1,'style','k--');
 
-figure_plot_out = figure('Renderer', 'painters', 'Position', [100 100 400 700]);
+figure_plot_out = figure('Renderer', 'painters', 'Position', [100 100 550 700]);
 figure_plot.draw();
+
+%%
+% Once we're done with a page, save it and close it.
+filename = fullfile(dirs.root,'results','raster_sdf_fano_cstask_figure_phasic.pdf');
+set(figure_plot_out,'PaperSize',[20 10]); %set the paper size to what you want
+print(figure_plot_out,filename,'-dpdf') % then print it
+close(figure_plot_out)

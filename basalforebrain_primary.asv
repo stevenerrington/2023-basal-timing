@@ -4,6 +4,8 @@
 
 
 %% Setup workspace
+% > INSERT DESCRIPTION HERE
+
 % Clear workspace
 clear all; close all; clc; beep off; warning off;
 
@@ -11,22 +13,25 @@ clear all; close all; clc; beep off; warning off;
 dirs = get_dirs_bf('wustl');
 params = get_params;
 
-%% Analysis
-% Pavlovian task data
-pavlovian_master
-% > plots (1), (2), (3)
+%% Analysis: Pavlovian task data
+% > INSERT DESCRIPTION HERE
 
-% Timing task data
+pavlovian_master
+
+% Figures:
+plot_ramping_exampleNeuron
+
+
+
+%% Analysis: Timing task data
+% > INSERT DESCRIPTION HERE
+
 timing_master
-% Trace task data
+
+%% Analysis: Trace task data
+% > INSERT DESCRIPTION HERE
+
 trace_master
 
-%% Figures: 
-plot_cs_exampleNeuron_phasic  %(1)
-plot_cs_exampleNeuron_ramping %(2)
 
-plot_cs_fanoBar_phasicramping %(3)
-
-plot_cs_fanoSpider            %(3)
-plot_cs_rwdOutcomeFanoBoxplot %(4)
 

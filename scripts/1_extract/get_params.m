@@ -10,7 +10,7 @@ params.sdf.window = [-500 1000]; % [min max] window for spike density function
 params.raster.cleanFlag = 0;
 
 % % Fano factor
-params.fano.bin_size = 100; % Bin size for Fano Factor analysis (get_fano)
+params.fano.bin_size = 50; % Bin size for Fano Factor analysis (get_fano)
 params.fano.smooth_bin = 100;
 
 % % Statistics
