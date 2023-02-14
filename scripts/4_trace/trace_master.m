@@ -40,9 +40,8 @@ for neuron_i = 1:size(bf_datasheet_traceExp,1)
         'VariableNames',{'filename','trials','rasters','sdf'});
 end
 
-%%
+%% Analysis: calculate running fano factor
 
-params.fano.bin_size = 25;
 clear fano
 parfor neuron_i = 1:size(bf_datasheet_traceExp,1)
     
@@ -55,10 +54,13 @@ parfor neuron_i = 1:size(bf_datasheet_traceExp,1)
 
 end
 
+bf_data_traceExp.fano = fano';
+clear fano
+
+%% Figure: Generate example SDFs & Fano
 
 for neuron_i = 1:size(bf_datasheet_traceExp,1)
 
-    
     figure(neuron_i);
     subplot(2,1,1); hold on
     plot(-5000:5000,nanmean(bf_data_traceExp.sdf{neuron_i}(bf_data_traceExp.trials{neuron_i}.plot_test,:)))
