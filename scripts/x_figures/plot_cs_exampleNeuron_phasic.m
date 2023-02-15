@@ -40,6 +40,7 @@ end
 clear figure_plot
 color_scheme = cool(length(plot_trial_types));
 
+% Phasic neuron %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Raster plot
 figure_plot(1,1)=gramm('x',plot_spk_data,'color',plot_label);
 figure_plot(1,1).geom_raster();
@@ -67,6 +68,11 @@ figure_plot(3,1).set_color_options('map',color_scheme);
 figure_plot(3,1).geom_vline('xintercept',0,'style','k-');
 figure_plot(3,1).geom_vline('xintercept',1500,'style','k-');
 figure_plot(3,1).geom_hline('yintercept',1,'style','k--');
+
+% Ramping neuron
+
+
+
 
 figure_plot_out = figure('Renderer', 'painters', 'Position', [100 100 550 700]);
 figure_plot.draw();

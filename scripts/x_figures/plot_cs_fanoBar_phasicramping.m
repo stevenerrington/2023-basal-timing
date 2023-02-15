@@ -13,7 +13,7 @@ clear fano_x fano_condition fano_site fano_class
 
 for neuron_i = 1:size(bf_data_CS,1)
     
-    switch bf_data_CSsheet.site{neuron_i}
+    switch bf_datasheet_CS.site{neuron_i}
         case 'wustl'
             site_id = 2;
         case 'nih'
@@ -39,8 +39,8 @@ for neuron_i = 1:size(bf_data_CS,1)
             fano_x(count,1) = fano.window.(cond);
             fano_condition{count,1} = [int2str(cond_i) '_' cond];
             fano_epoch{count,1} = epoch_label;
-            fano_site{count,1} = bf_data_CSsheet.site{neuron_i};
-            fano_class{count,1} = bf_data_CSsheet.cluster_label{neuron_i};
+            fano_site{count,1} = bf_datasheet_CS.site{neuron_i};
+            fano_class{count,1} = bf_datasheet_CS.cluster_label{neuron_i};
         end
 
     end

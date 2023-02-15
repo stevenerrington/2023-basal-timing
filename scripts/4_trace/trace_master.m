@@ -67,7 +67,7 @@ for neuron_i = 1:size(bf_datasheet_traceExp,1)
     xlim([-200 2000]); vline(1500,'k'); vline(0, 'k'); 
         
     subplot(2,1,2); hold on
-    plot(fano(neuron_i).time,fano(neuron_i).raw.plot_test)
+    plot(bf_data_traceExp.fano(neuron_i).time,bf_data_traceExp.fano(neuron_i).raw.plot_test)
     xlim([-200 2000]); ylim([0 4]); hline(1,'k'), vline(1500, 'k'); vline(0,'k');
     
 end
