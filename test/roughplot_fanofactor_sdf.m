@@ -1,24 +1,25 @@
-for neuron_i = 1:size(bf_data_CS,1)
+
+
+for neuron_i = 1:size(striatum_data_CS,1)
     
     figure(neuron_i);
     subplot(2,1,1); hold on
-    plot(-5000:5000,nanmean(bf_data_CS.sdf{neuron_i}(bf_data_CS.trials{neuron_i}.prob0,:)))
-    plot(-5000:5000,nanmean(bf_data_CS.sdf{neuron_i}(bf_data_CS.trials{neuron_i}.prob25,:)))
-    plot(-5000:5000,nanmean(bf_data_CS.sdf{neuron_i}(bf_data_CS.trials{neuron_i}.prob50,:)))
-    plot(-5000:5000,nanmean(bf_data_CS.sdf{neuron_i}(bf_data_CS.trials{neuron_i}.prob75,:)))
-    plot(-5000:5000,nanmean(bf_data_CS.sdf{neuron_i}(bf_data_CS.trials{neuron_i}.prob100,:)))
+    plot(-5000:5000,nanmean(striatum_data_CS.sdf{neuron_i}(striatum_data_CS.trials{neuron_i}.prob0,:)))
+    plot(-5000:5000,nanmean(striatum_data_CS.sdf{neuron_i}(striatum_data_CS.trials{neuron_i}.prob25,:)))
+    plot(-5000:5000,nanmean(striatum_data_CS.sdf{neuron_i}(striatum_data_CS.trials{neuron_i}.prob50,:)))
+    plot(-5000:5000,nanmean(striatum_data_CS.sdf{neuron_i}(striatum_data_CS.trials{neuron_i}.prob75,:)))
+    plot(-5000:5000,nanmean(striatum_data_CS.sdf{neuron_i}(striatum_data_CS.trials{neuron_i}.prob100,:)))
     xlim([-1500 3000]); vline(-1000,'k'); vline(0, 'k'); 
-    
-    if strcmp(bf_data_CSsheet.site{neuron_i},'wustl'); vline(2500,'k'); else; vline(1500,'k'); end
+    vline(2500,'k'); 
     
     subplot(2,1,2); hold on
-    plot(bf_data_CS.fano(neuron_i).time,bf_data_CS.fano(neuron_i).raw.prob0)
-    plot(bf_data_CS.fano(neuron_i).time,bf_data_CS.fano(neuron_i).raw.prob25)
-    plot(bf_data_CS.fano(neuron_i).time,bf_data_CS.fano(neuron_i).raw.prob50)
-    plot(bf_data_CS.fano(neuron_i).time,bf_data_CS.fano(neuron_i).raw.prob75)
-    plot(bf_data_CS.fano(neuron_i).time,bf_data_CS.fano(neuron_i).raw.prob100)
+    plot(striatum_data_CS.fano(neuron_i).time,striatum_data_CS.fano(neuron_i).raw.prob0)
+    plot(striatum_data_CS.fano(neuron_i).time,striatum_data_CS.fano(neuron_i).raw.prob25)
+    plot(striatum_data_CS.fano(neuron_i).time,striatum_data_CS.fano(neuron_i).raw.prob50)
+    plot(striatum_data_CS.fano(neuron_i).time,striatum_data_CS.fano(neuron_i).raw.prob75)
+    plot(striatum_data_CS.fano(neuron_i).time,striatum_data_CS.fano(neuron_i).raw.prob100)
     xlim([-1500 3000]); ylim([0 4]); hline(1,'k'), vline(-1000, 'k'); vline(0,'k');
-    if strcmp(bf_data_CSsheet.site{neuron_i},'wustl'); vline(2500,'k'); else; vline(1500,'k'); end
+    vline(2500,'k');
     
 end
 
@@ -29,17 +30,17 @@ for neuron_i = 16
     
     figure(neuron_i);
     subplot(2,1,1); hold on
-    plot(-5000:5000,nanmean(bf_data_CS.sdf{neuron_i}(bf_data_CS.trials{neuron_i}.prob50d,:)))
-    plot(-5000:5000,nanmean(bf_data_CS.sdf{neuron_i}(bf_data_CS.trials{neuron_i}.prob50nd,:)))
+    plot(-5000:5000,nanmean(striatum_data_CS.sdf{neuron_i}(striatum_data_CS.trials{neuron_i}.prob50d,:)))
+    plot(-5000:5000,nanmean(striatum_data_CS.sdf{neuron_i}(striatum_data_CS.trials{neuron_i}.prob50nd,:)))
     xlim([-1500 3000]); vline(-1000,'k'); vline(0, 'k'); 
     
-    if strcmp(bf_data_CSsheet.site{neuron_i},'wustl'); vline(2500,'k'); else; vline(1500,'k'); end
+    vline(2500,'k');
     
     subplot(2,1,2); hold on
-    plot(bf_data_CS.fano(neuron_i).time,bf_data_CS.fano(neuron_i).smooth.prob50d)
-    plot(bf_data_CS.fano(neuron_i).time,bf_data_CS.fano(neuron_i).smooth.prob50nd)
+    plot(striatum_data_CS.fano(neuron_i).time,striatum_data_CS.fano(neuron_i).smooth.prob50d)
+    plot(striatum_data_CS.fano(neuron_i).time,striatum_data_CS.fano(neuron_i).smooth.prob50nd)
     xlim([-1500 3000]); ylim([0 4]); hline(1,'k'), vline(-1000, 'k'); vline(0,'k');
-    if strcmp(bf_data_CSsheet.site{neuron_i},'wustl'); vline(2500,'k'); else; vline(1500,'k'); end
+    vline(2500,'k'); 
     
 end
 
