@@ -3,27 +3,28 @@
 clear epoch
 epoch.CSonset = [0 200];
 epoch_zero.CSonset = [0];
+fano_timewindow = [0:500];
 
 clear fano_prob*
 
 input_data = [bf_data_CS(bf_datasheet_CS.cluster_id == 2,:); bf_data_timingTask; bf_data_traceExp];
 
+cs_trial = 'prob50'; timing_trial = 'p50s_50l_short'; trace_trial = 'timingcue_uncertain';
+
 for neuron_i = 1:size(input_data,1)
-    fano = struct();
-    
-    fano = get_fano_window(input_data.rasters{neuron_i},...
-        input_data.trials{neuron_i},...
-        epoch.CSonset + epoch_zero.CSonset); % @ moment, centers on 0
+
+    fano_continuous = [];
+    fano_continuous = find(ismember(input_data.fano(neuron_i).time,fano_timewindow));
     
     try
-        fano_cs_onset(neuron_i,1) =  fano.window.probAll;
+        fano_cs_onset(neuron_i,1) =  nanmean(input_data.fano(neuron_i).raw.(cs_trial)(fano_continuous));
         task_id{neuron_i,1} = '1_CS';
     catch
         try
-            fano_cs_onset(neuron_i,1) =  fano.window.fractal6105_1500;
+            fano_cs_onset(neuron_i,1) =  nanmean(input_data.fano(neuron_i).raw.(timing_trial)(fano_continuous));
             task_id{neuron_i,1} = '2_Timing';
         catch
-            fano_cs_onset(neuron_i,1) =  fano.window.plot_test;
+            fano_cs_onset(neuron_i,1) =  nanmean(input_data.fano(neuron_i).raw.(trace_trial)(fano_continuous));
             task_id{neuron_i,1} = '3_Trace';
         end
     end
@@ -42,12 +43,12 @@ test_figure(1,1).geom_jitter('alpha',0.2);
 test_figure(1,1).no_legend();
 test_figure(1,1).facet_grid([],[]);
 test_figure(1,1).geom_hline('yintercept',1);
-% stoppingBoxplot_Figure(1,1).axe_property('YLim',[0.08 0.16]);
+test_figure(1,1).axe_property('YLim',[0 2]);
 
 % Figure parameters & settings
 test_figure.set_names('y','');
 
-outcome_rwd_fano_out = figure('Renderer', 'painters', 'Position', [100 100 200 200]);
+outcome_rwd_fano_out = figure('Renderer', 'painters', 'Position', [100 100 200 350]);
 test_figure.draw();
 
 

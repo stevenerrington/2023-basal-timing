@@ -12,12 +12,12 @@ params = get_params;
 
 %% Analysis
 % Basal forebrain: >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-pavlovian_master % Pavlovian task data
-timing_master    % Timing task data
-trace_master     % Trace task data
+pavlovian_bf_master % Pavlovian task data
+timing_bf_master    % Timing task data
+trace_bf_master     % Trace task data
 
 % Striatum: >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-
+pavlovian_striatum_master
 
 %% Figures: 
 figure_primary
