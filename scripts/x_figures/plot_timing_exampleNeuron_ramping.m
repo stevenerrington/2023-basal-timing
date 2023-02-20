@@ -2,6 +2,7 @@
 data_in = []; data_in = bf_data_timingTask;
 example_neuron_i = 6;
 plot_trial_types = {'p25s_75l_short','p50s_50l_short','p75s_25l_short'};
+color_scheme = cool(5); color_scheme = color_scheme([2,3,4],:);
 
 xlim_input = [-500 2500];
 ylim_input = [0 60];
@@ -38,7 +39,6 @@ end
 
 %% Generate plot using gramm
 clear figure_plot
-color_scheme = cool(length(plot_trial_types));
 
 % Raster plot
 figure_plot(1,1)=gramm('x',plot_spk_data,'color',plot_label);
