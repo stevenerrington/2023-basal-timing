@@ -7,10 +7,9 @@ xlim_input = [-500 2500];
 ylim_input = [-10 10];
 
 % Initialize plot data structures
-plot_sdf_data = [];
-plot_fano_data = []; plot_fano_label = [];
-plot_category_label = [];
-plot_label = [];
+plot_sdf_data = []; plot_fano_data = []; plot_fano_label = [];
+plot_category_label = []; plot_label = [];
+
 plot_time = [-5000:5000];
 time_zero = abs(plot_time(1));
 color_scheme = cool(length(plot_trial_types));

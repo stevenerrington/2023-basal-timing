@@ -16,7 +16,7 @@ epoch.postOutcome = [0 200]; epoch_zero.postOutcome = [1500 2500];
 % Figure properties
 xlim_input = [-100 500];
 ylim_input = [-20 30];
-color_scheme = [0 0 0; 1 0 0];
+color_scheme = cool(length(plot_trial_types));
 
 %% Extract: get relevant data
 for neuron_i = 1:size(data_in,1)
@@ -63,9 +63,9 @@ for neuron_i = 1:size(data_in,1)
         plot_fano_label = [plot_fano_label; {[int2str(trial_type_i) '_' (trial_type_label)]}];  
        
         switch trial_type_label
-            case {'prob25d' , 'prob25nd'}; plot_group = [plot_group; {'1_25%'}];
-            case {'prob50d' , 'prob50nd'}; plot_group = [plot_group; {'2_50%'}];
-            case {'prob75d' , 'prob75nd'}; plot_group = [plot_group; {'3_75%'}];       
+            case 'prob25d' | 'prob25nd'; plot_group = [plot_group; {'1_25%'}];
+            case 'prob50d' | 'prob50nd'; plot_group = [plot_group; {'1_25%'}];
+            case 'prob50d' | 'prob50nd'; plot_group = [plot_group; {'1_25%'}];       
         end
         
         if endsWith( trial_type_label , 'nd' )
@@ -97,18 +97,17 @@ end
 clear figure_plot
 
 % Spike density function >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-figure_plot(1,1)=gramm('x',plot_time,'y',plot_sdf_data,'color',plot_label_rwd,'subset',strcmp(plot_category_label,'Ramping'));
+figure_plot(1,1)=gramm('x',plot_time,'y',plot_sdf_data,'color',plot_group,'subset',strcmp(plot_category_label,'Ramping'));
 figure_plot(1,1).stat_summary();
 figure_plot(1,1).axe_property('XLim',xlim_input,'YLim',ylim_input);
-figure_plot(1,1).set_names('x','Time from Outcome (ms)','y','Firing rate (Z-score)');
+figure_plot(1,1).set_names('x','Time from Outcome (ms)','y','Firing rate (spk/sec)');
 figure_plot(1,1).set_color_options('map',color_scheme);
 figure_plot(1,1).geom_vline('xintercept',0,'style','k-');
 figure_plot(1,1).geom_vline('xintercept',1500,'style','k-');
 figure_plot(1,1).no_legend;
-figure_plot(1,1).facet_grid([],plot_group);
 
 % Fano factor >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-figure_plot(2,1)=gramm('x',plot_time,'y',plot_fano_data,'color',plot_label_rwd,'subset',strcmp(plot_category_label,'Ramping'));
+figure_plot(2,1)=gramm('x',plot_time,'y',plot_fano_data,'color',plot_fano_label,'subset',strcmp(plot_category_label,'Ramping'));
 figure_plot(2,1).stat_summary();
 figure_plot(2,1).axe_property('XLim',xlim_input,'YLim',[0 4]);
 figure_plot(2,1).set_names('x','Time from Outcome (ms)','y','Fano Factor');
@@ -117,18 +116,18 @@ figure_plot(2,1).geom_vline('xintercept',0,'style','k-');
 figure_plot(2,1).geom_vline('xintercept',1500,'style','k-');
 figure_plot(2,1).geom_hline('yintercept',1,'style','k--');
 figure_plot(2,1).no_legend;
-figure_plot(2,1).facet_grid([],plot_group);
 
 % Bar Plot >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-figure_plot(3,1)=gramm('x',plot_group,'y',plot_fano_window_data,'color',plot_label_rwd);
-figure_plot(3,1).stat_summary('geom',{'bar','black_errorbar'},'width',0.2);
-figure_plot(3,1).geom_jitter('alpha',0.2,'dodge',0.5,'width',0.1);
+figure_plot(3,1)=gramm('x',plot_group,'y',plot_fano_window_data,'color',plot_group);
+figure_plot(3,1).stat_summary('geom',{'bar','black_errorbar'},'width',1);
+figure_plot(3,1).geom_jitter('alpha',0.2);
 figure_plot(3,1).set_color_options('map',color_scheme);
+figure_plot(3,1).no_legend();
 figure_plot(3,1).geom_hline('yintercept',1);
 figure_plot(3,1).axe_property('YLim',[0 4]);
 
 
-figure_plot_out = figure('Renderer', 'painters', 'Position', [100 100 600 600]);
+figure_plot_out = figure('Renderer', 'painters', 'Position', [100 100 200 600]);
 figure_plot.draw();
 
 %% Output
