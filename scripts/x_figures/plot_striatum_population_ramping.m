@@ -15,6 +15,8 @@ time_zero = abs(plot_time(1));
 color_scheme = cool(length(plot_trial_types));
 baseline_win = [-500:200];
 
+%% Figure: extract and reformat data
+
 for neuron_i = 1:size(data_in,1)
     
     bl_fr_mean = nanmean(nanmean(data_in.sdf{neuron_i}(data_in.trials{neuron_i}.probAll,baseline_win+time_zero)));
@@ -40,6 +42,8 @@ for neuron_i = 1:size(data_in,1)
     end
 end
 
+
+%% Figure: generate figure
 % Generate plot using gramm
 clear figure_plot
 
@@ -52,7 +56,7 @@ figure_plot(1,1).set_names('x','Time from CS Onset (ms)','y','Firing rate (spk/s
 figure_plot(1,1).set_color_options('map',color_scheme);
 figure_plot(1,1).geom_vline('xintercept',0,'style','k-');
 figure_plot(1,1).geom_vline('xintercept',2500,'style','k-');
-figure_plot(1,1).no_legend;
+% figure_plot(1,1).no_legend;
 
 % Fano factor
 figure_plot(2,1)=gramm('x',data_in.fano(1).time,'y',plot_fano_data,'color',plot_fano_label);

@@ -12,9 +12,11 @@ plot_bf_fanoSpider                   %(4)
 % > Reward omitted x reward delivered comparison
 plot_bf_outcome
 
-% > Population SDF and fano factor for ramping neurons in timing and trace
-% task
+% > Population SDF and fano factor for ramping neurons in timing task
 plot_bf_population_timingramping
+plot_bf_population_timingramping_varTime
+
+% > Population SDF and fano factor for ramping neurons in trace task
 plot_bf_population_traceramping
 
 % > Across task fano-factor

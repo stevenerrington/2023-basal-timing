@@ -2,7 +2,7 @@
 %% Analysis: epoched Fano Factor
 % In progress - 1539, Feb 1st
 clear epoch
-epoch.fano_window = {[0 500],[-500 0]};
+epoch.fano_window = {[0:500],[-500:0]};
 epoch.alignZero = {[0 0], [1500 2500]};
 
 clear fano_prob*
@@ -28,15 +28,18 @@ for neuron_i = 1:size(bf_data_CS,1)
             epoch_label = 'Late';            
         end
         
-        fano = get_fano_window(bf_data_CS.rasters{neuron_i},...
-            bf_data_CS.trials{neuron_i},...
-            epoch.fano_window{epoch_i} + epoch.alignZero{epoch_i}(site_id)); % @ moment, centers on 0
-        
+        fano_continuous = [];
+        fano_continuous = find(ismember(bf_data_CS.fano(neuron_i).time,...
+            epoch.fano_window{epoch_i}+epoch.alignZero{epoch_i}(site_id)));
+
         for cond_i = 1:length(cond_list)
             count = count + 1;
             cond = cond_list{cond_i};
             
-            fano_x(count,1) = fano.window.(cond);
+            fano_mean =  nanmean(bf_data_CS.fano(neuron_i).raw.(cond)(fano_continuous));
+            
+            
+            fano_x(count,1) = fano_mean;
             fano_condition{count,1} = [int2str(cond_i) '_' cond];
             fano_epoch{count,1} = epoch_label;
             fano_site{count,1} = bf_datasheet_CS.site{neuron_i};

@@ -3,7 +3,6 @@
 clear epoch
 epoch.CSonset = [0 200];
 epoch_zero.CSonset = [0];
-fano_timewindow = [0:500];
 
 clear fano_prob*
 

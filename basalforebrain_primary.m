@@ -7,7 +7,7 @@
 clear all; close all; clc; beep off; warning off;
 
 % Define paths & key directories
-dirs = get_dirs_bf('home');
+dirs = get_dirs_bf('wustl');
 params = get_params;
 
 %% Analysis
@@ -18,10 +18,8 @@ trace_bf_master     % Trace task data
 
 %%%% < eye-tracking: plot eye position x time, and sdf
 
-
 % Striatum: >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 pavlovian_striatum_master
-
 
 % Brainwide: >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 get_gray_datamap
