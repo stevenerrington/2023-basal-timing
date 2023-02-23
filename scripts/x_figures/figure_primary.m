@@ -1,5 +1,24 @@
 %% Figures
 
+
+% Basal forebrain >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+%% Working plots:
+
 % Basal forebrain >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 % > Example neurons and population SDF
 plot_bf_exampleNeuron_phasicramping  %(1)
