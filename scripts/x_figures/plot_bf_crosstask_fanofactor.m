@@ -13,7 +13,7 @@ cs_trial = 'prob50'; timing_trial = 'p50s_50l_short'; trace_trial = 'timingcue_u
 for neuron_i = 1:size(input_data,1)
 
     fano_continuous = [];
-    fano_continuous = find(ismember(input_data.fano(neuron_i).time,fano_timewindow));
+    fano_continuous = find(ismember(input_data.fano(neuron_i).time,params.fano.timewindow));
     
     try
         fano_cs_onset(neuron_i,1) =  nanmean(input_data.fano(neuron_i).raw.(cs_trial)(fano_continuous));
