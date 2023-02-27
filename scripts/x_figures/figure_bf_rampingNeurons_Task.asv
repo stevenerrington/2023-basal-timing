@@ -73,14 +73,14 @@ end
 %>>>> Population level extraction: >>>>>>>>>>>>>>>>>>>>>>>>
 % For all neurons in the data_in structure
 for neuron_i = 1:size(data_in,1)
-    all_prob_trials = []; plot_trial_types = {};
+    all_prob_trials = [];
     
     switch master_datatable_bf.task{neuron_i}
         case 'CS'
             plot_trial_types = {'prob0','prob25','prob50','prob75','prob100'};
         case 'Timing'
             plot_trial_types = {'p25s_75l_short','p50s_50l_short','p75s_25l_short'};
-        case 'Trace'
+        case 3 % CS
             plot_trial_types = {'timingcue_uncertain','notimingcue_uncertain'};
     end
     
@@ -128,7 +128,7 @@ figure_plot(1,1).set_names('x','Time from CS Onset (ms)','y','Trial');
 % figure_plot(1,1).set_color_options('map',{color_scheme_CS, color_scheme_timing, color_scheme_trace});
 figure_plot(1,1).geom_vline('xintercept',0,'style','k-');
 figure_plot(1,1).geom_vline('xintercept',1500,'style','k-');
-figure_plot(1,1).facet_grid([],plot_example_category_label,'scale','free_y');
+figure_plot(1,1).facet_grid([],plot_example_category_label);
 figure_plot(1,1).no_legend;
 
 % Example neuron: spike density function

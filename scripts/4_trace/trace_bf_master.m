@@ -56,32 +56,32 @@ bf_data_traceExp.fano = fano';
 clear fano
 
 
-% 
-% % Cuttings 
-% %% Figure: Generate example SDFs & Fano
-% 
-% for neuron_i = 1:size(bf_datasheet_traceExp,1)
-% 
-%     figure(neuron_i);
-%     subplot(2,1,1); hold on
+
+% Cuttings 
+%% Figure: Generate example SDFs & Fano
+
+for neuron_i = 1:size(bf_datasheet_traceExp,1)
+
+    figure(neuron_i);
+    subplot(2,1,1); hold on
+    plot(-5000:5000,nanmean(bf_data_traceExp.sdf{neuron_i}(bf_data_traceExp.trials{neuron_i}.notimingcue_uncertain_nd,:)))
+%     plot(-5000:5000,nanmean(bf_data_traceExp.sdf{neuron_i}(bf_data_traceExp.trials{neuron_i}.notimingcue_uncertain_d,:)))
+    plot(-5000:5000,nanmean(bf_data_traceExp.sdf{neuron_i}(bf_data_traceExp.trials{neuron_i}.timingcue_uncertain_nd,:)))
 %     plot(-5000:5000,nanmean(bf_data_traceExp.sdf{neuron_i}(bf_data_traceExp.trials{neuron_i}.notimingcue_uncertain_nd,:)))
-% %     plot(-5000:5000,nanmean(bf_data_traceExp.sdf{neuron_i}(bf_data_traceExp.trials{neuron_i}.notimingcue_uncertain_d,:)))
-%     plot(-5000:5000,nanmean(bf_data_traceExp.sdf{neuron_i}(bf_data_traceExp.trials{neuron_i}.timingcue_uncertain_nd,:)))
-% %     plot(-5000:5000,nanmean(bf_data_traceExp.sdf{neuron_i}(bf_data_traceExp.trials{neuron_i}.notimingcue_uncertain_nd,:)))
-%     xlim([0 3500]); vline(0, 'k'); vline(1000, 'k'); vline(2500, 'k'); 
-%         
-%     subplot(2,1,2); hold on
+    xlim([0 3500]); vline(0, 'k'); vline(1000, 'k'); vline(2500, 'k'); 
+        
+    subplot(2,1,2); hold on
+    plot(bf_data_traceExp.fano(neuron_i).time,bf_data_traceExp.fano(neuron_i).raw.notimingcue_uncertain_nd)
+%     plot(bf_data_traceExp.fano(neuron_i).time,bf_data_traceExp.fano(neuron_i).raw.notimingcue_uncertain_d)
+    plot(bf_data_traceExp.fano(neuron_i).time,bf_data_traceExp.fano(neuron_i).raw.timingcue_uncertain_nd)
 %     plot(bf_data_traceExp.fano(neuron_i).time,bf_data_traceExp.fano(neuron_i).raw.notimingcue_uncertain_nd)
-% %     plot(bf_data_traceExp.fano(neuron_i).time,bf_data_traceExp.fano(neuron_i).raw.notimingcue_uncertain_d)
-%     plot(bf_data_traceExp.fano(neuron_i).time,bf_data_traceExp.fano(neuron_i).raw.timingcue_uncertain_nd)
-% %     plot(bf_data_traceExp.fano(neuron_i).time,bf_data_traceExp.fano(neuron_i).raw.notimingcue_uncertain_nd)
-%     xlim([0 3500]); ylim([0 4]); hline(1,'k');  vline(0, 'k'); vline(1000, 'k'); vline(2500, 'k');
-%     
-%     test_a(neuron_i,:) = nanmean(bf_data_traceExp.sdf{neuron_i}(bf_data_traceExp.trials{neuron_i}.notimingcue_uncertain_nd,:));
-%     test_b(neuron_i,:) = nanmean(bf_data_traceExp.sdf{neuron_i}(bf_data_traceExp.trials{neuron_i}.timingcue_uncertain_nd,:));
-%     
-% end
-% 
+    xlim([0 3500]); ylim([0 4]); hline(1,'k');  vline(0, 'k'); vline(1000, 'k'); vline(2500, 'k');
+    
+    test_a(neuron_i,:) = nanmean(bf_data_traceExp.sdf{neuron_i}(bf_data_traceExp.trials{neuron_i}.notimingcue_uncertain_nd,:));
+    test_b(neuron_i,:) = nanmean(bf_data_traceExp.sdf{neuron_i}(bf_data_traceExp.trials{neuron_i}.timingcue_uncertain_nd,:));
+    
+end
+
 % 
 % figure; hold on
 % plot(-5000:5000,nanmean(test_a),'r')
