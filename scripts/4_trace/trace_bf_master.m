@@ -55,32 +55,47 @@ end
 bf_data_traceExp.fano = fano';
 clear fano
 
+%% Analysis: Calculate the inter-spike interval distribution for each trial condition
 
-
-% Cuttings 
-%% Figure: Generate example SDFs & Fano
-
-for neuron_i = 1:size(bf_datasheet_traceExp,1)
-
-    figure(neuron_i);
-    subplot(2,1,1); hold on
-    plot(-5000:5000,nanmean(bf_data_traceExp.sdf{neuron_i}(bf_data_traceExp.trials{neuron_i}.notimingcue_uncertain_nd,:)))
-%     plot(-5000:5000,nanmean(bf_data_traceExp.sdf{neuron_i}(bf_data_traceExp.trials{neuron_i}.notimingcue_uncertain_d,:)))
-    plot(-5000:5000,nanmean(bf_data_traceExp.sdf{neuron_i}(bf_data_traceExp.trials{neuron_i}.timingcue_uncertain_nd,:)))
-%     plot(-5000:5000,nanmean(bf_data_traceExp.sdf{neuron_i}(bf_data_traceExp.trials{neuron_i}.notimingcue_uncertain_nd,:)))
-    xlim([0 3500]); vline(0, 'k'); vline(1000, 'k'); vline(2500, 'k'); 
-        
-    subplot(2,1,2); hold on
-    plot(bf_data_traceExp.fano(neuron_i).time,bf_data_traceExp.fano(neuron_i).raw.notimingcue_uncertain_nd)
-%     plot(bf_data_traceExp.fano(neuron_i).time,bf_data_traceExp.fano(neuron_i).raw.notimingcue_uncertain_d)
-    plot(bf_data_traceExp.fano(neuron_i).time,bf_data_traceExp.fano(neuron_i).raw.timingcue_uncertain_nd)
-%     plot(bf_data_traceExp.fano(neuron_i).time,bf_data_traceExp.fano(neuron_i).raw.notimingcue_uncertain_nd)
-    xlim([0 3500]); ylim([0 4]); hline(1,'k');  vline(0, 'k'); vline(1000, 'k'); vline(2500, 'k');
+parfor neuron_i = 1:size(bf_datasheet_traceExp,1)
     
-    test_a(neuron_i,:) = nanmean(bf_data_traceExp.sdf{neuron_i}(bf_data_traceExp.trials{neuron_i}.notimingcue_uncertain_nd,:));
-    test_b(neuron_i,:) = nanmean(bf_data_traceExp.sdf{neuron_i}(bf_data_traceExp.trials{neuron_i}.timingcue_uncertain_nd,:));
+    fprintf('Calculating ISI distribution for neuron %i of %i   |  %s   \n',...
+        neuron_i,size(bf_datasheet_traceExp,1), bf_datasheet_traceExp.file{neuron_i})
+    
+    % Calculate Fano Factor
+    isi(neuron_i) = get_isi(bf_data_traceExp.rasters{neuron_i},...
+        bf_data_traceExp.trials{neuron_i});
     
 end
+
+bf_data_traceExp.isi = isi'; clear isi
+
+
+
+%% Cuttings 
+% Figure: Generate example SDFs & Fano
+% 
+% for neuron_i = 1:size(bf_datasheet_traceExp,1)
+% 
+%     figure(neuron_i);
+%     subplot(2,1,1); hold on
+%     plot(-5000:5000,nanmean(bf_data_traceExp.sdf{neuron_i}(bf_data_traceExp.trials{neuron_i}.notimingcue_uncertain_nd,:)))
+%     plot(-5000:5000,nanmean(bf_data_traceExp.sdf{neuron_i}(bf_data_traceExp.trials{neuron_i}.notimingcue_uncertain_d,:)))
+%     plot(-5000:5000,nanmean(bf_data_traceExp.sdf{neuron_i}(bf_data_traceExp.trials{neuron_i}.timingcue_uncertain_nd,:)))
+%     plot(-5000:5000,nanmean(bf_data_traceExp.sdf{neuron_i}(bf_data_traceExp.trials{neuron_i}.notimingcue_uncertain_nd,:)))
+%     xlim([0 3500]); vline(0, 'k'); vline(1000, 'k'); vline(2500, 'k'); 
+%         
+%     subplot(2,1,2); hold on
+%     plot(bf_data_traceExp.fano(neuron_i).time,bf_data_traceExp.fano(neuron_i).raw.notimingcue_uncertain_nd)
+%     plot(bf_data_traceExp.fano(neuron_i).time,bf_data_traceExp.fano(neuron_i).raw.notimingcue_uncertain_d)
+%     plot(bf_data_traceExp.fano(neuron_i).time,bf_data_traceExp.fano(neuron_i).raw.timingcue_uncertain_nd)
+%     plot(bf_data_traceExp.fano(neuron_i).time,bf_data_traceExp.fano(neuron_i).raw.notimingcue_uncertain_nd)
+%     xlim([0 3500]); ylim([0 4]); hline(1,'k');  vline(0, 'k'); vline(1000, 'k'); vline(2500, 'k');
+%     
+%     test_a(neuron_i,:) = nanmean(bf_data_traceExp.sdf{neuron_i}(bf_data_traceExp.trials{neuron_i}.notimingcue_uncertain_nd,:));
+%     test_b(neuron_i,:) = nanmean(bf_data_traceExp.sdf{neuron_i}(bf_data_traceExp.trials{neuron_i}.timingcue_uncertain_nd,:));
+%     
+% end
 
 % 
 % figure; hold on

@@ -119,7 +119,20 @@ end
 bf_data_timingTask.fano = fano';
 clear fano
 
+%% Analysis: Calculate the inter-spike interval distribution for each trial condition
 
+parfor neuron_i = 1:size(bf_datasheet_timingExp,1)
+    
+    fprintf('Calculating ISI distribution for neuron %i of %i   |  %s   \n',...
+        neuron_i,size(bf_datasheet_timingExp,1), bf_datasheet_timingExp.file{neuron_i})
+    
+    % Calculate Fano Factor
+    isi(neuron_i) = get_isi(bf_data_timingTask.rasters{neuron_i},...
+        bf_data_timingTask.trials{neuron_i});
+    
+end
+
+bf_data_timingTask.isi = isi'; clear isi
 
 
 %% % Cuttings

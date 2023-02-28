@@ -22,5 +22,6 @@ params.stats.stat_bin = 101; % UNKNOWN (2023-01-23; BinForStat)
 % % Licking
 params.licking.signal_cutoff = 2; % SD of baseline
 params.licking.baseline = [-250 -50]; % Relative to target/CS onset
-params.licking.gauss_ms = 20;
+params.licking.gauss_ms = 10;
+
 end

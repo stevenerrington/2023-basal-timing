@@ -15,7 +15,7 @@ status = get_status(dirs);
 switch status
     case 'data'
         load_proc_data
-    case 'extract'
+    case 'data'
         % Basal forebrain data:
         pavlovian_bf_master % Pavlovian task data
         timing_bf_master    % Timing task data
@@ -24,6 +24,9 @@ end
 
 %% Figures: 
 figure_primary
+
+
+
 
 %% In progress:
 % Striatum: >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
