@@ -17,13 +17,13 @@ joint_datastruct = [nih_datastruct.ProbAmtDataStruct wustl_datastruct.ProbAmtDat
 clear bf_datasheet_CS % clear dataframe variable to stop contamination
  
 % For each identified datafile
-for ii = 1:size(joint_datastruct,2)
+for neuron_i = 1:size(joint_datastruct,2)
     % clear loop variables to stop contamination
     clear file monkey date ap_loc ml_loc depth area site dir
 
     % get file name and monkey name
-    file = {joint_datastruct(ii).name};
-    monkey = {lower(joint_datastruct(ii).monkey)};
+    file = {joint_datastruct(neuron_i).name};
+    monkey = {lower(joint_datastruct(neuron_i).monkey)};
     
     % Extract data: WUSTL
     if ~isempty( find(strcmp(wustl_neuronsheet(:,15),file{1}(1:end-4))))
@@ -56,12 +56,10 @@ for ii = 1:size(joint_datastruct,2)
         site = {'nih'};                            % Institution where data was recorded   
         dir = {'X:\MONKEYDATA\NIHBFrampingdata2575\MRDR\'}; % Data storage directory
         
-    else
-        continue
     end
     
     % Save variables to a row in the datatable
-    bf_datasheet_CS(ii,:) = table(file, monkey, date, ap_loc, ml_loc, depth, area, site, dir);
+    bf_datasheet_CS(neuron_i,:) = table(file, monkey, date, ap_loc, ml_loc, depth, area, site, dir);
     
 end
 
@@ -79,19 +77,19 @@ bf_data_CS = table();
 
 % For each identified neuron meeting the criteria, we will loop through,
 % load the experimental data file, and extract the event aligned raster.
-for ii = 1:size(bf_datasheet_CS,1)
+for neuron_i = 1:size(bf_datasheet_CS,1)
     
     % Clear variables, console, and figures
     clear REXPDS trials Rasters SDFcs_n fano; clc; close all;
     
-    filename = bf_datasheet_CS.file{ii};
-    fprintf('Extracting data from neuron %i of %i   |  %s   \n',ii,size(bf_datasheet_CS,1), filename)
+    filename = bf_datasheet_CS.file{neuron_i};
+    fprintf('Extracting data from neuron %i of %i   |  %s   \n',neuron_i,size(bf_datasheet_CS,1), filename)
     
-    switch bf_datasheet_CS.site{ii}
+    switch bf_datasheet_CS.site{neuron_i}
         case 'nih' % NIH data
             
             % Load the data (REX structure)
-            REX = mrdr('-a', '-d', fullfile(bf_datasheet_CS.dir{ii},bf_datasheet_CS.file{ii}));
+            REX = mrdr('-a', '-d', fullfile(bf_datasheet_CS.dir{neuron_i},bf_datasheet_CS.file{neuron_i}));
             
             % Get trial indices
             trials = get_rex_trials(REX);
@@ -99,12 +97,13 @@ for ii = 1:size(bf_datasheet_CS,1)
             Rasters = get_rex_raster(REX, trials, params); % Derived from Timing2575Group.m
             % Get event aligned spike-density function
             SDF = plot_mean_psth({Rasters},params.sdf.gauss_ms,1,size(Rasters,2),1);
-            
+            % Get licking beh raster
+            Licking = [];
             
         case 'wustl' % WUSTL data
             
             % Load the data (PDS structure)
-            load(fullfile(bf_datasheet_CS.dir{ii},bf_datasheet_CS.file{ii}),'PDS');
+            load(fullfile(bf_datasheet_CS.dir{neuron_i},bf_datasheet_CS.file{neuron_i}),'PDS');
             
             % Get trial indices
             trials = get_trials(PDS);
@@ -113,11 +112,13 @@ for ii = 1:size(bf_datasheet_CS,1)
             % Get event aligned spike-density function
             SDF = plot_mean_psth({Rasters},params.sdf.gauss_ms,1,size(Rasters,2),1);
             
+            % Get licking raster
+            Licking = get_licking_raster(PDS,params);
     end
     
     % Output extracted data into a table
-    bf_data_CS(ii,:) = table({filename}, {trials}, {Rasters},{SDF},...
-        'VariableNames',{'filename','trials','rasters','sdf'});
+    bf_data_CS(neuron_i,:) = table({filename}, {trials}, {Rasters},{SDF},{Licking},...
+        'VariableNames',{'filename','trials','rasters','sdf','licking'});
     
     
 end

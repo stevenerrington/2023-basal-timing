@@ -19,4 +19,8 @@ params.stats.n_perms = 100; % Number of permutations for permutation tests (Numb
 params.stats.corr_thresh = 0.01; % Statistical threshold for correlational analysis (CorTh)
 params.stats.stat_bin = 101; % UNKNOWN (2023-01-23; BinForStat)
 
+% % Licking
+params.licking.signal_cutoff = 2; % SD of baseline
+params.licking.baseline = [-250 -50]; % Relative to target/CS onset
+params.licking.gauss_ms = 20;
 end
