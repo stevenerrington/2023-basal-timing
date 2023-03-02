@@ -96,9 +96,12 @@ for ii = 1:size(bf_datasheet_timingExp,1)
     % Get event aligned spike-density function
     SDF = plot_mean_psth({Rasters},params.sdf.gauss_ms,1,size(Rasters,2),1);
     
+    % Get licking data
+    Licking = [];
+    
     % Output extracted data into a table
-    bf_data_timingTask(ii,:) = table({filename}, {trials}, {Rasters},{SDF},...
-        'VariableNames',{'filename','trials','rasters','sdf'});
+    bf_data_timingTask(ii,:) = table({filename}, {trials}, {Rasters},{SDF},{Licking},...
+        'VariableNames',{'filename','trials','rasters','sdf','licking'});
 
 end
 

@@ -3,7 +3,7 @@ parfor neuron_i = 1:size(bf_datasheet_CS,1)
     
     if ~isempty(bf_data_CS.licking{neuron_i})
         fprintf('Calculating Fano Factor for neuron %i of %i   |  %s   \n',...
-            neuron_i,size(bf_datasheet_CS,1), bf_data_CS.filename{neuron_i})
+            neuron_i,size(bf_datasheet_CS,1), bf_data_CS.file{neuron_i})
         
         % Calculate Fano Factor
         fano{neuron_i} = get_fano(bf_data_CS.licking{neuron_i},...
@@ -14,7 +14,7 @@ parfor neuron_i = 1:size(bf_datasheet_CS,1)
 
     else
         fprintf('No licking data for neuron %i of %i   |  %s   \n',...
-            neuron_i,size(bf_datasheet_CS,1), bf_data_CS.filename{neuron_i})        
+            neuron_i,size(bf_datasheet_CS,1), bf_data_CS.file{neuron_i})        
         
         fano{neuron_i} = [];
         LDF{neuron_i} = [];
@@ -78,7 +78,7 @@ figure_plot(1,1).stat_summary();
 figure_plot(1,1).axe_property('XLim',xlim_input,'YLim',[-2 15]);
 figure_plot(1,1).set_names('x','Time from CS Onset (ms)','y','Lick rate (licks/sec)');
 figure_plot(1,1).set_color_options('map',color_scheme);
-figure_plot(1,1).no_legend;
+% figure_plot(1,1).no_legend;
 
 % Fano factor
 figure_plot(2,1)=gramm('x',data_in.fano_licking{1}.time,'y',plot_fano_data,'color',plot_fano_label );
@@ -89,16 +89,16 @@ figure_plot(2,1).set_color_options('map',color_scheme);
 figure_plot(2,1).geom_vline('xintercept',0,'style','k-');
 figure_plot(2,1).geom_vline('xintercept',2500,'style','k-');
 figure_plot(2,1).geom_hline('yintercept',1,'style','k--');
-figure_plot(2,1).no_legend;
+% figure_plot(2,1).no_legend;
 
 figure_plot_out = figure('Renderer', 'painters', 'Position', [100 100 800 500]);
 figure_plot.draw();
 
 % %% Output
 % % Once we're done with a page, save it and close it.
-% filename = fullfile(dirs.root,'results','LDF_fano_cstask_figure_populations.pdf');
+% file = fullfile(dirs.root,'results','LDF_fano_cstask_figure_populations.pdf');
 % set(figure_plot_out,'PaperSize',[20 10]); %set the paper size to what you want
-% print(figure_plot_out,filename,'-dpdf') % then print it
+% print(figure_plot_out,file,'-dpdf') % then print it
 % close(figure_plot_out)
 
 

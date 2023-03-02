@@ -33,9 +33,12 @@ for neuron_i = 1:size(bf_datasheet_traceExp,1)
     % Get event aligned spike-density function
     SDF = plot_mean_psth({Rasters},params.sdf.gauss_ms,1,size(Rasters,2),1);
     
+    % Get licking raster
+    Licking = get_licking_raster(PDS,params); 
+    
     % Output extracted data into a table
-    bf_data_traceExp(neuron_i,:) = table({filename}, {trials}, {Rasters},{SDF},...
-        'VariableNames',{'filename','trials','rasters','sdf'});
+    bf_data_traceExp(neuron_i,:) = table({filename}, {trials}, {Rasters},{SDF},{Licking},...
+        'VariableNames',{'filename','trials','rasters','sdf','licking'});
 end
 
 %% Analysis: calculate running fano factor

@@ -1,6 +1,6 @@
 % Input variables
 data_in = []; data_in = bf_data_traceExp;
-plot_trial_types = {'timingcue_uncertain','notimingcue_uncertain'};
+plot_trial_types = {'notimingcue_uncertain','timingcue_uncertain'};
 
 xlim_input = [-500 3500];
 ylim_input = [-10 10];
@@ -71,6 +71,7 @@ figure_plot(2,1).set_color_options('map',color_scheme);
 figure_plot(2,1).geom_vline('xintercept',0,'style','k-');
 figure_plot(2,1).geom_vline('xintercept',2500,'style','k-');
 figure_plot(2,1).geom_hline('yintercept',1,'style','k--');
+figure_plot(2,1).no_legend;
 
 figure_plot_out = figure('Renderer', 'painters', 'Position', [100 100 300 400]);
 figure_plot.draw();

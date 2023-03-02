@@ -126,7 +126,7 @@ else
         
         % Output extracted data into a table
         bf_data_CS(neuron_i,:) = table({filename}, {trials}, {Rasters},{SDF},{Licking},...
-            'VariableNames',{'file','trials','rasters','sdf','licking'});
+            'VariableNames',{'filename','trials','rasters','sdf','licking'});
         
         
     end

@@ -6,12 +6,14 @@ signal_cutoff = params.licking.signal_cutoff;
 % Initialise relevant arrays
 Rasters=[];
 
+
 % Set alignment parameters
 event_zero=6001;
 
 nTrls = length(PDS.timetargeton);
 
 for trial_i = 1:nTrls
+    
     
     lick_signal_in = []; lick_signal_in = PDS.onlineLickForce{trial_i};
     lick_signal_in(:,2) = lick_signal_in(:,2)-lick_signal_in(1,2);
@@ -54,11 +56,14 @@ for trial_i = 1:nTrls
         
     else
         clear temp
-    	temp(1:event_zero*2) = 0;
-        Rasters(trial_i,:) = temp;        
+        temp(1:event_zero*2) = 0;
+        Rasters(trial_i,:) = temp;
         clear temp lick_times
     end
 end
+
+
+
 
 Rasters = Rasters(:,event_zero-5000:event_zero+5000);
 

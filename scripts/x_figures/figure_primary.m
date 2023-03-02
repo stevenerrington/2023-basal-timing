@@ -1,8 +1,5 @@
 %% Figures
 % Basal forebrain >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-
-
-
 figure_bf_rampingNeurons_Task
 
 

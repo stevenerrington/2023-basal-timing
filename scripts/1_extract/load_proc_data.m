@@ -1,4 +1,6 @@
 %% Load processed data
+
+fprintf('Loading pre-extracted data \n')
 % Extracted beh & neurophys
 load(fullfile(dirs.root,'data','large','bf_data_CS.mat'))
 load(fullfile(dirs.root,'data','large','bf_data_timingTask.mat'))
