@@ -21,9 +21,6 @@ switch status
         pavlovian_bf_master % Pavlovian task data
         timing_bf_master    % Timing task data
         trace_bf_master     % Trace task data
-        
-        % Striatum data:
-        pavlovian_striatum_master % Pavlovian task data
 end
 
 %% Figures: 
@@ -31,5 +28,5 @@ figure_primary
 
 %% In progress:
 % Striatum: >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-
+pavlovian_striatum_master
 

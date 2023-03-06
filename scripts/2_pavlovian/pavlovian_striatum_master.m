@@ -49,7 +49,7 @@ striatum_data_CS = table();
 for ii = 1:size(striatum_datasheet_CS,1)
     
     % Clear variables, console, and figures
-    clear REXPDS trials Rasters SDFcs_n fano; clc; close all;
+    clear REX PDS trials Rasters SDFcs_n fano; clc; close all;
     
     filename = striatum_datasheet_CS.file{ii};
     fprintf('Extracting data from neuron %i of %i   |  %s   \n',ii,size(striatum_datasheet_CS,1), filename)
@@ -63,11 +63,12 @@ for ii = 1:size(striatum_datasheet_CS,1)
     Rasters = get_raster(PDS, trials, params); % Derived from Timing2575Group.m
     % Get event aligned spike-density function
     SDF = plot_mean_psth({Rasters},params.sdf.gauss_ms,1,size(Rasters,2),1);
-    
+    % Get licking raster
+    Licking = get_licking_raster(PDS,params);
     
     % Output extracted data into a table
-    striatum_data_CS(ii,:) = table({filename}, {trials}, {Rasters},{SDF},...
-        'VariableNames',{'filename','trials','rasters','sdf'});
+    striatum_data_CS(ii,:) = table({filename}, {trials}, {Rasters},{SDF},{Licking},...
+        'VariableNames',{'filename','trials','rasters','sdf','licking'});
     
 end
 
@@ -87,6 +88,20 @@ end
 
 striatum_data_CS.fano = fano'; clear fano
 
+%% Analysis: Calculate the inter-spike interval distribution for each trial condition
+
+parfor neuron_i = 1:size(striatum_datasheet_CS,1)
+    
+    fprintf('Calculating ISI distribution for neuron %i of %i   |  %s   \n',...
+        neuron_i,size(striatum_datasheet_CS,1), striatum_data_CS.filename{neuron_i})
+    
+    % Calculate ISI dist
+    isi(neuron_i) = get_isi(striatum_data_CS.rasters{neuron_i},...
+        striatum_data_CS.trials{neuron_i});
+    
+end
+
+striatum_data_CS.isi = isi'; clear isi
 
 
 

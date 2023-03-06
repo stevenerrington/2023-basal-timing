@@ -119,7 +119,6 @@ else
                 Rasters = get_raster(PDS, trials, params); % Derived from Timing2575Group.m
                 % Get event aligned spike-density function
                 SDF = plot_mean_psth({Rasters},params.sdf.gauss_ms,1,size(Rasters,2),1);
-                
                 % Get licking raster
                 Licking = get_licking_raster(PDS,params);
         end
