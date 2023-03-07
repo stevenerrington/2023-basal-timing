@@ -4,7 +4,6 @@
 % > SingleVsDoubleOutcomeIlya
 % > StructMakerTimingTrace_V01
 
-
 %% Curation: generate a datamap
 % > Load in a pre-curated sheet of neuron information for upcoming analyses 
 

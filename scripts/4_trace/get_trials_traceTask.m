@@ -84,8 +84,10 @@ trials.fractal6214 = intersect(find(PDS(1).fractals==6214),completedtrial);
 
 trials.fullItiTrials_  = [];
 for x=1:length(PDS.fractals)
-    if PDS.sptimes{x}(end) - PDS.timesoffreeoutcomes_first(x)>2.5
-        trials.fullItiTrials_ = [trials.fullItiTrials_ x];
+    if ~isempty(PDS.sptimes{x})
+        if PDS.sptimes{x}(end) - PDS.timesoffreeoutcomes_first(x)>2.5
+            trials.fullItiTrials_ = [trials.fullItiTrials_ x];
+        end
     end
 end
 

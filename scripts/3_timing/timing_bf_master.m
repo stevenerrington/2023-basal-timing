@@ -79,7 +79,7 @@ bf_data_timingTask = table();
 for ii = 1:size(bf_datasheet_timingExp,1)
     
     % Clear variables, console, and figures
-    clear REXPDS trials Rasters SDFcs_n fano; clc; close all;
+    clear REX PDS trials Rasters SDFcs_n fano; clc; close all;
     
     filename = bf_datasheet_timingExp.file{ii};
     fprintf('Extracting data from neuron %i of %i   |  %s   \n',ii,size(bf_datasheet_timingExp,1), filename)

@@ -43,7 +43,6 @@ for neuron_i = 1:size(data_in,1)
         plot_fano_data = [plot_fano_data; {data_in.fano(neuron_i).raw.(trial_type_label)}];
         plot_fano_label = [plot_fano_label; {[int2str(trial_type_i) '_' (trial_type_label)]}];
         
-        plot_category_label = [plot_category_label; {bf_datasheet_CS.cluster_label{neuron_i}}];
         
     end
 end
@@ -71,7 +70,7 @@ figure_plot(2,1).set_color_options('map',color_scheme);
 figure_plot(2,1).geom_vline('xintercept',0,'style','k-');
 figure_plot(2,1).geom_vline('xintercept',2500,'style','k-');
 figure_plot(2,1).geom_hline('yintercept',1,'style','k--');
-figure_plot(2,1).no_legend;
+% figure_plot(2,1).no_legend;
 
 figure_plot_out = figure('Renderer', 'painters', 'Position', [100 100 300 400]);
 figure_plot.draw();
