@@ -50,7 +50,6 @@ test_figure.set_names('y','');
 outcome_rwd_fano_out = figure('Renderer', 'painters', 'Position', [100 100 200 350]);
 test_figure.draw();
 
-
 filename = fullfile(dirs.root,'results','bf_ramping_fano_x_task.pdf');
 set(outcome_rwd_fano_out,'PaperSize',[20 10]); %set the paper size to what you want
 print(outcome_rwd_fano_out,filename,'-dpdf') % then print it

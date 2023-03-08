@@ -14,9 +14,17 @@ nTrls = length(PDS.timetargeton);
 
 for trial_i = 1:nTrls
     
-    
+    % HOLD CODE:
+    % > we had issues with onlineLickforce in the timing task, so we may
+    % need to use a different way in which the signal way captured
+    % (EyeJoy). I'm waiting to double check with IEM, and will return - for
+    % now, this is a signpost on where to go with the revised signal.
+    % This may need to be filtered though... (03-08-2023, SPE).
+    % lick_signal_in_temp = PDS.EyeJoy{trial_i}(4,:)
+
     lick_signal_in = []; lick_signal_in = PDS.onlineLickForce{trial_i};
     lick_signal_in(:,2) = lick_signal_in(:,2)-lick_signal_in(1,2);
+    
     
     % Get baseline
     test = lick_signal_in(:,2) - PDS.timetargeton(trial_i);

@@ -97,7 +97,8 @@ for ii = 1:size(bf_datasheet_timingExp,1)
     SDF = plot_mean_psth({Rasters},params.sdf.gauss_ms,1,size(Rasters,2),1);
     
     % Get licking data
-    Licking = [];
+    Licking = []; 
+    Licking = get_licking_raster(PDS,params); 
     
     % Output extracted data into a table
     bf_data_timingTask(ii,:) = table({filename}, {trials}, {Rasters},{SDF},{Licking},...
