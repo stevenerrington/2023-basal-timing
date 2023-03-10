@@ -11,6 +11,11 @@ plot_neural_activity
 % averaged activity, distinguishing between delivered and omitted reward.
 plot_outcome_activity
 
+% This script will produce figures that shows examine activity solely during
+% the timing task.
+plot_timingTask_activity
+
+
 %% Methodological tests
 % This script will produce figures demonstrating methodological considerations:
 % > the relationship between fano factor and firing rate (scatter plot).
