@@ -8,6 +8,7 @@ input_labels = {'1_basal_forebrain','2_striatum'};
 
 % > Generate figure
 params.plot.ylim = [0 3]; params.plot.colormap = [0,0,0,0.5;1,0,0,0.5];
+params.fano.timewindow = [0:500];
 plot_compare_fano_c(input_data,input_trials,input_labels,params)
 
 %%% > Note: I need to check plot_compare_fano_c for matching neuron to it's
@@ -21,4 +22,5 @@ input_labels = {'1_basal_forebrain','2_striatum'};
 
 % > Generate figure
 params.plot.ylim = [0 3]; params.plot.colormap = [0,0,0,0.5;1,0,0,0.5];
+params.fano.timewindow = [0:500];
 plot_compare_fano_c(input_data,input_trials,input_labels,params)

@@ -17,7 +17,8 @@ input_trials = {'prob50','p50s_50l_short','timingcue_uncertain'};
 input_labels = {'1_CS','2_timing','3_trace'};
 % > Generate figure
 params.plot.ylim = [0 3];
-plot_compare_fano(input_data,input_trials,input_labels,params)
+bf_ramping_onset_fano = plot_compare_fano(input_data,input_trials,input_labels,params);
+save_figure(bf_ramping_onset_fano,dirs.fig,'bf_ramping_onset_fano')
 
 % Comparison for striatum ramping neurons --------------------------
 % > Define data for comparison
@@ -27,7 +28,8 @@ input_trials = {'prob50','timingcue_uncertain'};
 input_labels = {'1_CS','2_trace'};
 % > Generate figure
 params.plot.ylim = [0 3];
-plot_compare_fano(input_data,input_trials,input_labels,params)
+striatum_ramping_onset_fano = plot_compare_fano(input_data,input_trials,input_labels,params);
+save_figure(striatum_ramping_onset_fano,dirs.fig,'striatum_ramping_onset_fano')
 
 % -------------------------------------------------------------------------
 % --------------------- Outcome  ------------------------------------------
@@ -47,7 +49,8 @@ input_labels = {'prob50d','prob50nd'};
 
 % > Generate figure
 params.plot.ylim = [0 3]; params.plot.colormap = [0,0,0;1,0,0];
-plot_compare_fano_b(input_data,input_trials,input_labels,params)
+bf_ramping_outcome_fano = plot_compare_fano_b(input_data,input_trials,input_labels,params);
+save_figure(bf_ramping_outcome_fano,dirs.fig,'bf_ramping_outcome_fano')
 
 % Comparison for striatum ramping neurons --------------------------
 % Define analysis time window 
@@ -61,4 +64,5 @@ input_labels = {'prob50d','prob50nd'};
 
 % > Generate figure
 params.plot.ylim = [0 3]; params.plot.colormap = [0,0,0;1,0,0];
-plot_compare_fano_b(input_data,input_trials,input_labels,params)
+striatum_ramping_outcome_fano = plot_compare_fano_b(input_data,input_trials,input_labels,params);
+save_figure(striatum_ramping_outcome_fano,dirs.fig,'striatum_ramping_outcome_fano')

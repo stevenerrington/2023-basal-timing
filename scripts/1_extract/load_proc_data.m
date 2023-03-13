@@ -1,5 +1,5 @@
 %% Load processed data
-
+clc
 fprintf('Loading pre-extracted data \n')
 % Extracted beh & neurophys
 load(fullfile(dirs.root,'data','large','bf_data_CS.mat'))
