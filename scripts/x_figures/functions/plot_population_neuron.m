@@ -1,4 +1,9 @@
-function figure_plot_out = plot_population_neuron(data_in,plot_trial_types,params)
+function [figure_plot_out, plot_data] = plot_population_neuron(data_in,plot_trial_types,params,fig_flag)
+
+if nargin < 4
+   fig_flag = 0; 
+end
+
 % Input variables
 xlim_input = params.plot.xlim; ylim_input = params.plot.ylim;
 
@@ -44,31 +49,44 @@ for neuron_i = 1:size(data_in,1)
     end
 end
 
-% Generate plot using gramm
-clear figure_plot
 
-% Ramping %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Spike density function
-figure_plot(1,1)=gramm('x',plot_time,'y',plot_sdf_data,'color',plot_label);
-figure_plot(1,1).stat_summary();
-figure_plot(1,1).axe_property('XLim',xlim_input,'YLim',ylim_input);
-figure_plot(1,1).set_names('x','Time from CS Onset (ms)','y','Firing rate (Z-score)');
-figure_plot(1,1).set_color_options('map',color_scheme);
-figure_plot(1,1).geom_vline('xintercept',0,'style','k-');
-figure_plot(1,1).geom_vline('xintercept',params.plot.xintercept,'style','k-');
-figure_plot(1,1).no_legend;
+%% Output data
+plot_data.plot_sdf_data = plot_sdf_data;
+plot_data.plot_label = plot_label;
+plot_data.plot_fano_data = plot_fano_data;
+plot_data.plot_fano_label = plot_fano_label;
 
-% Fano factor
-figure_plot(2,1)=gramm('x',data_in.fano(1).time,'y',plot_fano_data,'color',plot_fano_label);
-figure_plot(2,1).stat_summary();
-figure_plot(2,1).axe_property('XLim',xlim_input,'YLim',[0 3]);
-figure_plot(2,1).set_names('x','Time from CS Onset (ms)','y','Fano Factor');
-figure_plot(2,1).set_color_options('map',color_scheme);
-figure_plot(2,1).geom_vline('xintercept',0,'style','k-');
-figure_plot(2,1).geom_vline('xintercept',params.plot.xintercept,'style','k-');
-figure_plot(2,1).geom_hline('yintercept',1,'style','k--');
-figure_plot(2,1).no_legend;
 
-figure_plot_out = figure('Renderer', 'painters', 'Position', [100 100 300 400]);
-figure_plot.draw();
+%% Generate Figure
 
+if fig_flag == 1
+    % Generate plot using gramm
+    clear figure_plot
+    
+    % Ramping %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    % Spike density function
+    figure_plot(1,1)=gramm('x',plot_time,'y',plot_sdf_data,'color',plot_label);
+    figure_plot(1,1).stat_summary();
+    figure_plot(1,1).axe_property('XLim',xlim_input,'YLim',ylim_input);
+    figure_plot(1,1).set_names('x','Time from CS Onset (ms)','y','Firing rate (Z-score)');
+    figure_plot(1,1).set_color_options('map',color_scheme);
+    figure_plot(1,1).geom_vline('xintercept',0,'style','k-');
+    figure_plot(1,1).geom_vline('xintercept',params.plot.xintercept,'style','k-');
+    figure_plot(1,1).no_legend;
+    
+    % Fano factor
+    figure_plot(2,1)=gramm('x',data_in.fano(1).time,'y',plot_fano_data,'color',plot_fano_label);
+    figure_plot(2,1).stat_summary();
+    figure_plot(2,1).axe_property('XLim',xlim_input,'YLim',[0 3]);
+    figure_plot(2,1).set_names('x','Time from CS Onset (ms)','y','Fano Factor');
+    figure_plot(2,1).set_color_options('map',color_scheme);
+    figure_plot(2,1).geom_vline('xintercept',0,'style','k-');
+    figure_plot(2,1).geom_vline('xintercept',params.plot.xintercept,'style','k-');
+    figure_plot(2,1).geom_hline('yintercept',1,'style','k--');
+    figure_plot(2,1).no_legend;
+    
+    figure_plot_out = figure('Renderer', 'painters', 'Position', [100 100 300 400]);
+    figure_plot.draw();
+else
+    figure_plot_out = [];
+end
