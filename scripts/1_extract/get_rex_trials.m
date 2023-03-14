@@ -78,4 +78,8 @@ trials.aAll = [trials.a0, trials.a25, trials.a50, trials.a75, trials.a100];
 trials.uncert_delivered = [trials.prob25d, trials.prob50d, trials.prob75d];
 trials.uncert_omit = [trials.prob25nd, trials.prob50nd, trials.prob75nd];
 
+
+trials.uncertain = [trials.prob25, trials.prob50, trials.prob75];
+trials.certain = [trials.prob0, trials.prob100];
+
 end

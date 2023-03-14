@@ -2,12 +2,18 @@
 % 2023-basal-timing, S P Errington, January 2023
 % > Project description will go here
 
+
+%% Dev notes:
+% 2023-03-14: updated CS data to include a trial structure for certain v
+%             uncertain
+
+
 %% Setup workspace
 % Clear workspace
 clear all; close all; clc; beep off; warning off;
 
 % Define paths & key directories
-dirs = get_dirs_bf('home');
+dirs = get_dirs_bf('wustl');
 params = get_params;
 status = get_status(dirs);
 

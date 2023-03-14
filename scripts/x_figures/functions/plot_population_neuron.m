@@ -4,9 +4,6 @@ if nargin < 4
    fig_flag = 0; 
 end
 
-% Input variables
-xlim_input = params.plot.xlim; ylim_input = params.plot.ylim;
-
 % Initialize plot data structures
 plot_sdf_data = []; 
 plot_fano_data = []; plot_fano_label = [];
@@ -14,8 +11,8 @@ plot_category_label = []; plot_label = [];
 plot_time = [-5000:5000];
 time_zero = abs(plot_time(1));
 
-color_scheme = params.plot.colormap;
-baseline_win = [-500:200];
+baseline_win = [-1000:3500];
+max_win = [2000:2500];
 
 for neuron_i = 1:size(data_in,1)
     all_prob_trials = [];
@@ -26,6 +23,7 @@ for neuron_i = 1:size(data_in,1)
     bl_fr_mean = nanmean(nanmean(data_in.sdf{neuron_i}(all_prob_trials,baseline_win+time_zero)));
     bl_fr_std = nanstd(nanmean(data_in.sdf{neuron_i}(all_prob_trials,baseline_win+time_zero)));
     
+    max_fr = max(mean(data_in.sdf{neuron_i}(all_prob_trials,max_win+time_zero)));
     
     for trial_type_i = 1:length(plot_trial_types)
         trial_type_label = plot_trial_types{trial_type_i};
@@ -33,6 +31,7 @@ for neuron_i = 1:size(data_in,1)
         n_trls = size(trials_in,2);
         
         sdf_x = []; sdf_x = (nanmean(data_in.sdf{neuron_i}(trials_in,:))-bl_fr_mean)./bl_fr_std;
+        %sdf_x = []; sdf_x = nanmean(data_in.sdf{neuron_i}(trials_in,:))./max_fr;
         
         % If there aren't enough trials, then we will NaN out the SDF
         if any(isinf(sdf_x)) | length(sdf_x) == 1
@@ -63,6 +62,9 @@ if fig_flag == 1
     % Generate plot using gramm
     clear figure_plot
     
+    xlim_input = params.plot.xlim; ylim_input = params.plot.ylim;
+    color_scheme = params.plot.colormap;
+
     % Ramping %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     % Spike density function
     figure_plot(1,1)=gramm('x',plot_time,'y',plot_sdf_data,'color',plot_label);

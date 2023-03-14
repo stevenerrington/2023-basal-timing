@@ -6,7 +6,6 @@ end
 
 % Input variables
 example_neuron_i = neuron_i;
-xlim_input = params.plot.xlim; ylim_input = params.plot.ylim;
 
 % Initialize plot data structures
 plot_sdf_data = []; plot_spk_data = [];
@@ -15,8 +14,6 @@ plot_label = [];
 
 plot_time = [-5000:5000];
 time_zero = abs(plot_time(1));
-
-color_scheme = params.plot.colormap;
 
 
 %% Setup figure %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -54,6 +51,9 @@ if fig_flag == 1
     % Generate plot using gramm
     clear figure_plot
     
+    xlim_input = params.plot.xlim; ylim_input = params.plot.ylim;
+    color_scheme = params.plot.colormap;
+
     % Raster plot
     figure_plot(1,1)=gramm('x',plot_spk_data,'color',plot_label);
     figure_plot(1,1).geom_raster();
