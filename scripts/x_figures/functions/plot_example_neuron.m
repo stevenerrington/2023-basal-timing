@@ -34,7 +34,7 @@ for trial_type_i = 1:length(plot_trial_types)
     plot_spk_data = [plot_spk_data; spkTimes];
     
     
-    plot_fano_data = [plot_fano_data; {data_in.fano(example_neuron_i).raw.(trial_type_label)}];
+    plot_fano_data = [plot_fano_data; {data_in.fano(example_neuron_i).smooth.(trial_type_label)}];
     plot_fano_label = [plot_fano_label; {[int2str(trial_type_i) '_' (trial_type_label)]}];
 end
 

@@ -1,4 +1,4 @@
-function [figure_plot_out, plot_data] = plot_population_neuron(data_in,plot_trial_types,params,fig_flag)
+function [figure_plot_out, plot_data] = plot_population_neuron_csOutcome(data_in,datasheet_in,plot_trial_types,params,fig_flag)
 
 if nargin < 4
    fig_flag = 0; 
@@ -41,13 +41,21 @@ for neuron_i = 1:size(data_in,1)
             sdf_x = nan(1,length(plot_time));
         end
         
+        switch datasheet_in.site{neuron_i}
+            case 'nih'
+                sdf_x = sdf_x(time_zero+1500+[-1000:500]);
+            case 'wustl'
+                sdf_x = sdf_x(time_zero+2500+[-1000:500]);
+        end
+        
+        
         plot_sdf_data = [plot_sdf_data ; num2cell(sdf_x,2)];
         plot_label = [plot_label; {[int2str(trial_type_i) '_' (trial_type_label)]}];
         
-        plot_fano_data = [plot_fano_data; {data_in.fano(neuron_i).smooth.(trial_type_label)}];
+        plot_fano_data = [plot_fano_data; {data_in.fano(neuron_i).raw.(trial_type_label)}];
         plot_fano_label = [plot_fano_label; {[int2str(trial_type_i) '_' (trial_type_label)]}];
         
-        plot_time_adjust = [plot_time_adjust; {plot_time}];
+        plot_time_adjust = [plot_time_adjust; {[-1000:500]}];
         
     end
 end
