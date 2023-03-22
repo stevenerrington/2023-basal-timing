@@ -17,7 +17,7 @@ example_neuron_i_bf = 16;
 bf_plot_data_CS.area_label = repmat({'1_bf'},size(bf_plot_data_CS.plot_label,1),1);
 
 % Get example ramping neuron activity in the basal ganglia (striatum).
-example_neuron_i_striatum = 17; % 1, 10, 17
+example_neuron_i_striatum = 10; % 1, 10, 17
 [~, striatum_plot_data_CS] = plot_example_neuron(striatum_data_CS,plot_trial_types_CS,params,example_neuron_i_striatum,0);
 striatum_plot_data_CS.area_label = repmat({'1_bg'},size(striatum_plot_data_CS.plot_label,1),1);
 
@@ -28,7 +28,7 @@ example_neuron_i_bf = 8; %1, 5, 8
 bf_plot_data_trace.area_label = repmat({'1_bf'},size(bf_plot_data_trace.plot_label,1),1);
 
 % Get example ramping neuron activity in the basal ganglia (striatum).
-example_neuron_i_striatum = 16; % 16
+example_neuron_i_striatum = 8; % 16
 [~, striatum_plot_data_trace] = plot_example_neuron(striatum_data_traceExp,plot_trial_types_trace,params,example_neuron_i_striatum,0);
 striatum_plot_data_trace.area_label = repmat({'1_bg'},size(striatum_plot_data_trace.plot_label,1),1);
 
@@ -172,7 +172,7 @@ figure_plot(7,1)=gramm('x',[-5000:5000],...
     'y',[striatum_plot_data_CS.plot_sdf_data],...
     'color',[striatum_plot_data_CS.plot_label]);
 figure_plot(7,1).stat_summary();
-figure_plot(7,1).axe_property('XLim',params.plot.xlim_CSonset,'XTick',{},'XTickLabels',{},'YLim',params.plot.ylim_example_sdf);
+figure_plot(7,1).axe_property('XLim',params.plot.xlim_CSonset,'XTick',{},'XTickLabels',{},'YLim',[0 50]);
 figure_plot(7,1).set_names('x','','y','Basal Ganglia');
 figure_plot(7,1).set_line_options('base_size', 0.5);
 figure_plot(7,1).set_color_options('map',params.plot.colormap);
@@ -186,7 +186,7 @@ figure_plot(8,1)=gramm('x',[-5000:5000],...
     'y',[striatum_plot_data_CS.plot_sdf_data],...
     'color',[striatum_plot_data_CS.plot_label]);
 figure_plot(8,1).stat_summary();
-figure_plot(8,1).axe_property('XLim',params.plot.xlim_outcome+2500,'XTick',{},'XTickLabels',{},'YTick',[],'YLim',params.plot.ylim_example_sdf);
+figure_plot(8,1).axe_property('XLim',params.plot.xlim_outcome+2500,'XTick',{},'XTickLabels',{},'YTick',[],'YLim',[0 50]);
 figure_plot(8,1).set_names('x','','y','');
 figure_plot(8,1).set_line_options('base_size', 0.5);
 figure_plot(8,1).set_color_options('map',params.plot.colormap);
@@ -202,7 +202,7 @@ figure_plot(9,1)=gramm('x',{bf_data_CS.fano(example_neuron_i_bf).time;...
     'y',[bf_plot_data_CS.plot_fano_data(1);striatum_plot_data_CS.plot_fano_data(1)],...
     'color',[append(bf_plot_data_CS.plot_fano_label(1),'_BF');append(striatum_plot_data_CS.plot_fano_label(1),'_BG')]);
 figure_plot(9,1).geom_line();
-figure_plot(9,1).axe_property('XLim',params.plot.xlim_CSonset,'XTick',{},'XTickLabels',{},'YLim',[0 2.5]);
+figure_plot(9,1).axe_property('XLim',params.plot.xlim_CSonset,'XTick',{},'XTickLabels',{},'YLim',[0 3]);
 figure_plot(9,1).set_names('x','','y','Fano');
 figure_plot(9,1).set_color_options('map',params.plot.colormap_bf_bg);
 figure_plot(9,1).set_line_options('base_size', 0.5);
@@ -218,7 +218,7 @@ figure_plot(10,1)=gramm('x',{bf_data_CS.fano(example_neuron_i_bf).time+1000;...
     'y',[bf_plot_data_CS.plot_fano_data(1);striatum_plot_data_CS.plot_fano_data(1)],...
     'color',[append(bf_plot_data_CS.plot_fano_label(1),'_BF');append(striatum_plot_data_CS.plot_fano_label(1),'_BG')]);
 figure_plot(10,1).geom_line();
-figure_plot(10,1).axe_property('XLim',params.plot.xlim_outcome+2500,'XTick',{},'XTickLabels',{},'YTick',[],'YLim',[0 2.5]);
+figure_plot(10,1).axe_property('XLim',params.plot.xlim_outcome+2500,'XTick',{},'XTickLabels',{},'YTick',[],'YLim',[0 3]);
 figure_plot(10,1).set_names('x','','y','');
 figure_plot(10,1).set_color_options('map',params.plot.colormap_bf_bg);
 figure_plot(10,1).set_line_options('base_size', 0.5);
@@ -422,7 +422,7 @@ figure_plot(7,2)=gramm('x',[-5000:5000],...
     'y',[striatum_plot_data_trace.plot_sdf_data],...
     'color',[striatum_plot_data_trace.plot_label]);
 figure_plot(7,2).stat_summary();
-figure_plot(7,2).axe_property('XLim',params.plot.xlim_CSonset,'XTick',{},'XTickLabels',{},'YLim',params.plot.ylim_example_sdf);
+figure_plot(7,2).axe_property('XLim',params.plot.xlim_CSonset,'XTick',{},'XTickLabels',{},'YLim',[0 50]);
 figure_plot(7,2).set_names('x','','y','');
 figure_plot(7,2).set_line_options('base_size', 0.5);
 figure_plot(7,2).set_color_options('map',params.plot.colormap);
@@ -436,7 +436,7 @@ figure_plot(8,2)=gramm('x',[-5000:5000],...
     'y',[striatum_plot_data_trace.plot_sdf_data],...
     'color',[striatum_plot_data_trace.plot_label]);
 figure_plot(8,2).stat_summary();
-figure_plot(8,2).axe_property('XLim',params.plot.xlim_outcome+2500,'XTick',{},'XTickLabels',{},'YTick',[],'YLim',params.plot.ylim_example_sdf);
+figure_plot(8,2).axe_property('XLim',params.plot.xlim_outcome+2500,'XTick',{},'XTickLabels',{},'YTick',[],'YLim',[0 50]);
 figure_plot(8,2).set_names('x','','y','');
 figure_plot(8,2).set_line_options('base_size', 0.5);
 figure_plot(8,2).set_color_options('map',params.plot.colormap);
@@ -452,7 +452,7 @@ figure_plot(9,2)=gramm('x',{bf_data_traceExp.fano(example_neuron_i_bf).time;...
     'y',[bf_plot_data_trace.plot_fano_data(1);striatum_plot_data_trace.plot_fano_data(1)],...
     'color',[append(bf_plot_data_trace.plot_fano_label(1),'_BF');append(striatum_plot_data_trace.plot_fano_label(1),'_BG')]);
 figure_plot(9,2).geom_line();
-figure_plot(9,2).axe_property('XLim',params.plot.xlim_CSonset,'XTick',{},'XTickLabels',{},'YLim',[0 2.5]);
+figure_plot(9,2).axe_property('XLim',params.plot.xlim_CSonset,'XTick',{},'XTickLabels',{},'YLim',[0 3]);
 figure_plot(9,2).set_names('x','','y','');
 figure_plot(9,2).set_color_options('map',params.plot.colormap_bf_bg);
 figure_plot(9,2).set_line_options('base_size', 0.5);
@@ -468,7 +468,7 @@ figure_plot(10,2)=gramm('x',{bf_data_traceExp.fano(example_neuron_i_bf).time+100
     'y',[bf_plot_data_trace.plot_fano_data(1);striatum_plot_data_trace.plot_fano_data(1)],...
     'color',[append(bf_plot_data_trace.plot_fano_label(1),'_BF');append(striatum_plot_data_trace.plot_fano_label(1),'_BG')]);
 figure_plot(10,2).geom_line();
-figure_plot(10,2).axe_property('XLim',params.plot.xlim_outcome+2500,'XTick',{},'XTickLabels',{},'YTick',[],'YLim',[0 2.5]);
+figure_plot(10,2).axe_property('XLim',params.plot.xlim_outcome+2500,'XTick',{},'XTickLabels',{},'YTick',[],'YLim',[0 3]);
 figure_plot(10,2).set_names('x','','y','');
 figure_plot(10,2).set_color_options('map',params.plot.colormap_bf_bg);
 figure_plot(10,2).set_line_options('base_size', 0.5);
