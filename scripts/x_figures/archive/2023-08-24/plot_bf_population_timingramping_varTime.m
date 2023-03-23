@@ -10,7 +10,7 @@ plot_label = []; plot_sdf_data_outcome = []; plot_fano_data_outcome = [];
 plot_time = [-5000:5000]; time_zero = abs(plot_time(1));
 baseline_win = [-500:200];
 outcome_win = [-1000:100];
-epoch.outcomeTime = [1500,2500,3500];
+epoch.outcomeTime = [1500,2500,3500,4500];
 
 % Define figure properties
 color_scheme = cool(5); color_scheme = color_scheme([2,3,4],:);

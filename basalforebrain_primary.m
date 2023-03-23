@@ -13,7 +13,7 @@
 clear all; close all; clc; beep off; warning off;
 
 % Define paths & key directories
-dirs = get_dirs_bf('wustl');
+dirs = get_dirs_bf('home');
 params = get_params;
 status = get_status(dirs);
 
@@ -30,6 +30,7 @@ switch status
         
         % Striatum data --------------------------------
         pavlovian_striatum_master % Pavlovian task data
+        timing_striatum_master
         trace_striatum_master     % Trace task data
 end
 

@@ -11,7 +11,7 @@ params.plot.colormap = cool(length(plot_trial_types));
 % > Plot example ramping neuron in the basal forebrain.
 params.plot.xlim = [-250 1750]; params.plot.ylim = [0 100];
 params.plot.xintercept = 1500;
-bf_example_timing_ramping = plot_example_neuron(bf_data_timingTask,plot_trial_types,params,2);
+bf_example_timing_ramping = plot_example_neuron(bf_data_timingTask,plot_trial_types,params,2,1);
 save_figure(bf_example_timing_ramping,dirs.fig,'bf_example_timing_ramping')
 
 %% Population
