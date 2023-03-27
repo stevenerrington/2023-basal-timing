@@ -5,8 +5,7 @@ plot_trial_types = {'prob0','prob25','prob50','prob75','prob100'};
 
 % Parameters
 xlim_input_CS = [0 500]; xlim_input_outcome = [-500 0]; 
-ylim_input = [0 75];
-clear figure_plot
+ylim_input = [0 75]; color_scheme = cool(length(plot_trial_types));
 
 %% Get example neuron data
 % Initialize plot data structures
@@ -45,7 +44,7 @@ end
 % Raster plot
 figure_plot(1,1)=gramm('x',plot_spk_data,'color',plot_label);
 figure_plot(1,1).geom_raster();
-figure_plot(1,1).axe_property('XLim',xlim_input_CS,'XTick',[],'YTick',[]);
+figure_plot(1,1).axe_property('XLim',xlim_input_CS,'XTick',[],'YTick',[],'XColor',[1 1 1],'YColor',[1 1 1]);
 figure_plot(1,1).set_names('x','','y','');
 figure_plot(1,1).set_color_options('map',color_scheme);
 figure_plot(1,1).no_legend;
@@ -53,7 +52,7 @@ figure_plot(1,1).no_legend;
 % Spike density function
 figure_plot(2,1)=gramm('x',plot_time,'y',plot_sdf_data,'color',plot_label);
 figure_plot(2,1).stat_summary();
-figure_plot(2,1).axe_property('XLim',xlim_input_CS,'YLim',ylim_input,'XTick',[],'YTick',[]);
+figure_plot(2,1).axe_property('XLim',xlim_input_CS,'YLim',ylim_input,'XTick',[],'XColor',[1 1 1]);
 figure_plot(2,1).set_names('x','','y','');
 figure_plot(2,1).set_color_options('map',color_scheme);
 figure_plot(2,1).no_legend;
@@ -61,7 +60,7 @@ figure_plot(2,1).no_legend;
 % Fano factor
 figure_plot(3,1)=gramm('x',data_in.fano(example_neuron_i).time,'y',plot_fano_data,'color',plot_fano_label);
 figure_plot(3,1).geom_line();
-figure_plot(3,1).axe_property('XLim',xlim_input_CS,'YLim',[0 4],'XTick',[],'YTick',[]);
+figure_plot(3,1).axe_property('XLim',xlim_input_CS,'YLim',[0 2],'XTick',[],'XColor',[1 1 1]);
 figure_plot(3,1).set_names('x','','y','');
 figure_plot(3,1).set_color_options('map',color_scheme);
 figure_plot(3,1).geom_hline('yintercept',1,'style','k--');
@@ -71,7 +70,7 @@ figure_plot(3,1).no_legend;
 % Raster plot
 figure_plot(1,2)=gramm('x',plot_spk_data,'color',plot_label);
 figure_plot(1,2).geom_raster();
-figure_plot(1,2).axe_property('XLim',xlim_input_outcome+1500,'XTick',[],'YTick',[]);
+figure_plot(1,2).axe_property('XLim',xlim_input_outcome+1500,'XTick',[],'YTick',[],'XColor',[1 1 1],'YColor',[1 1 1]);
 figure_plot(1,2).set_names('x','','y','');
 figure_plot(1,2).set_color_options('map',color_scheme);
 figure_plot(1,2).no_legend;
@@ -79,7 +78,7 @@ figure_plot(1,2).no_legend;
 % Spike density function
 figure_plot(2,2)=gramm('x',plot_time,'y',plot_sdf_data,'color',plot_label);
 figure_plot(2,2).stat_summary();
-figure_plot(2,2).axe_property('XLim',xlim_input_outcome+1500,'YLim',ylim_input,'XTick',[],'YTick',[]);
+figure_plot(2,2).axe_property('XLim',xlim_input_outcome+1500,'YLim',ylim_input,'XTick',[],'YTick',[],'XColor',[1 1 1],'YColor',[1 1 1]);
 figure_plot(2,2).set_names('x','','y','');
 figure_plot(2,2).set_color_options('map',color_scheme);
 figure_plot(2,2).no_legend;
@@ -87,7 +86,7 @@ figure_plot(2,2).no_legend;
 % Fano factor
 figure_plot(3,2)=gramm('x',data_in.fano(example_neuron_i).time,'y',plot_fano_data,'color',plot_fano_label);
 figure_plot(3,2).geom_line();
-figure_plot(3,2).axe_property('XLim',xlim_input_outcome+1500,'YLim',[0 2.5],'XTick',[],'YTick',[]);
+figure_plot(3,2).axe_property('XLim',xlim_input_outcome+1500,'YLim',[0 2],'XTick',[],'YTick',[],'XColor',[1 1 1],'YColor',[1 1 1]);
 figure_plot(3,2).set_names('x','','y','');
 figure_plot(3,2).set_color_options('map',color_scheme);
 figure_plot(3,2).geom_hline('yintercept',1,'style','k--');
@@ -102,7 +101,7 @@ plot_category_label_pop = []; plot_label_pop = [];
 
 % Define parameters
 plot_time = [-5000:5000]; time_zero = abs(plot_time(1));
-norm_window = [1:10001];
+norm_window = 5000+[-1000:3000];
 
 % For each neuron
 for neuron_i = 1:size(data_in,1)
@@ -157,7 +156,7 @@ end
 % Spike density function
 figure_plot(4,1)=gramm('x',plot_time,'y',plot_sdf_data_pop,'color',plot_label_pop);
 figure_plot(4,1).stat_summary();
-figure_plot(4,1).axe_property('XLim',xlim_input_CS,'YLim',[-1 4],'XTick',[],'YTick',[]);
+figure_plot(4,1).axe_property('XLim',xlim_input_CS,'YLim',[-3 4],'XTick',[],'XColor',[1 1 1]);
 figure_plot(4,1).set_names('x','','y','');
 figure_plot(4,1).set_color_options('map',color_scheme);
 figure_plot(4,1).no_legend;
@@ -165,7 +164,7 @@ figure_plot(4,1).no_legend;
 % Fano factor
 figure_plot(5,1)=gramm('x',data_in.fano(example_neuron_i).time,'y',plot_fano_data_pop,'color',plot_fano_label_pop);
 figure_plot(5,1).stat_summary();
-figure_plot(5,1).axe_property('XLim',xlim_input_CS,'YLim',[0 2.5]);
+figure_plot(5,1).axe_property('XLim',xlim_input_CS,'YLim',[0 2]);
 figure_plot(5,1).set_names('x','Time from CS Onset (ms)','y','');
 figure_plot(5,1).set_color_options('map',color_scheme);
 figure_plot(5,1).geom_hline('yintercept',1,'style','k--');
@@ -175,7 +174,7 @@ figure_plot(5,1).no_legend;
 % Spike density function
 figure_plot(4,2)=gramm('x',plot_time,'y',plot_sdf_data_pop,'color',plot_label_pop);
 figure_plot(4,2).stat_summary();
-figure_plot(4,2).axe_property('XLim',xlim_input_outcome+2500,'YLim',[-1 4],'XTick',[],'YTick',[]);
+figure_plot(4,2).axe_property('XLim',xlim_input_outcome+2500,'YLim',[-3 4],'XTick',[],'YTick',[],'XColor',[1 1 1],'YColor',[1 1 1]);
 figure_plot(4,2).set_names('x','','y','');
 figure_plot(4,2).set_color_options('map',color_scheme);
 figure_plot(4,2).no_legend;
@@ -183,13 +182,8 @@ figure_plot(4,2).no_legend;
 % Fano factor
 figure_plot(5,2)=gramm('x',data_in.fano(example_neuron_i).time,'y',plot_fano_data_pop,'color',plot_fano_label_pop);
 figure_plot(5,2).stat_summary();
-figure_plot(5,2).axe_property('XLim',xlim_input_outcome+2500,'YLim',[0 2.5]);
+figure_plot(5,2).axe_property('XLim',xlim_input_outcome+2500,'YLim',[0 2],'YTick',[],'YColor',[1 1 1]);
 figure_plot(5,2).set_names('x','Time from outcome (ms)','y','');
 figure_plot(5,2).set_color_options('map',color_scheme);
 figure_plot(5,2).geom_hline('yintercept',1,'style','k--');
 figure_plot(5,2).no_legend;
-
-
-%% Generate gramm plot
-figure_plot_out = figure('Renderer', 'painters', 'Position', [100 100 300 500]);
-figure_plot.draw();
