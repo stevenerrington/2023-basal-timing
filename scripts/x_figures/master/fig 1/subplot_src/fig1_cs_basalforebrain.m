@@ -1,17 +1,17 @@
 %% Basal forebrain | CS task
 % Input variables
 data_in = []; data_in = bf_data_CS;
-plot_trial_types = {'prob0','prob25','prob50','prob75','prob100'};
+plot_trial_types = trialtype_plot.cs;
 
 % Parameters
-xlim_input_CS = [0 500]; xlim_input_outcome = [-500 0]; 
-ylim_input = [0 75]; color_scheme = cool(length(plot_trial_types));
+xlim_input_CS = [0 500]; xlim_input_outcome = [-500 0];
+ylim_input = [0 75]; color_scheme = colors.cs_task;
 
 %% Get example neuron data
 % Initialize plot data structures
 plot_sdf_data = [];
 plot_spk_data = [];
-plot_fano_data = []; plot_fano_label = []; 
+plot_fano_data = []; plot_fano_label = [];
 plot_label = [];
 plot_time = [-5000:5000];
 time_zero = abs(plot_time(1));
@@ -29,7 +29,7 @@ for trial_type_i = 1:length(plot_trial_types)
     
     spkTimes = {};
     for trl_i = 1:n_trls
-       spkTimes{trl_i,1} = find(data_in.rasters{example_neuron_i}(trials_in(trl_i),:) == 1) - time_zero;
+        spkTimes{trl_i,1} = find(data_in.rasters{example_neuron_i}(trials_in(trl_i),:) == 1) - time_zero;
     end
     
     plot_spk_data = [plot_spk_data; spkTimes];
@@ -119,33 +119,37 @@ for neuron_i = 1:size(data_in,1)
         
         % Get the normalized SDF
         sdf_x = []; sdf_x = (nanmean(data_in.sdf{neuron_i}(trials_in,:))-bl_fr_mean)./bl_fr_std;
-        fano_x = []; 
+        fano_x = [];
         
         % Then if:
         switch bf_datasheet_CS.site{neuron_i}
-            % NIH data
-            % > Pad with nan's to make the CS to outcome period the same
-            % length as the WUSTL data
+            case 'wustl'
+                fano_x = data_in.fano(neuron_i).raw.(trial_type_label);
+                sdf_out = []; sdf_out = sdf_x;
+                
+                % NIH data
+                % > Pad with nan's to make the CS to outcome period the same
+                % length as the WUSTL data
             case 'nih'
-                sdf_x = [sdf_x(1:time_zero+xlim_input_CS(2)+100),...
+                sdf_out = [];
+                sdf_out = [sdf_x(1:time_zero+xlim_input_CS(2)+100),...
                     nan(1,900), sdf_x(time_zero+xlim_input_CS(2)+1:end-1000)];
                 
                 fano_continuous_a = []; fano_continuous_a = find(ismember(data_in.fano(neuron_i).time,[-5000:xlim_input_CS(2)]));
                 fano_continuous_b = []; fano_continuous_b = find(ismember(data_in.fano(neuron_i).time,xlim_input_CS(2)+1:5000));
                 fano_x = [data_in.fano(neuron_i).raw.(trial_type_label)(fano_continuous_a),...
                     data_in.fano(neuron_i).raw.(trial_type_label)(fano_continuous_b)];
-
-            case 'wustl'
-                fano_x = data_in.fano(neuron_i).raw.(trial_type_label);              
+                
+                
                 
         end
         
-        plot_sdf_data_pop = [plot_sdf_data_pop ; num2cell(sdf_x,2)];
+        plot_sdf_data_pop = [plot_sdf_data_pop ; num2cell(sdf_out,2)];
         plot_label_pop = [plot_label_pop; {[int2str(trial_type_i) '_' (trial_type_label)]}];
         
         plot_fano_data_pop = [plot_fano_data_pop; {fano_x}];
         plot_fano_label_pop = [plot_fano_label_pop; {[int2str(trial_type_i) '_' (trial_type_label)]}];
-                
+        
         plot_category_label_pop = [plot_category_label_pop; {bf_datasheet_CS.cluster_label{neuron_i}}];
         
     end

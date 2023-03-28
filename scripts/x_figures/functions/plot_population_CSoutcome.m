@@ -1,4 +1,4 @@
-function figure_plot_out = plot_population_CSoutcome(data_in,datasheet_in,plot_trial_types,params)
+function figure_plot = plot_population_CSoutcome(data_in,datasheet_in,plot_trial_types,params,subfig_ref)
 
 % Input variables
 xlim_input = params.plot.xlim; ylim_input = params.plot.ylim;
@@ -18,7 +18,7 @@ plot_category_label = []; plot_group = []; plot_fano_window_data = [];
 plot_fanogroup_label = []; plot_label_rwd = [];
 
 % Timing parameters
-plot_time = [-1000:2000]; time_zero = 5000; baseline_win = [-500:-250];
+plot_time = [-1000:2000]; time_zero = 5000; baseline_win = [-1000:3500];
 epoch.postOutcome = [0 200]; epoch_zero.postOutcome = [1500 2500];
 
 
@@ -112,34 +112,31 @@ end
 clear figure_plot
 
 % Spike density function >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-figure_plot(1,1)=gramm('x',plot_time,'y',plot_sdf_data,'color',plot_label_rwd);
-figure_plot(1,1).stat_summary();
-figure_plot(1,1).axe_property('XLim',xlim_input,'YLim',ylim_input);
-figure_plot(1,1).set_names('x','Time from Outcome (ms)','y','Firing rate (Z-score)');
-figure_plot(1,1).set_color_options('map',color_scheme);
-figure_plot(1,1).geom_vline('xintercept',0,'style','k-');
-figure_plot(1,1).no_legend;
-figure_plot(1,1).facet_grid([],plot_group);
+figure_plot(subfig_ref(1),1)=gramm('x',plot_time,'y',plot_sdf_data,'color',plot_label_rwd);
+figure_plot(subfig_ref(1),1).stat_summary();
+figure_plot(subfig_ref(1),1).axe_property('XLim',xlim_input,'YLim',ylim_input,'XTick',[],'XColor',[1 1 1]);
+figure_plot(subfig_ref(1),1).set_names('x','Time from Outcome (ms)','y','Firing rate (Z-score)');
+figure_plot(subfig_ref(1),1).set_color_options('map',color_scheme);
+figure_plot(subfig_ref(1),1).geom_vline('xintercept',0,'style','k-');
+figure_plot(subfig_ref(1),1).no_legend;
+figure_plot(subfig_ref(1),1).facet_grid([],plot_group,'column_labels',false,'row_labels',false);
 
 % Fano factor >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-figure_plot(2,1)=gramm('x',plot_time,'y',plot_fano_data,'color',plot_label_rwd);
-figure_plot(2,1).stat_summary();
-figure_plot(2,1).axe_property('XLim',xlim_input,'YLim',[0 4]);
-figure_plot(2,1).set_names('x','Time from Outcome (ms)','y','Fano Factor');
-figure_plot(2,1).set_color_options('map',color_scheme);
-figure_plot(2,1).geom_vline('xintercept',0,'style','k-');
-figure_plot(2,1).geom_hline('yintercept',1,'style','k--');
-figure_plot(2,1).no_legend;
-figure_plot(2,1).facet_grid([],plot_group);
+figure_plot(subfig_ref(2),1)=gramm('x',plot_time,'y',plot_fano_data,'color',plot_label_rwd);
+figure_plot(subfig_ref(2),1).stat_summary();
+figure_plot(subfig_ref(2),1).axe_property('XLim',xlim_input,'YLim',[0 2]);
+figure_plot(subfig_ref(2),1).set_names('x','Time from Outcome (ms)','y','Fano Factor');
+figure_plot(subfig_ref(2),1).set_color_options('map',color_scheme);
+figure_plot(subfig_ref(2),1).geom_vline('xintercept',0,'style','k-');
+figure_plot(subfig_ref(2),1).geom_hline('yintercept',1,'style','k--');
+figure_plot(subfig_ref(2),1).no_legend;
+figure_plot(subfig_ref(2),1).facet_grid([],plot_group,'column_labels',false,'row_labels',false);
 
 % Bar Plot >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-figure_plot(3,1)=gramm('x',plot_group,'y',plot_fano_window_data,'color',plot_label_rwd);
-figure_plot(3,1).stat_summary('geom',{'bar','black_errorbar'},'width',0.2);
-figure_plot(3,1).geom_jitter('alpha',0.2,'dodge',0.5,'width',0.1);
-figure_plot(3,1).set_color_options('map',color_scheme);
-figure_plot(3,1).geom_hline('yintercept',1);
-figure_plot(3,1).axe_property('YLim',[0 4]);
+% figure_plot(3,1)=gramm('x',plot_group,'y',plot_fano_window_data,'color',plot_label_rwd);
+% figure_plot(3,1).stat_summary('geom',{'bar','black_errorbar'},'width',0.2);
+% figure_plot(3,1).geom_jitter('alpha',0.2,'dodge',0.5,'width',0.1);
+% figure_plot(3,1).set_color_options('map',color_scheme);
+% figure_plot(3,1).geom_hline('yintercept',1);
+% figure_plot(3,1).axe_property('YLim',[0 2]);
 
-
-figure_plot_out = figure('Renderer', 'painters', 'Position', [100 100 600 600]);
-figure_plot.draw();

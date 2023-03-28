@@ -1,11 +1,11 @@
-%% Basal ganglia | CS task
+%% Basal forebrain | CS task
 % Input variables
-data_in = []; data_in = striatum_data_traceExp;
-plot_trial_types = {'timingcue_uncertain','notrace_uncertain','timingcue_certain','notrace_certain'};
+data_in = []; data_in = striatum_data_CS;
+plot_trial_types = trialtype_plot.cs;
 
 % Parameters
-xlim_input_CS = [0 2500]; xlim_input_outcome = [-500 0]; 
-ylim_input = [0 75]; color_scheme = winter(length(plot_trial_types));
+xlim_input_CS = [0 2500];
+ylim_input = [0 75]; color_scheme = colors.cs_task;
 
 %% Get example neuron data
 % Initialize plot data structures
@@ -16,7 +16,7 @@ plot_label = [];
 plot_time = [-5000:5000];
 time_zero = abs(plot_time(1));
 
-example_neuron_i = 8;
+example_neuron_i = 10;
 
 % Raster & SDF restructuring
 for trial_type_i = 1:length(plot_trial_types)
@@ -42,33 +42,33 @@ end
 % Example neuron %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % CS Onset ----------------------------------------------------------------
 % Raster plot
-figure_plot(16,1)=gramm('x',plot_spk_data,'color',plot_label);
-figure_plot(16,1).geom_raster();
-figure_plot(16,1).axe_property('XLim',xlim_input_CS,'XTick',[],'YTick',[],'XColor',[1 1 1],'YColor',[1 1 1]);
-figure_plot(16,1).set_names('x','','y','');
-figure_plot(16,1).set_color_options('map',color_scheme);
-figure_plot(16,1).no_legend;
+figure_plot(11,1)=gramm('x',plot_spk_data,'color',plot_label);
+figure_plot(11,1).geom_raster();
+figure_plot(11,1).axe_property('XLim',xlim_input_CS,'XTick',[],'YTick',[],'XColor',[1 1 1],'YColor',[1 1 1]);
+figure_plot(11,1).set_names('x','','y','');
+figure_plot(11,1).set_color_options('map',color_scheme);
+figure_plot(11,1).no_legend;
 
 % Spike density function
-figure_plot(7,1)=gramm('x',plot_time,'y',plot_sdf_data,'color',plot_label);
-figure_plot(7,1).stat_summary();
-figure_plot(7,1).axe_property('XLim',xlim_input_CS,'YLim',ylim_input,'XTick',[],'XColor',[1 1 1]);
-figure_plot(7,1).set_names('x','','y','');
-figure_plot(7,1).set_color_options('map',color_scheme);
-figure_plot(7,1).no_legend;
+figure_plot(12,1)=gramm('x',plot_time,'y',plot_sdf_data,'color',plot_label);
+figure_plot(12,1).stat_summary();
+figure_plot(12,1).axe_property('XLim',xlim_input_CS,'YLim',ylim_input,'XTick',[],'XColor',[1 1 1]);
+figure_plot(12,1).set_names('x','','y','');
+figure_plot(12,1).set_color_options('map',color_scheme);
+figure_plot(12,1).no_legend;
 
 % Fano factor
-figure_plot(8,1)=gramm('x',data_in.fano(example_neuron_i).time,'y',plot_fano_data,'color',plot_fano_label);
-figure_plot(8,1).geom_line();
-figure_plot(8,1).axe_property('XLim',xlim_input_CS,'YLim',[0 2],'XTick',[],'XColor',[1 1 1]);
-figure_plot(8,1).set_names('x','','y','');
-figure_plot(8,1).set_color_options('map',color_scheme);
-figure_plot(8,1).geom_hline('yintercept',1,'style','k--');
-figure_plot(8,1).no_legend;
+figure_plot(13,1)=gramm('x',data_in.fano(example_neuron_i).time,'y',plot_fano_data,'color',plot_fano_label);
+figure_plot(13,1).geom_line();
+figure_plot(13,1).axe_property('XLim',xlim_input_CS,'YLim',[0 2],'XTick',[],'XColor',[1 1 1]);
+figure_plot(13,1).set_names('x','','y','');
+figure_plot(13,1).set_color_options('map',color_scheme);
+figure_plot(13,1).geom_hline('yintercept',1,'style','k--');
+figure_plot(13,1).no_legend;
 
 
 %% Get population neuron data
-data_in = []; data_in = bf_data_traceExp;
+data_in = []; data_in = striatum_data_CS;
 
 % Initialize arrays
 plot_sdf_data_pop = []; plot_fano_data_pop = []; plot_fano_label_pop = [];
@@ -81,15 +81,9 @@ norm_window = 5000+[-1000:3000];
 % For each neuron
 for neuron_i = 1:size(data_in,1)
     
-    trials_bl = []; 
-    for trial_type_i = 1:length(plot_trial_types)
-        trial_type_label = plot_trial_types{trial_type_i};
-        trials_bl = [trials_bl, data_in.trials{neuron_i}.(trial_type_label)];
-    end
-            
     % Get the mean and std to normalize
-    bl_fr_mean = nanmean(nanmean(data_in.sdf{neuron_i}(trials_bl,norm_window)));
-    bl_fr_std = nanstd(nanmean(data_in.sdf{neuron_i}(trials_bl,norm_window)));
+    bl_fr_mean = nanmean(nanmean(data_in.sdf{neuron_i}(data_in.trials{neuron_i}.probAll,norm_window)));
+    bl_fr_std = nanstd(nanmean(data_in.sdf{neuron_i}(data_in.trials{neuron_i}.probAll,norm_window)));
     
     % For each trial type
     for trial_type_i = 1:length(plot_trial_types)
@@ -101,14 +95,14 @@ for neuron_i = 1:size(data_in,1)
         % Get the normalized SDF
         sdf_x = []; sdf_x = (nanmean(data_in.sdf{neuron_i}(trials_in,:))-bl_fr_mean)./bl_fr_std;
         fano_x = []; fano_x = data_in.fano(neuron_i).raw.(trial_type_label);              
-                
-        
+
         plot_sdf_data_pop = [plot_sdf_data_pop ; num2cell(sdf_x,2)];
         plot_label_pop = [plot_label_pop; {[int2str(trial_type_i) '_' (trial_type_label)]}];
         
         plot_fano_data_pop = [plot_fano_data_pop; {fano_x}];
         plot_fano_label_pop = [plot_fano_label_pop; {[int2str(trial_type_i) '_' (trial_type_label)]}];
                 
+        plot_category_label_pop = [plot_category_label_pop; {bf_datasheet_CS.cluster_label{neuron_i}}];
         
     end
 end
@@ -116,18 +110,19 @@ end
 % Population neuron %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % CS Onset ----------------------------------------------------------------
 % Spike density function
-figure_plot(9,1)=gramm('x',plot_time,'y',plot_sdf_data_pop,'color',plot_label_pop);
-figure_plot(9,1).stat_summary();
-figure_plot(9,1).axe_property('XLim',xlim_input_CS,'YLim',[-3 4],'XTick',[],'XColor',[1 1 1]);
-figure_plot(9,1).set_names('x','','y','');
-figure_plot(9,1).set_color_options('map',color_scheme);
-figure_plot(9,1).no_legend;
+figure_plot(14,1)=gramm('x',plot_time,'y',plot_sdf_data_pop,'color',plot_label_pop);
+figure_plot(14,1).stat_summary();
+figure_plot(14,1).axe_property('XLim',xlim_input_CS,'YLim',[-3 4],'XTick',[],'XColor',[1 1 1]);
+figure_plot(14,1).set_names('x','','y','');
+figure_plot(14,1).set_color_options('map',color_scheme);
+figure_plot(14,1).no_legend;
 
 % Fano factor
-figure_plot(10,1)=gramm('x',data_in.fano(example_neuron_i).time,'y',plot_fano_data_pop,'color',plot_fano_label_pop);
-figure_plot(10,1).stat_summary();
-figure_plot(10,1).axe_property('XLim',xlim_input_CS,'YLim',[0 2]);
-figure_plot(10,1).set_names('x','Time from CS Onset (ms)','y','');
-figure_plot(10,1).set_color_options('map',color_scheme);
-figure_plot(10,1).geom_hline('yintercept',1,'style','k--');
-figure_plot(10,1).no_legend;
+figure_plot(15,1)=gramm('x',data_in.fano(example_neuron_i).time,'y',plot_fano_data_pop,'color',plot_fano_label_pop);
+figure_plot(15,1).stat_summary();
+figure_plot(15,1).axe_property('XLim',xlim_input_CS,'YLim',[0 2]);
+figure_plot(15,1).set_names('x','Time from CS Onset (ms)','y','');
+figure_plot(15,1).set_color_options('map',color_scheme);
+figure_plot(15,1).geom_hline('yintercept',1,'style','k--');
+figure_plot(15,1).no_legend;
+

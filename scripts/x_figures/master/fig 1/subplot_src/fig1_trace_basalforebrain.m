@@ -1,11 +1,11 @@
 %% Basal forebrain | CS task
 % Input variables
 data_in = []; data_in = bf_data_traceExp;
-plot_trial_types = {'timingcue_uncertain','notrace_uncertain','timingcue_certain','notrace_certain'};
+plot_trial_types = trialtype_plot.trace;
 
 % Parameters
 xlim_input_CS = [0 2500]; xlim_input_outcome = [-500 0]; 
-ylim_input = [0 75]; color_scheme = winter(length(plot_trial_types));
+ylim_input = [0 75]; color_scheme = colors.trace_task;
 
 %% Get example neuron data
 % Initialize plot data structures
@@ -52,7 +52,7 @@ figure_plot(6,1).no_legend;
 % Spike density function
 figure_plot(7,1)=gramm('x',plot_time,'y',plot_sdf_data,'color',plot_label);
 figure_plot(7,1).stat_summary();
-figure_plot(7,1).axe_property('XLim',xlim_input_CS,'YLim',ylim_input,'XTick',[],'XColor',[1 1 1]);
+figure_plot(7,1).axe_property('XLim',xlim_input_CS,'YLim',ylim_input,'XTick',[],'XColor',[1 1 1],'YTick',[]);
 figure_plot(7,1).set_names('x','','y','');
 figure_plot(7,1).set_color_options('map',color_scheme);
 figure_plot(7,1).no_legend;
@@ -60,7 +60,7 @@ figure_plot(7,1).no_legend;
 % Fano factor
 figure_plot(8,1)=gramm('x',data_in.fano(example_neuron_i).time,'y',plot_fano_data,'color',plot_fano_label);
 figure_plot(8,1).geom_line();
-figure_plot(8,1).axe_property('XLim',xlim_input_CS,'YLim',[0 2],'XTick',[],'XColor',[1 1 1]);
+figure_plot(8,1).axe_property('XLim',xlim_input_CS,'YLim',[0 2],'XTick',[],'XColor',[1 1 1],'YTick',[]);
 figure_plot(8,1).set_names('x','','y','');
 figure_plot(8,1).set_color_options('map',color_scheme);
 figure_plot(8,1).geom_hline('yintercept',1,'style','k--');
@@ -118,7 +118,7 @@ end
 % Spike density function
 figure_plot(9,1)=gramm('x',plot_time,'y',plot_sdf_data_pop,'color',plot_label_pop);
 figure_plot(9,1).stat_summary();
-figure_plot(9,1).axe_property('XLim',xlim_input_CS,'YLim',[-3 4],'XTick',[],'XColor',[1 1 1]);
+figure_plot(9,1).axe_property('XLim',xlim_input_CS,'YLim',[-3 4],'XTick',[],'XColor',[1 1 1],'YTick',[]);
 figure_plot(9,1).set_names('x','','y','');
 figure_plot(9,1).set_color_options('map',color_scheme);
 figure_plot(9,1).no_legend;
@@ -126,7 +126,7 @@ figure_plot(9,1).no_legend;
 % Fano factor
 figure_plot(10,1)=gramm('x',data_in.fano(example_neuron_i).time,'y',plot_fano_data_pop,'color',plot_fano_label_pop);
 figure_plot(10,1).stat_summary();
-figure_plot(10,1).axe_property('XLim',xlim_input_CS,'YLim',[0 2]);
+figure_plot(10,1).axe_property('XLim',xlim_input_CS,'YLim',[0 2],'YTick',[]);
 figure_plot(10,1).set_names('x','Time from CS Onset (ms)','y','');
 figure_plot(10,1).set_color_options('map',color_scheme);
 figure_plot(10,1).geom_hline('yintercept',1,'style','k--');
