@@ -56,6 +56,21 @@ SDFFREE = SDFFREE(:,event_zero+params.sdf.window(1):event_zero+params.sdf.window
 %% Clean rasters (reward artifact)
 if params.raster.cleanFlag == 1
     fprintf('! Raster cleaning code required. \n')
+    
+    % % Define periods of interest
+    %   For uncertain trials (25, 50, 75% probability)
+    time_win_contam_a = [7500-45 7500+15];
+    time_win_clean_a = [7500-45 7500+15];
+    
+    %   For uncertain trials (25, 50, 75% probability)
+    time_win_contam_b = [7500-15 7500+15];
+    time_win_clean_b = [7500-15-30 7500-15];
+    
+
+    % % Clean trials (reward artifact removal)
+    Rasters = clean_spk_artifact(Rasters,trials.timingcue_uncertain_nd,trials.timingcue_uncertain_d,time_win_contam_a,time_win_clean_a);
+    Rasters = clean_spk_artifact(Rasters,trials.notimingcue_uncertain_nd,trials.notimingcue_uncertain_d,time_win_contam_a,time_win_clean_a);
+  
 end
 % % Cut raster to period of interest
 Rasters = Rasters(:,event_zero-5000:event_zero+5000);

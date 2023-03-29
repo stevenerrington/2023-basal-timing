@@ -7,7 +7,7 @@ params.plot.ylim = 150; %PLOT YLIM for spike density functions (PlotYm)
 % % SDF
 params.sdf.gauss_ms = 100; % for making a spike density function (fits each spike with a 100ms gauss; gauswindow_ms)
 params.sdf.window = [-500 1000]; % [min max] window for spike density function
-params.raster.cleanFlag = 0;
+params.raster.cleanFlag = 1;
 
 % % Fano factor
 params.fano.bin_size = 50; % Bin size for Fano Factor analysis (get_fano)

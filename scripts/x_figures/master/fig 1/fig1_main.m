@@ -30,7 +30,6 @@ fig1_trace_basalforebrain
 fig1_cs_basalganglia
 fig1_trace_basalganglia
 
-
 %% Figure: Setup figure layout
 fig1_format
 
