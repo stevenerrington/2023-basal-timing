@@ -21,16 +21,20 @@ file_out_dir = 'Y:\Steven\dataMRDR\figures';
 fileList = struct2table(dir([nih_data_dir '\*E']));
 fileList = fileList.name;
 
+% [42, 86, 161, 196, 214, 259, 263, 269, 361, 697, 1310, 1341, 1342, 1344] % faulty
+% skipped 1345 to 1400. TEST 0945 20230331
+
 %% Load example data
-for file_i = 1:size(nih_datasheet,1)
-        switch nih_datasheet.monkey(file_i)
-            case 1; monk = 'han';
-            case 2; monk = 'peek';
-            case 3; monk = 'han';
-        end
-        
-        file = [monk nih_datasheet.unit{file_i} 'E'];
-        fprintf('Extracting data from %s | %i of %i        \n', file, file_i, size(nih_datasheet,1));
+for file_i = 1400:size(fileList,1)
+%         switch nih_datasheet.monkey(file_i)
+%             case 1; monk = 'han';
+%             case 2; monk = 'peek';
+%             case 3; monk = 'han';
+%         end
+%         
+        %file = [monk nih_datasheet.unit{file_i} 'E'];
+        file = fileList{file_i};
+        fprintf('Extracting data from %s | %i of %i        \n', file, file_i, size(fileList,1));
     
     try
         clear REX trials Rasters SDF
@@ -65,29 +69,29 @@ for file_i = 1:size(nih_datasheet,1)
     
         save_figure(figure_plot_out,file_out_dir,['bf_punish_' file])
     catch
-        file = [monk nih_datasheet.unit{file_i} 'E'];
+        file = fileList{file_i};
         count = count + 1;
         errorfile{count,1} = file;
     end
 
 end
-
-%% Curation: define datamap for ramp specific neurons
-
-ramp_uncertainty_neuron_index = [369, 709, 725, 1012, 1015, 1071, 1082, 1086, 1092, 2030];
-test = table();
-for neuron_i = 1:length(ramp_uncertainty_neuron_index)
-    nih_datasheet_idx = find(strcmp(nih_datasheet.unit, int2str(ramp_uncertainty_neuron_index(neuron_i))),1);
-    
-    depth = nih_datasheet.depth(nih_datasheet_idx);
-    ap = nih_datasheet.a(nih_datasheet_idx);
-    ml = nih_datasheet.b(nih_datasheet_idx);
-    
-    test(neuron_i,:) = table(depth,ap,ml);
-    
-end
-
-
+% 
+% %% Curation: define datamap for ramp specific neurons
+% 
+% ramp_uncertainty_neuron_index = [369, 709, 725, 1012, 1015, 1071, 1082, 1086, 1092, 2030];
+% test = table();
+% for neuron_i = 1:length(ramp_uncertainty_neuron_index)
+%     nih_datasheet_idx = find(strcmp(nih_datasheet.unit, int2str(ramp_uncertainty_neuron_index(neuron_i))),1);
+%     
+%     depth = nih_datasheet.depth(nih_datasheet_idx);
+%     ap = nih_datasheet.a(nih_datasheet_idx);
+%     ml = nih_datasheet.b(nih_datasheet_idx);
+%     
+%     test(neuron_i,:) = table(depth,ap,ml);
+%     
+% end
+% 
+% 
 
 
 

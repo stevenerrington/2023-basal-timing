@@ -4,8 +4,6 @@
 
 
 %% Dev notes:
-% 2023-03-14: updated CS data to include a trial structure for certain v
-%             uncertain
 
 
 %% Setup workspace
@@ -25,6 +23,7 @@ switch status
     case 'extract'
         % Basal forebrain data -------------------------
         pavlovian_bf_master % Pavlovian task data
+        punish_bf_master    % Punish task data
         timing_bf_master    % Timing task data
         trace_bf_master     % Trace task data
         

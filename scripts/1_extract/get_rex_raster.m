@@ -104,9 +104,9 @@ if params.raster.cleanFlag == 1
     time_win_clean_b = [7500-15-30 7500-15];
     
     % % Define trials (reward artifact removal)
-%     cleanreward75n = intersect(trials.prob75,ndeliv); cleanreward75 = intersect(trials.prob75,deliv);
-    cleanreward50n = intersect(trials.prob50_reward,ndeliv); cleanreward50 = intersect(trials.prob50_reward,deliv);
-%     cleanreward25n = intersect(trials.prob25,ndeliv); cleanreward25 = intersect(trials.prob25,deliv);
+    cleanreward75n = intersect(trials.prob75,ndeliv); cleanreward75 = intersect(trials.prob75,deliv);
+    cleanreward50n = intersect(trials.prob50,ndeliv); cleanreward50 = intersect(trials.prob50,deliv);
+    cleanreward25n = intersect(trials.prob25,ndeliv); cleanreward25 = intersect(trials.prob25,deliv);
     
     % % Clean trials (reward artifact removal)
     Rasters = clean_spk_artifact(Rasters,cleanreward75n,cleanreward75,time_win_contam_a,time_win_clean_a);
