@@ -84,7 +84,7 @@ if fig_flag == 1
     % Fano factor
     figure_plot(2,1)=gramm('x',data_in.fano(1).time,'y',plot_fano_data,'color',plot_fano_label);
     figure_plot(2,1).stat_summary();
-    figure_plot(2,1).axe_property('XLim',xlim_input,'YLim',[0 3]);
+    figure_plot(2,1).axe_property('XLim',xlim_input,'YLim',[0 2.5]);
     figure_plot(2,1).set_names('x','Time from CS Onset (ms)','y','Fano Factor');
     figure_plot(2,1).set_color_options('map',color_scheme);
     figure_plot(2,1).geom_vline('xintercept',0,'style','k-');

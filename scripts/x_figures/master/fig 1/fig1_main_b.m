@@ -2,8 +2,8 @@ clear figure_plot
 
 %% Parameter: define figure parameters
 % Trial types to plot:
-% trialtype_plot.cs = {'prob0','prob50_punish','prob100_punish'};
-trialtype_plot.cs = {'uncertain','certain'};
+trialtype_plot.cs = {'prob0_punish','prob50_punish','prob100_punish'};
+% trialtype_plot.cs = {'uncertain','certain'};
 trialtype_plot.trace = {'timingcue_uncertain','notrace_uncertain','timingcue_certain','notrace_certain'};
 % trialtype_plot.trace = {'notrace_uncertain','notrace_certain'};
 

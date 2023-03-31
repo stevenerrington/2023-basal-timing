@@ -77,7 +77,7 @@ if fig_flag == 1
     % Fano factor
     figure_plot(3,1)=gramm('x',data_in.fano(example_neuron_i).time,'y',plot_fano_data,'color',plot_fano_label);
     figure_plot(3,1).geom_line();
-    figure_plot(3,1).axe_property('XLim',xlim_input,'YLim',[0 6]);
+    figure_plot(3,1).axe_property('XLim',xlim_input,'YLim',[0 2.5]);
     figure_plot(3,1).set_names('x','Time from CS Onset (ms)','y','Fano Factor');
     figure_plot(3,1).set_color_options('map',color_scheme);
     figure_plot(3,1).geom_vline('xintercept',0,'style','k-');
