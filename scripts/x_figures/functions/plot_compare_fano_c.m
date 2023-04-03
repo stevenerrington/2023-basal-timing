@@ -1,4 +1,4 @@
-function figure_out = plot_compare_fano_c(input_data,input_trials,input_labels,params)
+function [figure_out,figure_gramm] = plot_compare_fano_c(input_data,input_trials,input_labels,params)
 
 ylim_input = params.plot.ylim;
 
@@ -53,7 +53,7 @@ figure_gramm(1,1).set_color_options('map',params.plot.colormap);
 % Figure parameters & settings
 figure_gramm.set_names('x','Task','y','Fano Factor');
 
-figure_out = figure('Renderer', 'painters', 'Position', [100 100 200 350]);
-figure_gramm.draw();
+  figure_out = []; % figure('Renderer', 'painters', 'Position', [100 100 200 350]);
+% figure_gramm.draw();
 
 end

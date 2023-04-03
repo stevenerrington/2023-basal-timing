@@ -12,8 +12,8 @@ params.fano.timewindow = 0:500;
 % Comparison for basal forebrain ramping neurons --------------------------
 % > Define data for comparison
 clear input_data input_trials input_labels
-input_data = {bf_data_CS(bf_datasheet_CS.cluster_id == 2,:),bf_data_timingTask,bf_data_traceExp};
-input_trials = {'prob50','p50s_50l_short','timingcue_uncertain'};
+input_data = {bf_data_CS(bf_datasheet_CS.cluster_id == 2,:),bf_data_CS(bf_datasheet_CS.cluster_id == 2,:)};
+input_trials = {'prob50','timingcue_uncertain'};
 input_labels = {'1_CS','2_timing','3_trace'};
 % > Generate figure
 params.plot.ylim = [0 3];

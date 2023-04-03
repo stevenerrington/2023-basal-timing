@@ -50,9 +50,3 @@ plotFano(Result_BF,figureParams);
 % 21% of datapoints survived matching (~75% in example)
 
 
-
-
-
-
-
-
