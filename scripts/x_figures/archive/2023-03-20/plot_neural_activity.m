@@ -11,19 +11,28 @@ params.plot.colormap = cool(length(plot_trial_types));
 % > Plot example phasic neuron in the basal forebrain.
 params.plot.xlim = [-500 2500]; params.plot.ylim = [0 100];
 params.plot.xintercept = 1500;
-bf_example_CS_phasic = plot_example_neuron(bf_data_CS,plot_trial_types,params,47);
+bf_example_CS_phasic = plot_example_neuron(bf_data_CS,plot_trial_types,params,47,1);
 save_figure(bf_example_CS_phasic,dirs.fig,'bf_example_CS_phasic')
 
 % > Plot example ramping neuron in the basal forebrain.
 params.plot.xlim = [-500 2500]; params.plot.ylim = [0 80];
-bf_example_CS_ramping = plot_example_neuron(bf_data_CS,plot_trial_types,params,16);
+bf_example_CS_ramping = plot_example_neuron(bf_data_CS,plot_trial_types,params,16,1);
 save_figure(bf_example_CS_ramping,dirs.fig,'bf_example_CS_ramping')
 
 % > Plot example ramping neuron in the striatum.
 params.plot.xlim = [-500 3500]; params.plot.ylim = [0 70];
-params.plot.xintercept = 2500;
-striatum_example_CS_ramping = plot_example_neuron(striatum_data_CS,plot_trial_types,params,5);
+params.plot.xintercept = 2500; 
+striatum_example_CS_ramping = plot_example_neuron(striatum_data_CS,plot_trial_types,params,5,1);
 save_figure(striatum_example_CS_ramping,dirs.fig,'striatum_example_CS_ramping')
+
+% > Punish task >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+plot_trial_types = {'prob0_punish','prob50_punish','prob100_punish'};
+params.plot.colormap = cool(length(plot_trial_types));
+% > Plot example ramping neuron in the basal forebrain
+params.plot.xlim = [-500 2500]; params.plot.ylim = [0 80]; params.plot.xintercept = 1500; 
+bf_example_punish_ramping = plot_example_neuron(bf_data_punish,plot_trial_types,params,7,1);
+save_figure(bf_example_punish_ramping,dirs.fig,'bf_example_punish_ramping')
+
 
 % > Trace task >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 plot_trial_types = {'notimingcue_uncertain','timingcue_uncertain'};
@@ -71,6 +80,15 @@ params.plot.xlim = [-500 3500]; params.plot.ylim = [-2 60]; params.plot.xinterce
 striatum_population_CS_ramping = plot_population_neuron(striatum_data_CS,plot_trial_types,params);
 clear data_in
 save_figure(striatum_population_CS_ramping,dirs.fig,'striatum_population_CS_ramping')
+
+% > Punish task >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+plot_trial_types = {'prob0_punish','prob50_punish','prob100_punish'};
+%  Plot population averaged ramping neuron activity in the basal forebrain.
+params.plot.xlim = [-500 2500]; params.plot.ylim = [-2 10]; params.plot.xintercept = [1500];
+bf_population_punish_ramping = plot_population_neuron(bf_data_punish,plot_trial_types,params,1);
+clear data_in
+save_figure(bf_population_punish_ramping,dirs.fig,'bf_population_punish_ramping')
+
 
 % > Trace task >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 plot_trial_types = {'notimingcue_uncertain','timingcue_uncertain'};

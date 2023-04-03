@@ -4,7 +4,7 @@
 
 % XLS Sheet: NIH Neurons
 nih_neuronsheet = readtable(fullfile(dirs.root,'docs','punishTask_bf_neurons.xlsx'));
-
+nih_neuronsheet = nih_neuronsheet(nih_neuronsheet.inc == 1,:);
 % Create datasheet
 clear bf_datasheet_punish % clear dataframe variable to stop contamination
 
@@ -41,7 +41,7 @@ clear nih_datastruct
 
 errorfile=cell(0);
 bf_data_punish = table();
-
+bf_datasheet_punish = bf_datasheet_punish
 % For each identified neuron meeting the criteria, we will loop through,
 % load the experimental data file, and extract the event aligned raster.
 for neuron_i = 1:size(bf_datasheet_punish,1)
