@@ -67,7 +67,7 @@ plot_time = [-5000:5000]; time_zero = abs(plot_time(1));
 norm_window = 5000+[-1000:3000];
 
 % For each neuron
-for neuron_i = 1:size(data_in,2)
+for neuron_i = 1:size(data_in,1)
     
     baseline_trials = [];
     for trial_type_i = 1:length(plot_trial_types)

@@ -10,7 +10,7 @@
 clear all; close all; clc; beep off; warning off;
 
 % Define paths & key directories
-dirs = get_dirs_bf('wustl');
+dirs = get_dirs_bf('home');
 params = get_params;
 status = get_status(dirs);
 
