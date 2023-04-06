@@ -1,9 +1,8 @@
 %% Reward
 % Initialize plot data structures
-plot_sdf_data = [];
-plot_spk_data = [];
+plot_sdf_data = []; plot_spk_data = []; plot_label = [];
 plot_fano_data = []; plot_fano_label = [];
-plot_label = [];
+
 plot_time = [-5000:5000];
 time_zero = abs(plot_time(1));
 

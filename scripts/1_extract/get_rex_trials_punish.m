@@ -83,5 +83,8 @@ trials.prob50_punish_nd=intersect(trials.prob50_punish,ndeliv_punish); % 50% pro
 trials.prob50_reward_d=intersect(trials.prob50_reward,deliv_reward); % 50% probability, delivered  (reward)
 trials.prob50_reward_nd=intersect(trials.prob50_reward,ndeliv_reward); % 50% probability, not-delivered (reward)
 
+trials.probAll_punish = [trials.prob0_punish,trials.prob50_punish,trials.prob100_punish];
+trials.probAll_reward = [trials.prob0_reward,trials.prob50_reward,trials.prob100_reward];
+trials.probAll_all = [trials.probAll_punish,trials.probAll_reward];
 
 end

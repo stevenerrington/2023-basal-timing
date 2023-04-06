@@ -10,7 +10,7 @@
 clear all; close all; clc; beep off; warning off;
 
 % Define paths & key directories
-dirs = get_dirs_bf('home');
+dirs = get_dirs_bf('wustl');
 params = get_params;
 status = get_status(dirs);
 
@@ -34,4 +34,3 @@ end
 
 %% Figures: 
 figure_primary
-figure_primary_worksheet
