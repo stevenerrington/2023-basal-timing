@@ -87,4 +87,12 @@ trials.probAll_punish = [trials.prob0_punish,trials.prob50_punish,trials.prob100
 trials.probAll_reward = [trials.prob0_reward,trials.prob50_reward,trials.prob100_reward];
 trials.probAll_all = [trials.probAll_punish,trials.probAll_reward];
 
+%%
+TrialEventTimes = dev_extractTrialEventTimes(REX);
+[short_iti_trls, long_iti_trls] = dev_findITItrials(TrialEventTimes);
+
+trials.iti_short = short_iti_trls';
+trials.iti_long = long_iti_trls';
+
+
 end

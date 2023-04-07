@@ -4,7 +4,7 @@ clear figure_plot
 % Input variables
 data_in = []; data_in = bf_data_punish;
 trialtype_plot.reward =...
-    {{'probAll_reward'},...
+    {{'iti_short','iti_long'},...
     {'probAll_reward'},...
     {'prob0_reward','prob50_reward','prob100_reward'},...
     {'prob50_reward_d','prob50_reward_nd'}};
@@ -146,7 +146,7 @@ for epoch_i = 2:4
     figure_plot(5,epoch_i).axe_property('XLim',epoch_xlim{epoch_i},'YLim',ylim_input_fano,'YTick',[],'YColor',[1 1 1]);
 end
 
-input_colormap = {[0.5 0.5 0.5], [0.5 0.5 0.5], color_scheme_reward, [13 105 134; 255 36 103]./255};
+input_colormap = {[242 193 45; 179 89 195]./255, [0.5 0.5 0.5], color_scheme_reward, [13 105 134; 255 36 103]./255};
 
 for epoch_i = 1:length(epoch_labels)
     figure_plot(:,epoch_i).set_color_options('map',input_colormap{epoch_i});
@@ -157,7 +157,7 @@ end
 epoch_widths = [0.1 0.2 0.3 0.3];
 epoch_widthref = [0.1 0.21 0.45 0.76];
 plot_heights = [0.1 0.2 0.1 0.3 0.1];
-plot_heightref = [0.85 0.675 0.55 0.22 0.1];
+plot_heightref = [0.89 0.675 0.55 0.22 0.1];
 
 for i = 1:4
     for j = 1:5
@@ -177,7 +177,5 @@ figure_plot(5,1).set_names('x','','y','FF');
 
 figure_plot(5,3).set_names('x','Time from CS (ms)');
 
-
-
 figure('Renderer', 'painters', 'Position', [100 100 600 500]);
-figure_plot.draw
+figure_plot.draw;

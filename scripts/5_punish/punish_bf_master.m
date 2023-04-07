@@ -107,16 +107,18 @@ parfor neuron_i = 1:size(bf_datasheet_punish,1)
 end
 
 bf_data_punish.isi = isi'; clear isi
-
-%% Analysis: Extract trial event times for each neuron/session
-for neuron_i = 1:size(bf_datasheet_punish,1)
-    
-    fprintf('Extracting trial event times for neuron %i of %i   |  %s   \n',...
-        neuron_i,size(bf_datasheet_punish,1), bf_data_punish.filename{neuron_i})
-    
-    REX = mrdr('-a', '-d', fullfile(bf_datasheet_punish.dir{neuron_i},bf_datasheet_punish.file{neuron_i}));
-    
-    % Calculate Fano Factor
-    TrialEventTimes{neuron_i,1} = dev_extractTrialEventTimes(REX);
-    
-end
+% 
+% %% Analysis: Extract trial event times for each neuron/session
+% 
+% clear TrialEventTimes
+% for neuron_i = 1:size(bf_datasheet_punish,1)
+%     
+%     fprintf('Extracting trial event times for neuron %i of %i   |  %s   \n',...
+%         neuron_i,size(bf_datasheet_punish,1), bf_data_punish.filename{neuron_i})
+%     
+%     REX = mrdr('-a', '-d', fullfile(bf_datasheet_punish.dir{neuron_i},bf_datasheet_punish.file{neuron_i}));
+%     
+%     % Calculate Fano Factor
+%     TrialEventTimes{neuron_i,1} = dev_extractTrialEventTimes(REX);
+% 
+% end
