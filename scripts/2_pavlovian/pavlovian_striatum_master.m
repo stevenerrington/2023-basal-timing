@@ -65,10 +65,12 @@ for ii = 1:size(striatum_datasheet_CS,1)
     SDF = plot_mean_psth({Rasters},params.sdf.gauss_ms,1,size(Rasters,2),1);
     % Get licking raster
     Licking = get_licking_raster(PDS,params);
+    % Get eye position
+    Eye = get_eye_CS(PDS, params);    
     
     % Output extracted data into a table
-    striatum_data_CS(ii,:) = table({filename}, {trials}, {Rasters},{SDF},{Licking},...
-        'VariableNames',{'filename','trials','rasters','sdf','licking'});
+    striatum_data_CS(ii,:) = table({filename}, {trials}, {Rasters},{SDF},{Licking},{Eye},...
+        'VariableNames',{'filename','trials','rasters','sdf','licking','eye'});
     
 end
 

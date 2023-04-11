@@ -100,7 +100,10 @@ for neuron_i = 1:size(bf_datasheet_CS,1)
             SDF = plot_mean_psth({Rasters},params.sdf.gauss_ms,1,size(Rasters,2),1);
             % Get licking beh raster
             Licking = [];
+            % Get eye position
+            Eye = get_rex_eye(REX,params);
             
+        
         case 'wustl' % WUSTL data
             
             % Load the data (PDS structure)
@@ -114,11 +117,14 @@ for neuron_i = 1:size(bf_datasheet_CS,1)
             SDF = plot_mean_psth({Rasters},params.sdf.gauss_ms,1,size(Rasters,2),1);
             % Get licking raster
             Licking = get_licking_raster(PDS,params);
+            % Get eye position
+            Eye = get_eye_CS(PDS, params);
+            
     end
     
     % Output extracted data into a table
-    bf_data_CS(neuron_i,:) = table({filename}, {trials}, {Rasters},{SDF},{Licking},...
-        'VariableNames',{'filename','trials','rasters','sdf','licking'});
+    bf_data_CS(neuron_i,:) = table({filename}, {trials}, {Rasters},{SDF},{Licking},{Eye},...
+        'VariableNames',{'filename','trials','rasters','sdf','licking','eye'});
     
     
 end

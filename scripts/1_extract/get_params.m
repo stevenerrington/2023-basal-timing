@@ -24,4 +24,7 @@ params.licking.signal_cutoff = 2; % SD of baseline
 params.licking.baseline = [-250 -50]; % Relative to target/CS onset
 params.licking.gauss_ms = 10;
 
+% % Eye
+params.eye.alignWin = [-1000:3000];
+
 end

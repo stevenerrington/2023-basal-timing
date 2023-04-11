@@ -79,7 +79,7 @@ bf_data_timingTask = table();
 for ii = 1:size(bf_datasheet_timingExp,1)
     
     % Clear variables, console, and figures
-    clear REX PDS trials Rasters SDFcs_n fano; clc; close all;
+    clear PDS trials Rasters SDFcs_n fano; clc; close all;
     
     filename = bf_datasheet_timingExp.file{ii};
     fprintf('Extracting data from neuron %i of %i   |  %s   \n',ii,size(bf_datasheet_timingExp,1), filename)
@@ -98,11 +98,13 @@ for ii = 1:size(bf_datasheet_timingExp,1)
     
     % Get licking data
     Licking = []; 
-    Licking = get_licking_raster(PDS,params); 
+    
+    % Get eye data
+    Eye = get_eye_timing(PDS, params);
     
     % Output extracted data into a table
-    bf_data_timingTask(ii,:) = table({filename}, {trials}, {Rasters},{SDF},{Licking},...
-        'VariableNames',{'filename','trials','rasters','sdf','licking'});
+    bf_data_timingTask(ii,:) = table({filename}, {trials}, {Rasters},{SDF},{Licking},{Eye},...
+        'VariableNames',{'filename','trials','rasters','sdf','licking','eye'});
 
 end
 

@@ -38,9 +38,12 @@ for ii = 1:size(striatum_datasheet_timingExp,1)
     Licking = []; 
     %Licking = get_licking_raster(PDS,params); 
     
+    % Get eye data
+    Eye = get_eye_timing(PDS, params);
+    
     % Output extracted data into a table
-    striatum_data_timingTask(ii,:) = table({filename}, {trials}, {Rasters},{SDF},{Licking},...
-        'VariableNames',{'filename','trials','rasters','sdf','licking'});
+    striatum_data_timingTask(ii,:) = table({filename}, {trials}, {Rasters},{SDF},{Licking},{Eye},...
+        'VariableNames',{'filename','trials','rasters','sdf','licking','eye'});
 
 end
 

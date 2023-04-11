@@ -64,11 +64,13 @@ for neuron_i = 1:size(bf_datasheet_punish,1)
         SDF = plot_mean_psth({Rasters},params.sdf.gauss_ms,1,size(Rasters,2),1);
         % Get licking beh raster
         Licking = [];
-        
+        % Get eye position
+        Eye = get_rex_eye(REX,params);
+
         
         % Output extracted data into a table
-        bf_data_punish(neuron_i,:) = table({filename}, {trials}, {Rasters},{SDF},{Licking},...
-            'VariableNames',{'filename','trials','rasters','sdf','licking'});
+        bf_data_punish(neuron_i,:) = table({filename}, {trials}, {Rasters},{SDF},{Licking},{Eye},...
+            'VariableNames',{'filename','trials','rasters','sdf','licking','eye'});
     catch
         fprintf('!Error: neuron %i of %i   |  %s   \n',neuron_i,size(bf_datasheet_punish,1), filename)
         bf_data_punish(neuron_i,:) = table({filename}, {[]}, {[]},{[]},{[]},...
