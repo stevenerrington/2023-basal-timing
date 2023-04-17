@@ -2,16 +2,14 @@
 
 params.eye.window = [5 5]; params.plot.xintercept = 1500;
 params.eye.zero = find(params.eye.alignWin == 0);
+params.eye.salience_window = params.eye.zero+2500+[-200:0];
 
 % Basal forebrain: timing task
 trial_type_list = {'p50s_50l_short','p50s_50l_long'};
-params.plot.xintercept = 1500;
-params.eye.salience_window = params.eye.zero+1500+[-200:0];
-
 data_in = []; data_in = bf_data_timingTask;
-[~, ~, mean_gaze_array, time_gaze_window]  =...
+[p_gaze_window, conc_gaze_array, mean_gaze_array, time_gaze_window]  =...
     get_pgaze_window(data_in, trial_type_list, params);
-plot_eyegaze(mean_gaze_array,time_gaze_window,params);
+plot_eyegaze(mean_gaze_array,time_gaze_window,params)
 
 
 % Basal Forebrain: NIH CS task
@@ -20,20 +18,28 @@ params.plot.xintercept = 1500;
 params.eye.salience_window = params.eye.zero+1500+[-200:0];
 
 data_in = []; data_in = bf_data_CS(strcmp(bf_datasheet_CS.site,'nih'),:);
-[~, ~, mean_gaze_array, time_gaze_window]  =...
+[p_gaze_window, conc_gaze_array, mean_gaze_array, time_gaze_window]  =...
     get_pgaze_window(data_in, trial_type_list, params);
-plot_eyegaze(mean_gaze_array,time_gaze_window,params);
+plot_eyegaze(mean_gaze_array,time_gaze_window,params)
 
 
 % Basal Forebrain: WUSTL CS task
 trial_type_list = {'prob0','prob50','prob100'};
 params.plot.xintercept = 2500;
-params.eye.salience_window = params.eye.zero+2500+[-200:0];
 
 data_in = []; data_in = bf_data_CS(strcmp(bf_datasheet_CS.site,'wustl'),:);
-[~, ~, mean_gaze_array, time_gaze_window]  =...
+[p_gaze_window, conc_gaze_array, mean_gaze_array]  =...
     get_pgaze_window(data_in, trial_type_list, params);
-plot_eyegaze(mean_gaze_array,time_gaze_window,params);
+plot_eyegaze(mean_gaze_array,time_gaze_window,params)
+
+
+
+
+
+
+
+
+
 
 
 

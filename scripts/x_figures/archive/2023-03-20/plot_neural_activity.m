@@ -96,10 +96,10 @@ params.plot.colormap = [[0 70 67]./255;[242 165 65]./255];
 
 % Plot population averaged ramping neuron activity in the basal forebrain.
 params.plot.xlim = [-500 3500]; params.plot.ylim = [-3 8]; params.plot.xintercept = [2500];
-bf_population_trace_ramping = plot_population_neuron(bf_data_traceExp,plot_trial_types,params);
+bf_population_trace_ramping = plot_population_neuron(bf_data_traceExp,plot_trial_types,params,1);
 save_figure(bf_population_trace_ramping,dirs.fig,'bf_population_trace_ramping')
 
 % Plot population averaged ramping neuron activity in the striatum.
 params.plot.xlim = [-500 3500]; params.plot.ylim = [-5 20]; params.plot.xintercept = [2500];
-striatum_population_trace_ramping = plot_population_neuron(striatum_data_traceExp,plot_trial_types,params);
+striatum_population_trace_ramping = plot_population_neuron(striatum_data_traceExp,plot_trial_types,params,1);
 save_figure(striatum_population_trace_ramping,dirs.fig,'striatum_population_trace_ramping')

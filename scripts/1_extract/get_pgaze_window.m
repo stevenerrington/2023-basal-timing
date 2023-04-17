@@ -1,7 +1,8 @@
-function [p_gaze_window, conc_gaze_array, mean_gaze_array]  =...
+function [p_gaze_window, conc_gaze_array, mean_gaze_array, time_gaze_window]  =...
     get_pgaze_window(data_in, trial_type_list, params)
 
 x_window = params.eye.window(1); y_window = params.eye.window(2);
+zero_time = find(params.eye.alignWin == 0);
 
 clear p_gaze_window;
 
@@ -56,6 +57,13 @@ for trial_type_i = 1:length(trial_type_list)
         mean_gaze_array.(trial_type_label)(neuron_i,:) =...
             nanmean(p_gaze_window.(trial_type_label){neuron_i});
         
+        mean_window_duration = [];
+        for trial_i = 1:size(p_gaze_window.(trial_type_label){neuron_i},1)
+            mean_window_duration(trial_i,1) = sum(p_gaze_window.(trial_type_label){neuron_i}(trial_i,params.eye.salience_window));        
+        end
+        
+        time_gaze_window.(trial_type_label){neuron_i,:} =...
+            mean_window_duration;
     end
 end
 

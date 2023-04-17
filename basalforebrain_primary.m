@@ -14,7 +14,7 @@ dirs = get_dirs_bf('wustl');
 params = get_params;
 status = get_status(dirs);
 
-%% Analysis
+%% Data extraction
 switch status
     case 'data' %(approximately 16GB RAM usage)
         load_proc_data
@@ -32,5 +32,8 @@ switch status
         trace_striatum_master     % Trace task data
 end
 
-%% Figures: 
+%% Analyses:
+bf_analyses_map
+
+%% Figures:
 figure_primary

@@ -6,13 +6,14 @@ dirs.fig = fullfile(dirs.root,'results');
 % to CS onset to outcome to ITI
 plot_reward_allTrial
 
-% Plot activity in the punish/reward data in the CS to outcome period
+% Plot activity in the punish/reward data from the CS to outcome period:
+% split by punish and rewrad
 plot_punish_reward
 
 % Plot neural activity (aligned on CS onset) ---------------------
 % This script will produce figures that shows example and population
 % average activity, demonstrating phasic responses to the CS onset and
-% ramping activity between the CS and outcome.
+% ramping activity between the CS and outcome. 
 plot_neural_activity
 
 % This script will produce figures that shows population 
