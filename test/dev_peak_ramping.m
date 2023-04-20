@@ -1,46 +1,50 @@
+
+
+data_in = []; data_in = bf_data_CS(strcmp(bf_datasheet_CS.site,'nih'),:);
+trial_type_list = {'prob50'};
+
+
 peak_window = [1000:2000];
+[max_ramp_fr, max_ramp_fr_collated] = get_maxFR_ramping(data_in,trial_type_list,peak_window);
 
 
-data_in = []; data_in = bf_data_punish;
-trial_type_list = {'prob50_reward','prob50_punish'};
-
-max_ramp_fr = struct();
-max_ramp_fr.all = table();
-max_ramp_fr.mean = table();
-max_ramp_fr.var = table();
-
-
+figure_label = []; figure_data = [];
 for trial_type_i = 1:length(trial_type_list)
-    trial_type_in = trial_type_list{trial_type_i};
-    max_ramp_fr_collated.(trial_type_in) = [];
-
-    for neuron_i = 1:size(data_in,1)
-        
-        trials_in = []; trials_in = data_in.trials{neuron_i,1}.(trial_type_in);
-        peak_time = [];
-        
-        for trial_i = 1:length(trials_in)
-            trial_j = trials_in(trial_i);
-            
-            trial_sdf = []; trial_sdf = data_in.sdf{neuron_i,1}(trial_j,:);
-            peak_fr = max( trial_sdf(1,5000+peak_window));
-            
-            if peak_fr > 0
-                peak_time(trial_i,1) = find(trial_sdf == peak_fr,1)-5000;
-            else
-                peak_time(trial_i,1) = NaN;
-            end
-        end
-        
-        
-        max_ramp_fr.all.(trial_type_in){neuron_i,1} = peak_time;
-        max_ramp_fr.mean.(trial_type_in)(neuron_i,1) = nanmean(peak_time);
-        max_ramp_fr.var.(trial_type_in)(neuron_i,1) = nanstd(peak_time);
-        
-        max_ramp_fr_collated.(trial_type_in) = [max_ramp_fr_collated.(trial_type_in);peak_time];
-        
-    end    
+    figure_label = [figure_label; repmat({[int2str(trial_type_i) '_' trial_type_list{trial_type_i}]},size(data_in,1),1)];
+    figure_data = [figure_data ; max_ramp_fr.mean.(trial_type_list{trial_type_i})];
 end
+
+clear figure_plot
+figure;
+figure_plot(1,1)=gramm('x',figure_data,'color',figure_label);
+figure_plot(1,1).stat_bin('edges',[1200:50:1700],'geom','line')
+figure_plot(1,1).axe_property('XLim',[1200 1700]);
+figure_plot(1,1).set_names('x','Time of max firing (ms)','y','Frequency');
+figure_plot(1,1).geom_vline('xintercept',1500,'style','k-');
+figure_plot.draw
+
+
+peak_window = [2000:3000];
+data_in = []; data_in = bf_data_CS(strcmp(bf_datasheet_CS.site,'wustl') & strcmp(bf_datasheet_CS.cluster_label,'Ramping'),:);
+[max_ramp_fr, max_ramp_fr_collated] = get_maxFR_ramping(data_in,trial_type_list,peak_window);
+
+
+figure_label = []; figure_data = [];
+for trial_type_i = 1:length(trial_type_list)
+    figure_label = [figure_label; repmat({[int2str(trial_type_i) '_' trial_type_list{trial_type_i}]},size(data_in,1),1)];
+    figure_data = [figure_data ; max_ramp_fr.mean.(trial_type_list{trial_type_i})];
+end
+
+clear figure_plot
+figure;
+figure_plot(1,1)=gramm('x',figure_data,'color',figure_label);
+figure_plot(1,1).stat_bin('edges',[2200:50:2700],'geom','line')
+figure_plot(1,1).axe_property('XLim',[2200 2700]);
+figure_plot(1,1).set_names('x','Time of max firing (ms)','y','Frequency');
+figure_plot(1,1).geom_vline('xintercept',2500,'style','k-');
+figure_plot.draw
+
+
 
 
 
@@ -48,13 +52,6 @@ end
 
 %%
 clear figure_plot
-
-figure_label = [repmat({'1_punish50%'},size(data_in,1),1);repmat({'2_reward50%'},size(data_in,1),1)];
-figure_plot(1,1)=gramm('x',[max_ramp_fr.mean.prob50_punish;max_ramp_fr.mean.prob50_reward],'color',figure_label);
-figure_plot(1,1).stat_bin('edges',[1200:50:1700],'geom','line')
-figure_plot(1,1).axe_property('XLim',[1200 1700]);
-figure_plot(1,1).set_names('x','Time of max firing (ms)','y','Frequency');
-figure_plot(1,1).geom_vline('xintercept',1500,'style','k-');
 
 figure_label_conc = [repmat({'1_punish50%'},size(max_ramp_fr_collated.prob50_reward,1),1);repmat({'2_reward50%'},size(max_ramp_fr_collated.prob50_punish,1),1)];
 figure_plot(1,2)=gramm('x',[max_ramp_fr_collated.prob50_punish;max_ramp_fr_collated.prob50_reward],'color',figure_label_conc);
