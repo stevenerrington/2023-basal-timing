@@ -34,6 +34,7 @@ for neuron_i = 1:size(data_in,1)
                 & data_in.eye{neuron_i}.eye_x{1,1}(trials_in(trial_i),:) > x_min(1)...
                 & data_in.eye{neuron_i}.eye_y{1,1}(trials_in(trial_i),:) < y_min(2)...
                 & data_in.eye{neuron_i}.eye_y{1,1}(trials_in(trial_i),:) > y_min(1));
+            in_window = in_window(in_window < length(params.eye.alignWin));
             
             window_flag(trial_i,in_window) = 1;
             

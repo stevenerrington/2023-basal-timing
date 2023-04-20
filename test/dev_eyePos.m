@@ -9,9 +9,9 @@ params.plot.xintercept = 1500;
 params.eye.salience_window = params.eye.zero+1500+[-200:0];
 
 data_in = []; data_in = bf_data_timingTask;
-[~, ~, mean_gaze_array, time_gaze_window]  =...
+[~, ~, mean_gaze_array_bf_nih, time_gaze_window_wustl]  =...
     get_pgaze_window(data_in, trial_type_list, params);
-plot_eyegaze(mean_gaze_array,time_gaze_window,params);
+plot_eyegaze(mean_gaze_array_bf_nih,time_gaze_window_wustl,params);
 
 
 % Basal Forebrain: NIH CS task
@@ -20,9 +20,9 @@ params.plot.xintercept = 1500;
 params.eye.salience_window = params.eye.zero+1500+[-200:0];
 
 data_in = []; data_in = bf_data_CS(strcmp(bf_datasheet_CS.site,'nih'),:);
-[~, ~, mean_gaze_array, time_gaze_window]  =...
+[~, ~, mean_gaze_array_bf_nih, time_gaze_window_nih]  =...
     get_pgaze_window(data_in, trial_type_list, params);
-plot_eyegaze(mean_gaze_array,time_gaze_window,params);
+plot_eyegaze(mean_gaze_array_bf_nih,time_gaze_window_nih,params);
 
 
 % Basal Forebrain: WUSTL CS task
@@ -31,22 +31,58 @@ params.plot.xintercept = 2500;
 params.eye.salience_window = params.eye.zero+2500+[-200:0];
 
 data_in = []; data_in = bf_data_CS(strcmp(bf_datasheet_CS.site,'wustl'),:);
-[~, ~, mean_gaze_array, time_gaze_window]  =...
+[~, ~, mean_gaze_array_bf_wustl, time_gaze_window_wustl]  =...
     get_pgaze_window(data_in, trial_type_list, params);
-plot_eyegaze(mean_gaze_array,time_gaze_window,params);
+plot_eyegaze(mean_gaze_array_bf_wustl,time_gaze_window_wustl,params);
+
+
+%% dev idea: plot by monkey
+% Basal Forebrain: NIH CS task
+trial_type_list = {'prob0','prob50','prob100'};
+params.plot.xintercept = 1500;
+params.eye.salience_window = params.eye.zero+params.plot.xintercept+[-200:0];
+
+% 'han','peek'
+data_in = []; data_in = bf_data_CS(strcmp(bf_datasheet_CS.monkey,'han'),:);
+[~, ~, mean_gaze_array_bf_nih, time_gaze_window_nih]  =...
+    get_pgaze_window(data_in, trial_type_list, params);
+plot_eyegaze(mean_gaze_array_bf_nih,time_gaze_window_nih,params);
+
+% % Basal Forebrain: WUSTL CS task
+% params.plot.xintercept = 2500;
+% params.eye.salience_window = params.eye.zero+params.plot.xintercept+[-200:0];
+% 
+% % 'batman','zombie'
+% data_in = []; data_in = bf_data_CS(strcmp(bf_datasheet_CS.monkey,'batman'),:);
+% [~, ~, mean_gaze_array_bf_nih, time_gaze_window_nih]  =...
+%     get_pgaze_window(data_in, trial_type_list, params);
+% plot_eyegaze(mean_gaze_array_bf_nih,time_gaze_window_nih,params);
+
+%% dev ideas: combined data
+
+params.plot.xintercept = 1500;
+params.eye.salience_window = params.eye.zero+params.plot.xintercept+[-200:0];
+out_data_nih = plot_eyegaze(mean_gaze_array_bf_nih,time_gaze_window_nih,params);
+
+params.plot.xintercept = 2500;
+params.eye.salience_window = params.eye.zero+params.plot.xintercept+[-200:0];
+out_data_wustl = plot_eyegaze(mean_gaze_array_bf_wustl,time_gaze_window_wustl,params);
+
+data_in = []; data_in = [out_data_nih.mean_gaze_window;out_data_wustl.mean_gaze_window];
+data_in_b = []; data_in_b = [out_data_nih.p_gaze_array;out_data_wustl.p_gaze_array];
+label_in = []; label_in = [out_data_nih.label_in;out_data_wustl.label_in];
 
 
 
+clear figure_plot
+figure_plot(1,1)=gramm('x',label_in,'y',data_in,'color',label_in);
+figure_plot(1,1).stat_summary('geom',{'bar','black_errorbar'},'width',1);
+% figure_plot(1,1).geom_jitter('alpha',0.2);
+figure_plot(1,1).axe_property('YLim',[0 1]);
+figure_plot(1,1).set_names('x','Condition','y','P(Gaze at CS)');
 
-
-
-
-
-
-
-
-
-
+figure('Renderer', 'painters', 'Position', [100 100 350 250]);
+figure_plot.draw;
 
 
 %% Extract eye positions
@@ -108,11 +144,42 @@ for trial_type_i = 1:length(trial_type_list)
             [conc_gaze_array.(trial_type_label);...
             p_gaze_window.(trial_type_label){neuron_i}];
         
-        mean_gaze_array.(trial_type_label)(neuron_i,:) =...
+        mean_gaze_array_bf_nih.(trial_type_label)(neuron_i,:) =...
             nanmean(p_gaze_window.(trial_type_label){neuron_i});
         
     end
 end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+%%
+% Basal Forebrain: NIH CS task
+trial_type_list = {'prob0_punish','prob50_punish','prob100_punish'};
+params.plot.xintercept = 1500;
+params.eye.salience_window = params.eye.zero+params.plot.xintercept+[-200:0];
+
+data_in = []; data_in = bf_data_punish;
+[~, ~, mean_gaze_array_bf_punish, time_gaze_window_punish]  =...
+    get_pgaze_window(data_in, trial_type_list, params);
+plot_eyegaze(mean_gaze_array_bf_punish,time_gaze_window_punish,params);
+
+
+
+
+
 
 
 %% Figure
@@ -121,12 +188,12 @@ color_scheme_punish = [254 216 225; 251 137 166; 247 19 77]./255;
 color_scheme_reward = [156 224 245; 56 193 236; 16 131 167]./255;
 
 clear figure_plot
-data_in_reward = [num2cell(mean_gaze_array.prob0_reward,2);...
-    num2cell(mean_gaze_array.prob50_reward,2);...
-    num2cell(mean_gaze_array.prob100_reward,2)];
-data_in_punish = [num2cell(mean_gaze_array.prob0_punish,2);...
-    num2cell(mean_gaze_array.prob50_punish,2);...
-    num2cell(mean_gaze_array.prob100_punish,2)];
+data_in_reward = [num2cell(mean_gaze_array_bf_nih.prob0_reward,2);...
+    num2cell(mean_gaze_array_bf_nih.prob50_reward,2);...
+    num2cell(mean_gaze_array_bf_nih.prob100_reward,2)];
+data_in_punish = [num2cell(mean_gaze_array_bf_nih.prob0_punish,2);...
+    num2cell(mean_gaze_array_bf_nih.prob50_punish,2);...
+    num2cell(mean_gaze_array_bf_nih.prob100_punish,2)];
 
 label_in = [repmat({'1_prob0'},size(bf_data_punish,1),1);...
     repmat({'2_prob50'},size(bf_data_punish,1),1);...

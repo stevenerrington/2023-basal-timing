@@ -1,11 +1,12 @@
-function [out_data] = plot_eyegaze(mean_gaze_array,time_gaze_window,params)
+function plot_eyegaze_dev(mean_gaze_array,time_gaze_window,params)
+
 
 
 trial_type_list = fieldnames(mean_gaze_array);
 data_in = []; label_in = []; mean_gaze_window = [];
 for trial_type_i = 1:length(trial_type_list)
     data_in = [data_in; num2cell(mean_gaze_array.(trial_type_list{trial_type_i}),2)];
-    label_in = [label_in; repmat({[int2str(trial_type_i) '_' trial_type_list{trial_type_i}]},size(mean_gaze_array.(trial_type_list{trial_type_i}),1),1)];
+    label_in = [label_in; repmat({trial_type_list{trial_type_i}},size(mean_gaze_array.(trial_type_list{trial_type_i}),1),1)];
     mean_gaze_window = [mean_gaze_window; nanmean(mean_gaze_array.(trial_type_list{trial_type_i})(:,params.eye.salience_window),2)];
 end
 
@@ -17,8 +18,6 @@ for trial_type_i = 1:length(trial_type_list)
     for neuron_i = 1:length(time_data_in)
         time_gaze_array =...
             [time_gaze_array; nanmean(time_gaze_window.(trial_type_list{trial_type_i}){neuron_i})];
-        
-        p_gaze_array(neuron_i,trial_type_i) = nanmean(mean_gaze_array.(trial_type_list{trial_type_i})(neuron_i,params.eye.salience_window));
     end
     
     time_gaze_rocData.(trial_type_list{trial_type_i}) = time_gaze_array;
@@ -70,14 +69,3 @@ figure_plot(1,3).geom_hline('yintercept',0.5);
 
 figure('Renderer', 'painters', 'Position', [100 100 1200 350]);
 figure_plot.draw;
-
-out_data.roc_data = roc_data;
-out_data.time_gaze_rocData = time_gaze_rocData;
-out_data.mean_gaze_window = mean_gaze_window;
-out_data.label_in = label_in;
-out_data.p_gaze_array = p_gaze_array;
-
-
-
-
-
