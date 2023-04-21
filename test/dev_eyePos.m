@@ -62,26 +62,46 @@ plot_eyegaze(mean_gaze_array_bf_nih,time_gaze_window_nih,params);
 
 params.plot.xintercept = 1500;
 params.eye.salience_window = params.eye.zero+params.plot.xintercept+[-200:0];
+% NIH data ---------------------------------------------------------
+trial_type_list = {'prob0','prob50','prob100'};
+params.plot.xintercept = 1500;
+params.eye.salience_window = params.eye.zero+1500+[-200:0];
+
+data_in = []; data_in = bf_data_CS(strcmp(bf_datasheet_CS.site,'nih'),:);
+[~, ~, mean_gaze_array_bf_nih, time_gaze_window_nih]  =...
+    get_pgaze_window(data_in, trial_type_list, params);
+plot_eyegaze(mean_gaze_array_bf_nih,time_gaze_window_nih,params);
 out_data_nih = plot_eyegaze(mean_gaze_array_bf_nih,time_gaze_window_nih,params);
 
+
+% WUSTL data ---------------------------------------------------------
 params.plot.xintercept = 2500;
-params.eye.salience_window = params.eye.zero+params.plot.xintercept+[-200:0];
+params.eye.salience_window = params.eye.zero+2500+[-200:0];
+
+data_in = []; data_in = bf_data_CS(strcmp(bf_datasheet_CS.site,'wustl') & strcmp(bf_datasheet_CS.cluster_label,'Ramping'),:);
+[~, ~, mean_gaze_array_bf_wustl, time_gaze_window_wustl]  =...
+    get_pgaze_window(data_in, trial_type_list, params);
 out_data_wustl = plot_eyegaze(mean_gaze_array_bf_wustl,time_gaze_window_wustl,params);
 
+
+% Concatenated
 data_in = []; data_in = [out_data_nih.mean_gaze_window;out_data_wustl.mean_gaze_window];
 data_in_b = []; data_in_b = [out_data_nih.p_gaze_array;out_data_wustl.p_gaze_array];
 label_in = []; label_in = [out_data_nih.label_in;out_data_wustl.label_in];
+site_label_in = []; site_label_in = [repmat({'1_NIH'},length(out_data_nih.mean_gaze_window),1);...
+    repmat({'2_WUSTL'},length(out_data_wustl.mean_gaze_window),1)];
 
 
 
 clear figure_plot
 figure_plot(1,1)=gramm('x',label_in,'y',data_in,'color',label_in);
 figure_plot(1,1).stat_summary('geom',{'bar','black_errorbar'},'width',1);
-% figure_plot(1,1).geom_jitter('alpha',0.2);
 figure_plot(1,1).axe_property('YLim',[0 1]);
 figure_plot(1,1).set_names('x','Condition','y','P(Gaze at CS)');
+figure_plot(1,1).facet_grid([],site_label_in);
+figure_plot(1,1).no_legend();
 
-figure('Renderer', 'painters', 'Position', [100 100 350 250]);
+figure('Renderer', 'painters', 'Position', [100 100 500 250]);
 figure_plot.draw;
 
 

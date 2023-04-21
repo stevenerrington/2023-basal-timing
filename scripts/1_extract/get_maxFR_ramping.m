@@ -19,7 +19,7 @@ for trial_type_i = 1:length(trial_type_list)
             
             trial_sdf = []; trial_sdf = data_in.sdf{neuron_i,1}(trial_j,:);
             peak_fr = max( trial_sdf(1,5000+peak_window));
-            
+
             if peak_fr > 0
                 peak_time(trial_i,1) = find(trial_sdf == peak_fr,1)-5000;
             else
