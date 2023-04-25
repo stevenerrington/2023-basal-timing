@@ -24,9 +24,11 @@ for neuron_i = 1:size(nih_neuronsheet,1)
     area = {'BF'};                             % Recording area
     site = {'nih'};                            % Institution where data was recorded
     dir = nih_neuronsheet.dir(neuron_i); % Data storage directory
+    cluster_id = 2; % Data storage directory
+    cluster_label = {'Ramping'}; % Data storage directory
    
     % Save variables to a row in the datatable
-    bf_datasheet_punish(neuron_i,:) = table(file, monkey, date, ap_loc, ml_loc, depth, area, site, dir);
+    bf_datasheet_punish(neuron_i,:) = table(file, monkey, date, ap_loc, ml_loc, depth, area, site, dir,cluster_id,cluster_label);
     
 end
 

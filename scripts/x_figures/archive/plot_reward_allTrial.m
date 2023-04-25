@@ -2,17 +2,23 @@ clear figure_plot
 
 %% Basal forebrain | CS task
 % Input variables
-data_in = []; data_in = bf_data_punish;
-trialtype_plot.reward =...
-    {{'iti_short','iti_long'},...
-    {'probAll_reward'},...
-    {'prob0_reward','prob50_reward','prob100_reward'},...
-    {'prob50_reward_d','prob50_reward_nd'}};
+% Input data
+data_in_temp = []; data_in_temp = [bf_data_punish; bf_data_CS];
+datasheet_in_temp = []; datasheet_in_temp = [bf_datasheet_punish; bf_datasheet_CS];
+
+% Curate data: just get ramping neurons
+data_in = []; data_in = data_in_temp(datasheet_in_temp.cluster_id == 2,:);
+datasheet_in = []; datasheet_in = datasheet_in_temp(datasheet_in_temp.cluster_id == 2,:);
 
 % Parameters
-epoch_labels = {'prefix_iti','fix_to_CS','CS_to_outcome','outcome'};
-epoch_xlim = {[-1500 -1000],[-1000 0],[0 1500-10],[1500+10 3000]};
-
+epoch_labels = {'fix_to_CS','CS_early','CS_late','outcome'};
+epoch_xlim = {[-1000 0],[0 500],[1000 1500-10],[1500+10 1750]};
+epoch_align = {'cs','cs','reward','reward'};
+trialtype_plot.reward =...
+{{'probAll'},...
+{'prob0','prob50','prob100'},...
+{'prob0','prob50','prob100'},...
+{'prob50d','prob50nd'}};
 
 ylim_input_example_SDF = [0 75]; ylim_input_fano = [0 2]; ylim_input_pop_SDF = [-3 6];
 color_scheme_reward = [156 224 245; 56 193 236; 16 131 167]./255;
@@ -60,8 +66,15 @@ for epoch_i = 1:length(epoch_labels)
     plot_time = [-5000:5000]; time_zero = abs(plot_time(1));
     norm_window = 5000+[-1000:3000];
     
+    plot_sdf_data_times = [];
+    
     % For each neuron
     for neuron_i = 1:size(data_in,1)
+        if epoch_i == 3 | epoch_i == 4 
+            plot_sdf_data_times = [plot_sdf_data_times;{plot_time - 1000}];
+        else
+            plot_sdf_data_times = [plot_sdf_data_times;{plot_time}];
+        end
         
         baseline_trials = [];
         for trial_type_i = 1:length(plot_trial_types)
@@ -118,7 +131,7 @@ for epoch_i = 1:length(epoch_labels)
     
     % Population data
     % Spike density function
-    figure_plot(4,epoch_i)=gramm('x',plot_time,'y',plot_sdf_data_pop,'color',plot_label_pop);
+    figure_plot(4,epoch_i)=gramm('x',plot_sdf_data_times,'y',plot_sdf_data_pop,'color',plot_label_pop);
     figure_plot(4,epoch_i).stat_summary();
     figure_plot(4,epoch_i).no_legend;
     
@@ -146,7 +159,7 @@ for epoch_i = 2:4
     figure_plot(5,epoch_i).axe_property('XLim',epoch_xlim{epoch_i},'YLim',ylim_input_fano,'YTick',[],'YColor',[1 1 1]);
 end
 
-input_colormap = {[242 193 45; 179 89 195]./255, [0.5 0.5 0.5], color_scheme_reward, [13 105 134; 255 36 103]./255};
+input_colormap = {[0.5 0.5 0.5], color_scheme_reward, color_scheme_reward, [13 105 134; 255 36 103]./255};
 
 for epoch_i = 1:length(epoch_labels)
     figure_plot(:,epoch_i).set_color_options('map',input_colormap{epoch_i});

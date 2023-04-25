@@ -72,20 +72,20 @@ trials.prob50_punish=intersect(completedtrial,find(fractal==prob50_punish));
 trials.prob0_punish=intersect(completedtrial,find(fractal==prob0_punish));
 
 % % Reward amount (0:25:100% reward amount)
-trials.prob100_reward=intersect(completedtrial,find(fractal==prob100_reward));
-trials.prob50_reward=intersect(completedtrial,find(fractal==prob50_reward));
-trials.prob0_reward=intersect(completedtrial,find(fractal==prob0_reward));
+trials.prob100=intersect(completedtrial,find(fractal==prob100_reward));
+trials.prob50=intersect(completedtrial,find(fractal==prob50_reward));
+trials.prob0=intersect(completedtrial,find(fractal==prob0_reward));
 
 % % Probability x outcome
 trials.prob50_punish_d=intersect(trials.prob50_punish,deliv_punish); % 50% probability, delivered (punish)
 trials.prob50_punish_nd=intersect(trials.prob50_punish,ndeliv_punish); % 50% probability, not-delivered  (punish)
 
-trials.prob50_reward_d=intersect(trials.prob50_reward,deliv_reward); % 50% probability, delivered  (reward)
-trials.prob50_reward_nd=intersect(trials.prob50_reward,ndeliv_reward); % 50% probability, not-delivered (reward)
+trials.prob50d=intersect(trials.prob50,deliv_reward); % 50% probability, delivered  (reward)
+trials.prob50nd=intersect(trials.prob50,ndeliv_reward); % 50% probability, not-delivered (reward)
 
 trials.probAll_punish = [trials.prob0_punish,trials.prob50_punish,trials.prob100_punish];
-trials.probAll_reward = [trials.prob0_reward,trials.prob50_reward,trials.prob100_reward];
-trials.probAll_all = [trials.probAll_punish,trials.probAll_reward];
+trials.probAll_reward = [trials.prob0,trials.prob50,trials.prob100];
+trials.probAll = [trials.probAll_punish,trials.probAll_reward];
 
 %%
 TrialEventTimes = dev_extractTrialEventTimes(REX);

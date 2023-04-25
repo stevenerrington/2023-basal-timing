@@ -3,6 +3,7 @@
 params.eye.window = [5 5]; params.plot.xintercept = 1500;
 params.eye.zero = find(params.eye.alignWin == 0);
 
+%%
 % Basal forebrain: timing task
 trial_type_list = {'p50s_50l_short','p50s_50l_long'};
 params.plot.xintercept = 1500;
