@@ -7,8 +7,8 @@ switch user
         dirs.inherit = '/Users/stevenerrington/Desktop/Projects/2023-basal-timing/src/BasalForebrain_Zhang_Chen_Monosov';
         
     case 'home'
-        dirs.root = 'D:\projectCode\2023-basal-timing\';
-        dirs.toolbox = 'D:\projectCode\toolbox\';
+        dirs.root = 'D:\projects\2023-basal-timing\';
+        dirs.toolbox = 'D:\projects\toolbox\';
         dirs.inherit = 'C:\Users\Steven\Desktop\temp\BasalForebrain_Zhang_Chen_Monosov\BasalForebrain_Zhang_Chen_Monosov';
         
     case 'wustl'
