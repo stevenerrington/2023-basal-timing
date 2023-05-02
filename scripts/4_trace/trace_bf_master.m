@@ -35,9 +35,12 @@ for neuron_i = 1:size(bf_datasheet_traceExp,1)
     % Get licking raster
     Licking = get_licking_raster(PDS,params); 
     
+    % Eyes
+    Eye = [];
+            
     % Output extracted data into a table
-    bf_data_traceExp(neuron_i,:) = table({filename}, {trials}, {Rasters},{SDF},{Licking},...
-        'VariableNames',{'filename','trials','rasters','sdf','licking'});
+    bf_data_traceExp(neuron_i,:) = table({filename}, {trials}, {Rasters},{SDF},{Licking},{Eye},...
+        'VariableNames',{'filename','trials','rasters','sdf','licking','eye'});
 end
 
 %% Analysis: calculate running fano factor

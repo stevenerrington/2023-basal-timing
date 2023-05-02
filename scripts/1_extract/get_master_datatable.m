@@ -60,3 +60,8 @@ end
 
 %% Export: Save Data
 save(fullfile(dirs.root,'data','master_datatable_bf.mat'),'master_datatable_bf')
+
+
+%% Curation
+bf_data_1500_ramping = [bf_data_CS(strcmp(bf_datasheet_CS.site,'nih'),:); bf_data_punish; bf_data_timingTask];
+bf_data_2500_ramping = [bf_data_CS(bf_datasheet_CS.cluster_id  == 2 & strcmp(bf_datasheet_CS.site,'wustl'),:); bf_data_CS2; bf_data_traceExp];

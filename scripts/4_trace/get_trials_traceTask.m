@@ -91,4 +91,9 @@ for x=1:length(PDS.fractals)
     end
 end
 
+trials.uncertain=[trials.timingcue_uncertain, trials.notimingcue_uncertain];
+trials.certain=[trials.timingcue_certain, trials.notimingcue_certain];
+
+
+
 end

@@ -53,6 +53,12 @@ trials.fractal6105_2500 = intersect(find(durationsuntilreward==2.5),trials6105);
 trials.fractal6105_3500 = intersect(find(durationsuntilreward==3.5),trials6105);
 trials.fractal6105_4500 = intersect(find(durationsuntilreward==4.5),trials6105);
 
+
+trials.uncertain = [trials.p50s_50l_short,trials.p50s_50l_long,...
+    trials.p75s_25l_short,trials.p75s_25l_long,...
+    trials.p50s_50l_short,trials.p50s_50l_long];
+trials.certain = [trials.p100s_0l_short];
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % INHERITED FROM get_trials CODE.
 % 
