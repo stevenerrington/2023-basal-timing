@@ -65,3 +65,13 @@ save(fullfile(dirs.root,'data','master_datatable_bf.mat'),'master_datatable_bf')
 %% Curation
 bf_data_1500_ramping = [bf_data_CS(strcmp(bf_datasheet_CS.site,'nih'),:); bf_data_punish; bf_data_timingTask];
 bf_data_2500_ramping = [bf_data_CS(bf_datasheet_CS.cluster_id  == 2 & strcmp(bf_datasheet_CS.site,'wustl'),:); bf_data_CS2; bf_data_traceExp];
+
+
+neuron_1500_remove = [];
+neuron_2500_remove = [1 13 15 16 19 20 24 30 32 33 35 38];
+
+bf_data_2500_ramping(neuron_2500_remove,:) = [];
+
+
+
+

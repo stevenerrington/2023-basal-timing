@@ -1,4 +1,8 @@
 %% Basal forebrain project
 %  Analysis map
 
-% > Project description will go here
+% Get ramping dynamics
+
+
+% Get power-spectral density of resting firing rate
+

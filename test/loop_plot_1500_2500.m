@@ -31,7 +31,7 @@ for ii = 1:size(bf_data_2500_ramping,1)
     params.plot.xintercept = 2500;
     [~, ~,example_neuron] = plot_example_neuron(bf_data_2500_ramping,plot_trial_types,params,ii,0);
     example_neuron.set_title([int2str(ii) ' - ' bf_data_2500_ramping.filename{ii}]);
-    figure('Renderer', 'painters', 'Position', [100 100 400 600]);
+    figure('Renderer', 'painters', 'Position', [100 100 700 600]);
     example_neuron.draw;
     
     pause;
