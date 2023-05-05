@@ -77,7 +77,6 @@ figure_plot(1,1).stat_summary();
 figure_plot(1,1).axe_property('XLim',xlim_input,'YLim',ylim_input);
 figure_plot(1,1).set_names('x','Time from CS Onset (ms)','y','Firing rate (Z-score)');
 figure_plot(1,1).set_color_options('map',color_scheme);
-figure_plot(1,1).geom_vline('xintercept',0,'style','k-');
 figure_plot(1,1).geom_vline('xintercept',params.plot.xintercept,'style','k-');
 figure_plot(1,1).no_legend;
 
@@ -87,7 +86,6 @@ figure_plot(2,1).stat_summary();
 figure_plot(2,1).axe_property('XLim',xlim_input,'YLim',[0 2]);
 figure_plot(2,1).set_names('x','Time from CS Onset (ms)','y','Fano Factor');
 figure_plot(2,1).set_color_options('map',color_scheme);
-figure_plot(2,1).geom_vline('xintercept',0,'style','k-');
 figure_plot(2,1).geom_vline('xintercept',params.plot.xintercept,'style','k-');
 figure_plot(2,1).geom_hline('yintercept',1,'style','k--');
 figure_plot(2,1).no_legend;

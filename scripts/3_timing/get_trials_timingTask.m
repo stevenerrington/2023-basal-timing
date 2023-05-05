@@ -59,6 +59,10 @@ trials.uncertain = [trials.p50s_50l_short,trials.p50s_50l_long,...
     trials.p50s_50l_short,trials.p50s_50l_long];
 trials.certain = [trials.p100s_0l_short];
 
+trials.prob0 = 0;
+trials.prob50 = [trials.p50s_50l_short,trials.p50s_50l_long];
+trials.prob100 = trials.p100s_0l_short;
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % INHERITED FROM get_trials CODE.
 % 

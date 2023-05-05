@@ -100,5 +100,9 @@ figure('Renderer', 'painters', 'Position', [100 100 600 600]);
 figure_data.draw
 
 
+%%
+params.plot.xlim = [0 2500]; params.plot.ylim = [-2 4]; params.plot.xintercept = 2500;
+data_in_plot = []; data_in_plot = bf_data_2500_ramping;
+[~, ~, bf_pop_CS2500_ramping] = plot_population_neuron(data_in_plot,plot_trial_types,params,0);
 
 
