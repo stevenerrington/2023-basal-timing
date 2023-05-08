@@ -1,7 +1,7 @@
 clear figure_plot
-figure_plot = [bf_example_CS1500_ramping_appetitive, bf_example_CS1500_ramping_aversive;...
- bf_pop_CS1500_ramping_appetitive,  bf_pop_CS1500_ramping_aversive;...
- precision_figure_data_appetitive, precision_figure_data_aversive]; 
+figure_plot = [bf_example_CS1500_ramping_appetitive;...
+ bf_pop_CS1500_ramping_appetitive;...
+ precision_figure_data_appetitive]; 
 %% Gramm mapping
 %{
 (1,1) Raster: appetitive data
@@ -61,36 +61,7 @@ figure_plot(5,1).set_layout_options('Position',[0.1 0.1 0.2 0.075],... %Set the 
     'margin_width',[0.00 0.00],...
     'redraw',false);
 
-% Aversive spike data
-figure_plot(1,2).set_layout_options('Position',[0.35 0.9 0.2 0.075],... %Set the position in the figure (as in standard 'Position' axe property)
-    'legend',false,... % No need to display legend for side histograms
-    'margin_height',[0.00 0.00],... %We set custom margins, values must be coordinated between the different elements so that alignment is maintained
-    'margin_width',[0.00 0.00],...
-    'redraw',false);
 
-figure_plot(2,2).set_layout_options('Position',[0.35 0.6 0.2 0.25],... %Set the position in the figure (as in standard 'Position' axe property)
-    'legend',false,... % No need to display legend for side histograms
-    'margin_height',[0.00 0.00],... %We set custom margins, values must be coordinated between the different elements so that alignment is maintained
-    'margin_width',[0.00 0.00],...
-    'redraw',false);
-
-figure_plot(3,2).set_layout_options('Position',[0.35 0.5 0.2 0.075],... %Set the position in the figure (as in standard 'Position' axe property)
-    'legend',false,... % No need to display legend for side histograms
-    'margin_height',[0.00 0.00],... %We set custom margins, values must be coordinated between the different elements so that alignment is maintained
-    'margin_width',[0.00 0.00],...
-    'redraw',false);
-
-figure_plot(4,2).set_layout_options('Position',[0.35 0.2 0.2 0.25],... %Set the position in the figure (as in standard 'Position' axe property)
-    'legend',false,... % No need to display legend for side histograms
-    'margin_height',[0.00 0.00],... %We set custom margins, values must be coordinated between the different elements so that alignment is maintained
-    'margin_width',[0.00 0.00],...
-    'redraw',false);
-
-figure_plot(5,2).set_layout_options('Position',[0.35 0.1 0.2 0.075],... %Set the position in the figure (as in standard 'Position' axe property)
-    'legend',false,... % No need to display legend for side histograms
-    'margin_height',[0.00 0.00],... %We set custom margins, values must be coordinated between the different elements so that alignment is maintained
-    'margin_width',[0.00 0.00],...
-    'redraw',false);
 
 
 
@@ -121,58 +92,21 @@ figure_plot(9,1).set_layout_options('Position',[0.625 0.1 0.15 0.15],... %Set th
     'margin_width',[0.00 0.00],...
     'redraw',false);
 
-% Aversive precision
-figure_plot(6,2).set_layout_options('Position',[0.825 0.8 0.15 0.15],... %Set the position in the figure (as in standard 'Position' axe property)
-    'legend',false,... % No need to display legend for side histograms
-    'margin_height',[0.00 0.00],... %We set custom margins, values must be coordinated between the different elements so that alignment is maintained
-    'margin_width',[0.00 0.00],...
-    'redraw',false);
-%0.625 0.3 0.15 0.15
-
-figure_plot(7,2).set_layout_options('Position',[0.825 0.3 0.15 0.15],... %Set the position in the figure (as in standard 'Position' axe property)
-    'legend',false,... % No need to display legend for side histograms
-    'margin_height',[0.00 0.00],... %We set custom margins, values must be coordinated between the different elements so that alignment is maintained
-    'margin_width',[0.00 0.00],...
-    'redraw',false);
-%0.825 0.3 0.15 0.15
-
-figure_plot(8,2).set_layout_options('Position',[0.825 0.6 0.15 0.15],... %Set the position in the figure (as in standard 'Position' axe property)
-    'legend',false,... % No need to display legend for side histograms
-    'margin_height',[0.00 0.00],... %We set custom margins, values must be coordinated between the different elements so that alignment is maintained
-    'margin_width',[0.00 0.00],...
-    'redraw',false);
-%0.625 0.1 0.15 0.15
-
-figure_plot(9,2).set_layout_options('Position',[0.825 0.1 0.15 0.15],... %Set the position in the figure (as in standard 'Position' axe property)
-    'legend',false,... % No need to display legend for side histograms
-    'margin_height',[0.00 0.00],... %We set custom margins, values must be coordinated between the different elements so that alignment is maintained
-    'margin_width',[0.00 0.00],...
-    'redraw',false);
-%0.825 0.1 0.15 0.15
-
 
 %% Arrange labels
 
 for i = [1,2,3,4 6 7 8 9]
     figure_plot(i,1).axe_property('XTick',[],'XColor',[1 1 1]);
-    figure_plot(i,2).axe_property('XTick',[],'XColor',[1 1 1]);
 end
 
-for i = [1,2,3,4 5 6 7 8 9]
-    figure_plot(i,2).axe_property('YTick',[],'YColor',[1 1 1]);
-end
 
-figure_plot(6,1).axe_property('YLim',[-0.01 0.05]);
-figure_plot(6,2).axe_property('YLim',[-0.01 0.05]);
+figure_plot(6,1).axe_property('YLim',[-0.01 0.06]);
 
-figure_plot(8,1).axe_property('YLim',[0.02 0.05]);
-figure_plot(8,2).axe_property('YLim',[0.02 0.05]);
+figure_plot(8,1).axe_property('YLim',[0.0 0.03]);
 
-figure_plot(7,1).axe_property('YLim',[-250 100]);
-figure_plot(7,2).axe_property('YLim',[-250 100]);
+figure_plot(7,1).axe_property('YLim',[-600 200]);
 
 figure_plot(9,1).axe_property('YLim',[0 1000]);
-figure_plot(9,2).axe_property('YLim',[0 1000]);
 
 
 %% Plot figure
