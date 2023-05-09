@@ -59,8 +59,8 @@ clear figure_gramm
 % Boxplot
 figure_gramm(1,1)= gramm('x',cond_label,'y',data,'color',cond_label);
 %figure_gramm(1,1).stat_summary('geom',{'bar','black_errorbar'},'width',1);
-figure_gramm(1,1).stat_summary('geom',{'bar','black_errorbar'},'width',1);
-figure_gramm(1,1).geom_jitter('alpha',0.2);
+figure_gramm(1,1).stat_summary('geom',{'bar','black_errorbar'},'dodge',1,'width',5);
+% figure_gramm(1,1).geom_jitter('alpha',0.2);
 figure_gramm(1,1).no_legend();
 figure_gramm(1,1).facet_grid([],[]);
 figure_gramm(1,1).geom_hline('yintercept',1);
@@ -69,9 +69,7 @@ figure_gramm(1,1).set_color_options('map',params.plot.colormap);
 
 % Figure parameters & settings
 figure_gramm.set_names('x','Task','y','Fano Factor');
-
+figure_gramm.draw();
 figure_out = [];
-% figure_out = figure('Renderer', 'painters', 'Position', [100 100 200 350]);
-% figure_gramm.draw();
 
 end

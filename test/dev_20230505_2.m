@@ -52,9 +52,6 @@ params.plot.colormap = colors.aversive;
 %% Setup figure layout
 dev_20230505_layout
 
-
-
-
 %% Plot: Fano factor compass plots
 
 % Set figure parameters
@@ -101,4 +98,18 @@ spider_plot(fano_analysis_aversive.concatenate,...
 spider_plot_legend = legend({'0%','50%','100%'}, 'Location', 'SouthOutside','Orientation','Horizontal');
 spider_plot_legend.NumColumns = 3;
 
+%% Fano comparison
 
+% Define analysis time window 
+params.fano.timewindow = 0:1500;
+
+% > Define data for comparison
+clear input_data input_trials input_labels
+input_data = {bf_data_punish,bf_data_punish,bf_data_punish, bf_data_punish,bf_data_punish,bf_data_punish};
+input_trials = {'prob0','prob50','prob100','prob0_punish','prob50_punish','prob100_punish'};
+input_labels = {'prob0','prob50','prob100','prob0_punish','prob50_punish','prob100_punish'};
+
+% > Generate figure
+params.plot.ylim = [0 1.5]; params.plot.colormap = [colors.appetitive;colors.aversive];
+figure('Renderer', 'painters', 'Position', [100 100 300 200])
+bf_ramping_outcome_fano = plot_compare_fano_b(input_data,input_trials,input_labels,params);
