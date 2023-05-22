@@ -1,7 +1,6 @@
 function eye_pos_table = get_rex_eye(REX, params)
     eye_x_trial = []; eye_y_trial = []; location = [];
     
-    
     eye_alignWin = params.eye.alignWin;
     
     for trial_i = 1:size(REX,2)
