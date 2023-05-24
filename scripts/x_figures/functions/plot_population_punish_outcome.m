@@ -1,4 +1,4 @@
-function figure_plot = plot_population_CSoutcome(data_in,datasheet_in,plot_trial_types,params)
+function figure_plot = plot_population_punish_outcome(data_in,plot_trial_types,params)
 
 % Input variables
 xlim_input = params.plot.xlim; ylim_input = params.plot.ylim;
@@ -20,7 +20,7 @@ plot_sdf_window_data = [];
 
 % Timing parameters
 plot_time = [-1000:2000]; time_zero = 5000; baseline_win = [-1000:3500];
-epoch.postOutcome = [100 400]; epoch_zero.postOutcome = [1500 2500];
+epoch.postOutcome = [100 400]; epoch_zero.postOutcome = [1500 1500];
 
 
 %% Extract: get relevant data
@@ -37,16 +37,11 @@ for neuron_i = 1:size(data_in,1)
     bl_fr_std = nanstd(nanmean(data_in.sdf{neuron_i}(baseline_trials,baseline_win+time_zero)));
     
     % Get alignment times for different outcome times between exps
-    switch datasheet_in.site{neuron_i}
-        case 'wustl'
-            sdf_timewindow = plot_time + time_zero + 2500;
-            fano_timewindow = plot_time + 2500;
-            site_id = 2;
-        case 'nih'
-            sdf_timewindow = plot_time + time_zero + 1500;
-            fano_timewindow = plot_time + 1500;
-            site_id = 1;
-    end
+    
+    sdf_timewindow = plot_time + time_zero + 1500;
+    fano_timewindow = plot_time + 1500;
+    site_id = 1;
+
     
     % For each trial type
     for trial_type_i = 1:length(plot_trial_types)
@@ -74,9 +69,8 @@ for neuron_i = 1:size(data_in,1)
         plot_fano_label = [plot_fano_label; {[int2str(trial_type_i) '_' (trial_type_label)]}];  
        
         switch trial_type_label
-            case {'prob25d' , 'prob25nd'}; plot_group = [plot_group; {'1_25%'}];
-            case {'prob50d' , 'prob50nd'}; plot_group = [plot_group; {'2_50%'}];
-            case {'prob75d' , 'prob75nd'}; plot_group = [plot_group; {'3_75%'}];       
+            case {'prob50_punish_d' , 'prob50_punish_nd'}; plot_group = [plot_group; {'1_Punish'}];
+            case {'prob50d' , 'prob50nd'}; plot_group = [plot_group; {'2_Reward'}];
         end
         
         if endsWith( trial_type_label , 'nd' )
