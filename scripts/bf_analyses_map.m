@@ -1,8 +1,6 @@
 %% Basal forebrain project
-%  Analysis map
 
-% Get ramping dynamics
+dev_saccade_Extraction
+dev_saccade_extraction2 % updated - extract sacc raster
 
-
-% Get power-spectral density of resting firing rate
-
+dev_20230505_2

@@ -2,7 +2,7 @@ function [saccade_info,velocity_xy] = saccade_detector(...
     eyetrace,params)
 
 
-% NOTE: Issues with sacc end: I botched this by just adding 5 ms to the end
+% NOTE: Issues with sacc end: I botched this by just adding 1 ms to the end
 % of saccade start to get it to work - I don't think we need this metric,
 % but will fix in future. 2023-05-22 10:01AM
 
@@ -256,18 +256,22 @@ else
         %6 columns: number, startTime, endTime, peakVelocity, amplitude, direction
         % 7:8 start point position; 9:10 end point position
         for i = 1:size(Sac_m,1)
-            saccade_info(i,1) = i; % number
-            saccade_info(i,2) = Sac_m(i,1); % startTime
-            saccade_info(i,3) = Sac_m(i,sum(~isnan(Sac_m(i,:)))); % endTime
-            saccade_info(i,4) = max(velocity_xy(saccade_info(i,2):saccade_info(i,2)+5)); % peak velocity
-            temp_Sac_startPos = [eyetrace(saccade_info(i,2),1), eyetrace(saccade_info(i,2),2)];
-            temp_Sac_endPos = [eyetrace(saccade_info(i,2)+5,1), eyetrace(saccade_info(i,2)+5,2)];
-            Sac_vector = temp_Sac_endPos - temp_Sac_startPos;
-            saccade_info(i,5) = sqrt(Sac_vector(1)^2 + Sac_vector(2)^2); % amplitude
-            [theta, ~] = cart2pol(Sac_vector(1),Sac_vector(2));
-            saccade_info(i,6) = theta; % direction
-            saccade_info(i,7:8) = temp_Sac_startPos;
-            saccade_info(i,9:10) = temp_Sac_endPos; 
+            try
+                saccade_info(i,1) = i; % number
+                saccade_info(i,2) = Sac_m(i,1); % startTime
+                saccade_info(i,3) = Sac_m(i,sum(~isnan(Sac_m(i,:)))); % endTime
+                saccade_info(i,4) = max(velocity_xy(saccade_info(i,2):saccade_info(i,3))); % peak velocity
+                temp_Sac_startPos = [eyetrace(saccade_info(i,2),1), eyetrace(saccade_info(i,2),2)];
+                temp_Sac_endPos = [eyetrace(saccade_info(i,3),1), eyetrace(saccade_info(i,3),2)];
+                Sac_vector = temp_Sac_endPos - temp_Sac_startPos;
+                saccade_info(i,5) = sqrt(Sac_vector(1)^2 + Sac_vector(2)^2); % amplitude
+                [theta, ~] = cart2pol(Sac_vector(1),Sac_vector(2));
+                saccade_info(i,6) = theta; % direction
+                saccade_info(i,7:8) = temp_Sac_startPos;
+                saccade_info(i,9:10) = temp_Sac_endPos;
+            catch
+                saccade_info(i,:) = nan;
+            end
         end
         %% deleting those potential saccades whoose amplitues are too small
         for i = 1:size(saccade_info,1)

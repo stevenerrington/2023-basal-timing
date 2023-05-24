@@ -24,7 +24,8 @@ for trial_type_i = 1:length(trial_type_in)
     % Get trial type label and indices
     trial_type_label = trial_type_in{trial_type_i};
     trials_in = []; trials_in = data_in.trials{neuron_i}.(trial_type_label);
-
+    sacc_raster = zeros(length(trials_in),length(params.eye.alignWin));
+    
     sacc_times_out = {}; sacc_labels_out = {};
     
     % For each trial, determine the time of saccades
@@ -45,24 +46,37 @@ for trial_type_i = 1:length(trial_type_in)
         
         sacc_times_out{trial_i,1} = sacc_times;
         sacc_labels_out{trial_i,1} = trial_type_label; 
+        
     end
     
     % Concatenate across trials
-    data_sacc_times = [data_sacc_times; sacc_times_out];
-    data_sacc_labels = [data_sacc_labels; sacc_labels_out];
+    data_sacc_times{trial_type_i} = sacc_times_out;
+    data_sacc_labels{trial_type_i} = sacc_labels_out;
+end
+
+%% Concatenate
+plot_sacc_times = []; plot_sacc_labels = [];
+
+for trial_type_i = 1:length(trial_type_in)
+    plot_sacc_times = [plot_sacc_times; data_sacc_times{trial_type_i}];
+    plot_sacc_labels = [plot_sacc_labels; data_sacc_labels{trial_type_i}];
     
 end
 
 
 
+
+out = cat(1,data_sacc_times{trial_type_i});
+
+
 %% Raster saccades
 clear figure_plot
-figure_plot(1,1)=gramm('x',data_sacc_times,'color',data_sacc_labels);
+figure_plot(1,1)=gramm('x',plot_sacc_times,'color',plot_sacc_labels);
 figure_plot(1,1).geom_raster();
 figure_plot(1,1).axe_property('XLim',[-1000 2000]);
 figure_plot(1,1).set_names('x','Time from CS (ms)','y','Trial');
 
-figure_plot(2,1)=gramm('x',data_sacc_times,'color',data_sacc_labels);
+figure_plot(2,1)=gramm('x',plot_sacc_times,'color',plot_sacc_labels);
 figure_plot(2,1).stat_bin('edges',[-1000:250:2000],'normalization','probability','geom','line');
 figure_plot(2,1).axe_property('XLim',[-1000 2000]);
 figure_plot(2,1).set_names('x','Time from CS (ms)','y','Trial');
