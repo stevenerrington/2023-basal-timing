@@ -116,10 +116,10 @@ figure_plot(3,1).axe_property('YLim',[0 4]);
 figure_plot_out = figure('Renderer', 'painters', 'Position', [100 100 200 600]);
 figure_plot.draw();
 
-%% Output
-% Once we're done with a page, save it and close it.
-filename = fullfile(dirs.root,'results','sdf_fano_barplot_outcomeCS.pdf');
-set(figure_plot_out,'PaperSize',[20 10]); %set the paper size to what you want
-print(figure_plot_out,filename,'-dpdf') % then print it
-close(figure_plot_out)
-
+% %% Output
+% % Once we're done with a page, save it and close it.
+% filename = fullfile(dirs.root,'results','sdf_fano_barplot_outcomeCS.pdf');
+% set(figure_plot_out,'PaperSize',[20 10]); %set the paper size to what you want
+% print(figure_plot_out,filename,'-dpdf') % then print it
+% close(figure_plot_out)
+% 

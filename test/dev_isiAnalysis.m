@@ -2,7 +2,7 @@
 parfor neuron_i = 1:size(bf_datasheet_CS,1)
     
     fprintf('Calculating ISI distribution for neuron %i of %i   |  %s   \n',...
-        neuron_i,size(bf_datasheet_CS,1), bf_data_CS.file{neuron_i})
+        neuron_i,size(bf_datasheet_CS,1), bf_data_CS.filename{neuron_i})
     
     % Calculate ISI
     isi(neuron_i) = get_isi(bf_data_CS.rasters{neuron_i},...

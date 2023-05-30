@@ -1,4 +1,4 @@
-function [figure_out, figure_gramm] = plot_compare_fano_b(input_data,input_trials,input_labels,params)
+function [figure_out, figure_gramm, data_out] = plot_compare_fano_b(input_data,input_trials,input_labels,params,fig_flag)
 
 ylim_input = params.plot.ylim;
 
@@ -52,6 +52,17 @@ for neuron_i = 1:size(data_in,1)
     end
 end
 
+
+
+%% Export: Data
+
+data_out.cond_label = cond_label;
+data_out.data = data;
+
+
+
+
+
 %% Figure:
 
 clear figure_gramm
@@ -69,7 +80,12 @@ figure_gramm(1,1).set_color_options('map',params.plot.colormap);
 
 % Figure parameters & settings
 figure_gramm.set_names('x','Task','y','Fano Factor');
-figure_gramm.draw();
-figure_out = [];
+
+if fig_flag == 1
+    figure('Renderer', 'painters', 'Position', [100 100 600 600]);
+    figure_gramm.draw();
+end
+
+    figure_out = [];
 
 end

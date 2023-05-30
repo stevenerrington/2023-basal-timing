@@ -3,7 +3,7 @@
 % > Project description will go here
 
 %% Dev notes:
-% None. 2023-05-23
+% None (2023-05-23)
 
 %% Setup workspace
 % Clear workspace
@@ -32,7 +32,6 @@ switch status
         timing_striatum_master
         trace_striatum_master     % Trace task data
 end
-
 
 %% Analyses:
 bf_analyses_map

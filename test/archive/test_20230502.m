@@ -1,8 +1,6 @@
-datasheet_in = [bf_datasheet_CS;bf_datasheet_CS2];
-data_in = [bf_data_CS;bf_data_CS2];
-ramp_idx = find(datasheet_in.cluster_id==2);
-datasheet_in = datasheet_in(ramp_idx,:);
-data_in = data_in(ramp_idx,:);
+datasheet_in = striatum_datasheet_CS;
+data_in = striatum_data_CS;
+max_fr_window = [-500:500];
 
 for neuron_i = 1:size(data_in,1)
     

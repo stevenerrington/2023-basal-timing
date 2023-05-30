@@ -11,7 +11,7 @@ params.saccade.saccade_dur_thres = 5;
 params.saccade.saccade_amp_thres = 0.2;
 
 %% Define input data
-data_in = []; data_in = bf_data_1500_ramping;
+data_in = []; data_in = bf_data_punish;
 
 %% Extract saccade raster
 for neuron_i = 1:size(data_in,1)

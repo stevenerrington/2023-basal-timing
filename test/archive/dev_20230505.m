@@ -15,9 +15,9 @@ params.plot.xlim = [0 1500]; params.plot.ylim = [-2 4]; params.plot.xintercept =
 
 %% Plot slopes and peak firing rates of example neuron and population
 
-% params.stats.peak_window = [1000:2000];
-% [max_ramp_fr, max_ramp_fr_collated] = get_maxFR_ramping(bf_data_1500_ramping,plot_trial_types,params);
-% slope_analysis = get_slope_ramping(bf_data_1500_ramping,plot_trial_types,params);
+params.stats.peak_window = [1000:2000];
+[max_ramp_fr] = get_maxFR_ramping(bf_data_1500_ramping,plot_trial_types,params);
+slope_analysis = get_slope_ramping(bf_data_1500_ramping,plot_trial_types,params);
 
 [precision_figure_data] = plot_precision_analyses(slope_analysis, max_ramp_fr, 16, 0);
 
