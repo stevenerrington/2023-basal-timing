@@ -18,6 +18,8 @@ dev_individualtrl_ramp_example % Plot example neuron with fitted linear slope.
 
 dev_eyePos % Plot p(gaze) at CS across datasets (1500, 2500).
 
+dev_motor_pSaccXfr % Extract the p(gaze) across time and corr with fr (incomplete)
+
 mmff_test % Developing the mean-matched fano factor analysis.
 
 bf_striatum_outcome % Plot pre-and-post- outcome fano factor for basal ganglia data.

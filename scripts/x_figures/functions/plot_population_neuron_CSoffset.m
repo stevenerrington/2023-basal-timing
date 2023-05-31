@@ -1,6 +1,6 @@
-function [figure_plot_out, plot_data, figure_plot] = plot_population_neuron_csOutcome(data_in,datasheet_in,plot_trial_types,params,fig_flag)
+function [figure_plot_out, plot_data, figure_plot] = plot_population_neuron_CSoffset(data_in,plot_trial_types,params,fig_flag)
 
-if nargin < 5
+if nargin < 4
     fig_flag = 0;
 end
 
@@ -27,6 +27,7 @@ for neuron_i = 1:size(data_in,1)
     bl_fr_std = nanstd(nanmean(data_in.sdf{neuron_i}(all_prob_trials,baseline_win+time_zero)));
     max_fr = max(mean(data_in.sdf{neuron_i}(all_prob_trials,max_win+time_zero)));
     
+    
     for trial_type_i = 1:length(plot_trial_types)
         trial_type_label = plot_trial_types{trial_type_i};
         trials_in = []; trials_in = data_in.trials{neuron_i}.(trial_type_label);
@@ -40,30 +41,13 @@ for neuron_i = 1:size(data_in,1)
             sdf_x = nan(1,length(plot_time));
         end
         
-        fano_continuous = [];
-        
-        switch datasheet_in.site{neuron_i}
-            case 'nih'
-                sdf_x = sdf_x(time_zero+1500+[-1000:500]);
-                fano_continuous = find(ismember(data_in.fano(neuron_i).time,...
-                    1500+[-1000:500]));
-                
-            case 'wustl'
-                sdf_x = sdf_x(time_zero+2500+[-1000:500]);
-                fano_continuous = find(ismember(data_in.fano(neuron_i).time,...
-                    2500+[-1000:500]));
-        end
-        
-        fano_x = [];
-        fano_x = data_in.fano(neuron_i).raw.(trial_type_label)(fano_continuous);
-
         plot_sdf_data = [plot_sdf_data ; num2cell(sdf_x,2)];
         plot_label = [plot_label; {[int2str(trial_type_i) '_' (trial_type_label)]}];
         
-        plot_fano_data = [plot_fano_data; num2cell(fano_x,2)];
+        plot_fano_data = [plot_fano_data; {data_in.fano(neuron_i).smooth.(trial_type_label)}];
         plot_fano_label = [plot_fano_label; {[int2str(trial_type_i) '_' (trial_type_label)]}];
         
-        plot_time_adjust = [plot_time_adjust; {[-1000:500]}];
+        plot_time_adjust = [plot_time_adjust; {plot_time}];
         
     end
 end
@@ -86,23 +70,24 @@ color_scheme = params.plot.colormap;
 
 % Ramping %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Spike density function
-figure_plot(1,1)=gramm('x',plot_time_adjust,'y',plot_sdf_data,'color',plot_label);
+figure_plot(1,1)=gramm('x',plot_time,'y',plot_sdf_data,'color',plot_label);
 figure_plot(1,1).stat_summary();
 figure_plot(1,1).axe_property('XLim',xlim_input,'YLim',ylim_input);
 figure_plot(1,1).set_names('x','Time from CS Onset (ms)','y','Firing rate (Z-score)');
 figure_plot(1,1).set_color_options('map',color_scheme);
-figure_plot(1,1).geom_vline('xintercept',0,'style','k-');
+figure_plot(1,1).geom_vline('xintercept',params.plot.xintercept,'style','k-');
 figure_plot(1,1).no_legend;
 
 % Fano factor
-figure_plot(2,1)=gramm('x',plot_time_adjust,'y',plot_fano_data,'color',plot_fano_label);
+figure_plot(2,1)=gramm('x',data_in.fano(1).time,'y',plot_fano_data,'color',plot_fano_label);
 figure_plot(2,1).stat_summary();
 figure_plot(2,1).axe_property('XLim',xlim_input,'YLim',[0 2]);
 figure_plot(2,1).set_names('x','Time from CS Onset (ms)','y','Fano Factor');
 figure_plot(2,1).set_color_options('map',color_scheme);
-figure_plot(2,1).geom_vline('xintercept',0,'style','k-');
+figure_plot(2,1).geom_vline('xintercept',params.plot.xintercept,'style','k-');
 figure_plot(2,1).geom_hline('yintercept',1,'style','k--');
 figure_plot(2,1).no_legend;
+
 
 if fig_flag == 1
     figure_plot_out = figure('Renderer', 'painters', 'Position', [100 100 300 400]);

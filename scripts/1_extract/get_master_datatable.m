@@ -75,6 +75,7 @@ neuron_2500_remove = [1 13 15 16 19 20 24 30 32 33 35 38];
 bf_data_1500_ramping(neuron_1500_remove,:) = [];
 bf_data_2500_ramping(neuron_2500_remove,:) = [];
 
-
+bf_data_CS = bf_data_CS(bf_datasheet_CS.cluster_id == 2,:);
+bf_datasheet_CS = bf_datasheet_CS(bf_datasheet_CS.cluster_id == 2,:);
 
 

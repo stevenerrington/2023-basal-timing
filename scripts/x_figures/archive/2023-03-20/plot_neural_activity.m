@@ -11,7 +11,7 @@ params.plot.colormap = cool(length(plot_trial_types));
 % > Plot example phasic neuron in the basal forebrain.
 params.plot.xlim = [-500 2500]; params.plot.ylim = [0 100];
 params.plot.xintercept = 1500;
-bf_example_CS_phasic = plot_example_neuron(bf_data_CS,plot_trial_types,params,47,1);
+bf_example_CS_phasic = plot_example_neuron(bf_data_CS,plot_trial_types,params,30,1);
 save_figure(bf_example_CS_phasic,dirs.fig,'bf_example_CS_phasic')
 
 % > Plot example ramping neuron in the basal forebrain.
