@@ -41,7 +41,7 @@ params.plot.colormap = [[0 70 67]./255;[242 165 65]./255];
 % > Plot example ramping neuron in the basal forebrain.
 params.plot.xlim = [-500 3500]; params.plot.ylim = [0 100];
 params.plot.xintercept = 2500;
-bf_example_trace_ramping = plot_example_neuron(bf_data_traceExp,plot_trial_types,params,8);
+bf_example_trace_ramping = plot_example_neuron(bf_data_traceExp,plot_trial_types,params,8,1);
 save_figure(bf_example_trace_ramping,dirs.fig,'bf_example_trace_ramping')
 
 % > Plot example ramping neuron in the striatum.

@@ -54,10 +54,10 @@ color_scheme = params.plot.colormap;
 % Raster plot
 figure_plot(1,1)=gramm('x',plot_label,'y',plot_fano_data,'color',plot_label);
 % figure_plot(1,1).geom_jitter('alpha',0.2);
-figure_plot(1,1).stat_summary('geom',{'bar','errorbar'},'width',4,'dodge',1);
+figure_plot(1,1).stat_summary('geom',{'bar','errorbar'},'width',2.5,'dodge',1);
 figure_plot(1,1).no_legend;
 figure_plot(1,1).set_color_options('map',color_scheme);
-figure_plot(1,1).axe_property('YLim',[0 1.5]);
+figure_plot(1,1).axe_property('YLim',params.plot.ylim);
 
 if fig_flag == 1
     figure_plot_out = figure('Renderer', 'painters', 'Position', [100 100 400 700]);

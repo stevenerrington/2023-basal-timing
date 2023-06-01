@@ -1,4 +1,4 @@
-function [figure_plot_out, figure_plot, figure_plot_b] = plot_fr_x_uncertain(data_in,datasheet_in,plot_trial_types,params,fig_flag)
+function [figure_plot_out, figure_plot] = plot_fr_x_trace(data_in,datasheet_in,plot_trial_types,params,fig_flag)
 
 if nargin < 4
     fig_flag = 0;
@@ -16,7 +16,7 @@ fit_label = [];
 
 for neuron_i = 1:size(data_in,1)
     
-    if exist(datasheet_in.site)
+    if any(strcmp('site',datasheet_in.Properties.VariableNames))
         % Switch outcome time, depending on exp setup
         switch datasheet_in.site{neuron_i}
             case 'nih'
@@ -71,19 +71,16 @@ color_scheme = params.plot.colormap;
 
 % Raster plot
 figure_plot(1,1)=gramm('x',plot_label,'y',plot_sdf_data,'color',plot_label);
-figure_plot(1,1).geom_jitter('alpha',0.2);
+% figure_plot(1,1).geom_jitter('alpha',0.2);
+figure_plot(1,1).stat_summary('geom',{'bar','errorbar'},'width',2);
 figure_plot(1,1).no_legend;
 figure_plot(1,1).set_color_options('map',color_scheme);
-figure_plot(1,1).axe_property('YLim',[-5 5]);
+figure_plot(1,1).axe_property('YLim',params.plot.ylim);
 
-figure_plot_b(1,1)=gramm('x',x_fit_data,'y',y_fit_data);
-figure_plot_b(1,1).stat_summary();
-figure_plot_b(1,1).no_legend;
-figure_plot_b(1,1).axe_property('YLim',[-5 5]);
 
 if fig_flag == 1
     figure_plot_out = figure('Renderer', 'painters', 'Position', [100 100 400 700]);
-    figure_plot_b.draw();
+    figure_plot.draw();
 else
     figure_plot_out = [];
 end

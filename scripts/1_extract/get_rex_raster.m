@@ -5,7 +5,7 @@ function Rasters = get_rex_raster(REX, trials, params)
 
 % Initialise relevant variables %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % ????  <<< UNKNOWN: task relevant measures
-
+ params.raster.cleanFlag = 1;
 %% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %event codes used in C NIH system (REX); also find trials
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

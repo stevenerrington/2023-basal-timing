@@ -7,7 +7,7 @@ for neuron_i = 1:size(data_in,1)
     
     % Find the appropriate windows
     max_win = params.plot.xintercept + params.stats.peak_window;
-    slope_win = params.plot.xintercept + [-params.plot.xintercept+1000:0];
+    slope_win = params.plot.xintercept + [-params.plot.xintercept+750:0];
     
     
     % For each defined trial type inputted

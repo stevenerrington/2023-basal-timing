@@ -6,6 +6,7 @@ function Rasters = get_raster(PDS, trials, params)
 % Initialise relevant variables %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % ????  <<< UNKNOWN: task relevant measures
 n_trls = length(PDS.timetargeton);
+params.raster.cleanFlag = 1;
 
 %% Get relevant trial indices %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % % General:
