@@ -29,10 +29,10 @@ params.plot.ylim = [-1 5];
 params.plot.ylim = [0 2];
 % Basal forebrain
 [~, bf_trace_fano_plot] =...
-    plot_fano_x_uncertain(bf_data_traceExp,bf_datasheet_CS,plot_trial_types,params,0);
+    plot_fano_x_uncertain(bf_data_traceExp,bf_datasheet_traceExp,plot_trial_types,params,0);
 % Striatum
 [~, striatum_trace_fano_plot] =...
-    plot_fano_x_uncertain(striatum_data_traceExp,striatum_datasheet_CS,plot_trial_types,params,0);
+    plot_fano_x_uncertain(striatum_data_traceExp,striatum_datasheet_traceExp,plot_trial_types,params,0);
 
 
 

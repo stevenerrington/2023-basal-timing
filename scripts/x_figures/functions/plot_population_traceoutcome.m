@@ -1,4 +1,4 @@
-function figure_plot = plot_population_traceoutcome(data_in,plot_trial_types,params)
+function [figure_plot, figure_plot_rwd] = plot_population_traceoutcome(data_in,plot_trial_types,params)
 
 % Input variables
 xlim_input = params.plot.xlim; ylim_input = params.plot.ylim;
@@ -18,7 +18,7 @@ plot_category_label = []; plot_group = []; plot_fano_window_data = [];
 plot_fanogroup_label = []; plot_label_rwd = [];
 
 % Timing parameters
-plot_time = [-1000:2000]; time_zero = 5000; baseline_win = [-1000:3500];
+plot_time = [-3000:2000]; time_zero = 5000; baseline_win = [-1000:3500];
 epoch.postOutcome = [0 200]; epoch_zero.postOutcome = [1500 2500];
 
 
@@ -97,15 +97,23 @@ end
 clear figure_plot
 
 % Spike density function >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-figure_plot(1,1)=gramm('x',plot_time,'y',plot_sdf_data,'color',plot_label_rwd);
+figure_plot(1,1)=gramm('x',plot_time,'y',plot_sdf_data,'color',plot_group);
 figure_plot(1,1).stat_summary();
-figure_plot(1,1).axe_property('XLim',xlim_input,'YLim',ylim_input,'XTick',[],'XColor',[1 1 1]);
+figure_plot(1,1).axe_property('XLim',xlim_input,'YLim',ylim_input);
 figure_plot(1,1).set_names('x','Time from Outcome (ms)','y','Firing rate (Z-score)');
 figure_plot(1,1).set_color_options('map',color_scheme);
 figure_plot(1,1).geom_vline('xintercept',0,'style','k-');
+
+figure_plot_rwd(1,1)=gramm('x',plot_time,'y',plot_sdf_data,'color',plot_label_rwd);
+figure_plot_rwd(1,1).stat_summary();
+figure_plot_rwd(1,1).axe_property('XLim',xlim_input,'YLim',ylim_input);
+figure_plot_rwd(1,1).set_names('x','Time from Outcome (ms)','y','Firing rate (Z-score)');
+figure_plot_rwd(1,1).set_color_options('map',color_scheme);
+figure_plot_rwd(1,1).geom_vline('xintercept',0,'style','k-');
+
+
+
 % figure_plot(1,1).no_legend;
-figure_plot(1,1).facet_grid([],plot_group);
-% 
 % % Fano factor >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 % figure_plot(2,1)=gramm('x',plot_time,'y',plot_fano_data,'color',plot_label_rwd);
 % figure_plot(2,1).stat_summary();

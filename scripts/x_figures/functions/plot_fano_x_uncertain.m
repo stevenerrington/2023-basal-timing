@@ -17,11 +17,16 @@ fit_label = [];
 for neuron_i = 1:size(data_in,1)
     
     % Switch outcome time, depending on exp setup
-    switch datasheet_in.site{neuron_i}
-        case 'nih'
-            outcome_time = 1500;
-        case 'wustl'
-            outcome_time = 2500;
+    if any(strcmp('site',datasheet_in.Properties.VariableNames))
+        % Switch outcome time, depending on exp setup
+        switch datasheet_in.site{neuron_i}
+            case 'nih'
+                outcome_time = 1500;
+            case 'wustl'
+                outcome_time = 2500;
+        end
+    else
+        outcome_time = 2500;
     end
     
     fano_continuous = [];

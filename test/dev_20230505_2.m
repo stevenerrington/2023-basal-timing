@@ -39,12 +39,12 @@ params.fano.timewindow = 0:1500;
 
 plot_trial_types = {'prob0','prob50','prob100'};
 [max_ramp_fr_appetitive] = get_maxFR_z_ramping(plot_data_appetitive, plot_trial_types, params);
-% slope_analysis_appetitive = get_slope_ramping(bf_data_punish,plot_trial_types,params);
+slope_analysis_appetitive = get_slope_ramping(bf_data_punish,plot_trial_types,params);
 [fano_appetitive] = get_fano_ramping(bf_data_punish, plot_trial_types, params);
 
 plot_trial_types = {'prob0_punish','prob50_punish','prob100_punish'};
 [max_ramp_fr_aversive] = get_maxFR_z_ramping(plot_data_aversive, plot_trial_types, params);
-% slope_analysis_aversive = get_slope_ramping(bf_data_punish,plot_trial_types,params);
+slope_analysis_aversive = get_slope_ramping(bf_data_punish,plot_trial_types,params);
 [fano_aversive] = get_fano_ramping(bf_data_punish, plot_trial_types, params);
 
 %% Plot slopes and peak firing rates of example neuron and population

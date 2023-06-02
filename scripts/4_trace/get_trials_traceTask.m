@@ -48,6 +48,10 @@ trials.notimingcue_uncertain_nd=intersect(trials.notimingcue_uncertain,ndeliv);
 trials.notrace_uncertain_d=intersect(trials.timingcue_uncertain_nd,deliv);
 trials.notrace_uncertain_nd=intersect(trials.timingcue_uncertain_nd,ndeliv);
 
+
+trials.trace_uncertain_d = sort([trials.notimingcue_uncertain_d, trials.timingcue_uncertain_d]);
+trials.trace_uncertain_nd = sort([trials.notimingcue_uncertain_nd, trials.timingcue_uncertain_nd]);
+
 % From Ilya:
 % trace
 %

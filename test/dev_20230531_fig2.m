@@ -1,3 +1,9 @@
+load(fullfile(dirs.root,'data','large','bf_data_CS_spkRemoved.mat'))
+load(fullfile(dirs.root,'data','large','bf_datasheet_CS.mat'))
+
+bf_data_CS = bf_data_CS(bf_datasheet_CS.cluster_id == 2,:);
+bf_datasheet_CS = bf_datasheet_CS(bf_datasheet_CS.cluster_id == 2,:);
+
 %% Example neurons
 % In this section, we plot example neurons from the basal forebrain 
 % phasic and ramping) and the striatum during the CS and trace task.
@@ -39,6 +45,7 @@ params.plot.xlim = [-750 0]; params.plot.ylim = [-2 4];
 
 % Uncertainty fano
 clear figure_plot fano_x_uncertaintyA
+params.plot.ylim = [0 2];
 [~, fano_x_uncertainty_example] =...
     plot_fano_x_uncertain(bf_data_CS,bf_datasheet_CS,plot_trial_types,params,0);
 [~, fano_x_uncertainty_population] =...

@@ -1,10 +1,14 @@
 %% Basal forebrain project
+dev_20230505_2 % Figure 1: primary script
+dev_20230531_fig2 % Figure 2: primary script
+dev_20230531_fig3 % Figure 3: primary script
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 dev_saccade_extraction  % Extract saccade raster (legacy).
 dev_saccade_extraction2 % Extract saccade raster (current) and correlate motor activity against spikes.
 
 dev_20230505   % Plot main ramping activity and bar plots with precision of ramping (legacy).
-dev_20230505_2 % Plot main ramping activity and bar plots with precision of ramping.
 
 dev_outcome_CS % Plot outcome for 25%, 50%, and 75% CS prob task .
 dev_outcome_punish % Plot outcome for delivered omitted for punish and reward.
@@ -26,4 +30,8 @@ bf_striatum_outcome % Plot pre-and-post- outcome fano factor for basal ganglia d
 
 dev_isiAnalysis % Plot ISI distribution and coefficient of variation.
 
-dev_20230531_fig2 % Oki
+dev_20230531_fig2_striatum % Figure 2: for striatum data only
+dev_20230531_fig3_traceCueEnd % Figure 3: plot trace task end (cued or uncued)
+dev_20230531_fig3_traceOutcome % Figure 3: plot trace outcome (delivered or undelivered)
+
+

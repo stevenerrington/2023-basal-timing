@@ -16,7 +16,7 @@ fit_label = [];
 
 for neuron_i = 1:size(data_in,1)
     
-    if exist(datasheet_in.site)
+    if any(strcmp('site',datasheet_in.Properties.VariableNames))
         % Switch outcome time, depending on exp setup
         switch datasheet_in.site{neuron_i}
             case 'nih'
