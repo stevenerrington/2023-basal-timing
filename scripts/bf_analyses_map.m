@@ -35,3 +35,5 @@ dev_20230531_fig3_traceCueEnd % Figure 3: plot trace task end (cued or uncued)
 dev_20230531_fig3_traceOutcome % Figure 3: plot trace outcome (delivered or undelivered)
 
 
+%% Figures:
+figure_primary

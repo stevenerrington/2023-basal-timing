@@ -28,7 +28,7 @@ for neuron_i = 1:size(data_in,1)
             for bootstrap_i = 1:100
                 
                 sampletimes = []; sampletimes = sort(datasample(slope_win,250));
-                sdf_fr = []; sdf_fr = sdf_x(sampletimes+5000);
+                sdf_fr = []; sdf_fr = sdf_x(sampletimes+5001);
                 a = []; a = polyfit(sampletimes,sdf_fr,1);
                 
                 slope(bootstrap_i) = a(1);
