@@ -50,5 +50,26 @@ end
 
 
 %%
+plot_time = [0:1500];
+plot_sdf = [low_p_gaze_sdf_out;high_p_gaze_sdf_out];
+plot_roc = [low_p_gaze_sdf_out;high_p_gaze_sdf_out];
+plot_label = [repmat({'1_low'},size(low_p_gaze_sdf_out,1),1); repmat({'2_high'},size(high_p_gaze_sdf_out,1),1)];
+plot_roc_label = repmat({'low x high'},size(low_p_gaze_sdf_out,1),1);
 
+clear figure_plot
+% Ramping %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Spike density function
+figure_plot(1,1)=gramm('x',plot_time,'y',plot_sdf,'color',plot_label);
+figure_plot(1,1).stat_summary();
+figure_plot(1,1).axe_property('XLim',[0 1500],'YLim',[0.3 1]);
+figure_plot(1,1).set_names('x','Time from CS Onset (ms)','y','Firing rate (Z-score)');
+figure_plot(1,1).no_legend;
 
+figure_plot(1,2)=gramm('x',plot_roc_label,'y',test,'color',plot_roc_label);
+figure_plot(1,2).stat_summary('geom',{'bar','errorbar'});
+figure_plot(1,2).geom_jitter();
+figure_plot(1,2).axe_property('YLim',[0.3 1]);
+figure_plot(1,2).geom_hline('yintercept',0.5);
+figure_plot(1,2);
+
+figure_plot.draw
