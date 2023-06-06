@@ -126,7 +126,7 @@ for i = [1,2,3,4, 6, 7, 8]
 end
 
 
-figure('Renderer', 'painters', 'Position', [100 100 800 400]);
+figure('Renderer', 'painters', 'Position', [100 100 600 400]);
 figure_plot.draw;
 
 

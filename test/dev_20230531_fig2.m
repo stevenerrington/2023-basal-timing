@@ -181,7 +181,7 @@ for i = [6]
 
 end
 
-figure('Renderer', 'painters', 'Position', [100 100 800 400]);
+figure('Renderer', 'painters', 'Position', [100 100 600 400]);
 figure_plot.draw;
 
 

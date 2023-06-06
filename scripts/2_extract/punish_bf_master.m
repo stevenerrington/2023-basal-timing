@@ -69,7 +69,6 @@ for neuron_i = 1:size(bf_datasheet_punish,1)
         % Get eye position
         Eye = get_rex_eye(REX,params);
 
-        
         % Output extracted data into a table
         bf_data_punish(neuron_i,:) = table({filename}, {trials}, {Rasters},{SDF},{Licking},{Eye},...
             'VariableNames',{'filename','trials','rasters','sdf','licking','eye'});

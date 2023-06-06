@@ -2,7 +2,7 @@
 clc
 fprintf('Loading pre-extracted data \n')
 % Extracted beh & neurophys
-load(fullfile(dirs.root,'data','large','bf_data_CS.mat'))
+load(fullfile(dirs.root,'data','large','bf_data_CS.mat')) %bf_data_CS_spkRemoved
 load(fullfile(dirs.root,'data','large','bf_data_CS2.mat'))
 load(fullfile(dirs.root,'data','large','bf_data_timingTask.mat'))
 load(fullfile(dirs.root,'data','large','bf_data_traceExp.mat'))
