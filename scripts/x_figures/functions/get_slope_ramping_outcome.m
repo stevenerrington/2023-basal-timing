@@ -14,7 +14,7 @@ for neuron_i = 1:size(data_in,1)
         
     % Find the appropriate windows
     max_win = params.plot.xintercept + params.stats.peak_window;
-    slope_win = params.plot.xintercept + [0:500];
+    slope_win = params.plot.xintercept + [100:400];
     
     
     % For each defined trial type inputted
@@ -28,7 +28,7 @@ for neuron_i = 1:size(data_in,1)
 
         % Loop through the individual trials
         for trial_i = 1:n_trls
-            peak_fr = max(data_in.sdf{neuron_i}(trials_in(trial_i),max_win+5000));
+            peak_fr = max(data_in.sdf{neuron_i}(trials_in(trial_i),max_win+5001));
             sdf_x = []; sdf_x = data_in.sdf{neuron_i}(trials_in(trial_i),:);
             
             % Bootstrap the extract polyfit values
@@ -36,7 +36,7 @@ for neuron_i = 1:size(data_in,1)
             for bootstrap_i = 1:100
                 
                 sampletimes = []; sampletimes = sort(datasample(slope_win,250));
-                sdf_fr = []; sdf_fr = sdf_x(sampletimes+5000);
+                sdf_fr = []; sdf_fr = sdf_x(sampletimes+5001);
                 a = []; a = polyfit(sampletimes,sdf_fr,1);
                 
                 slope(bootstrap_i) = a(1);

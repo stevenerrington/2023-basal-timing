@@ -3,10 +3,13 @@ dev_20230505_2 % Figure 1: primary script
 dev_20230531_fig2 % Figure 2: primary script
 dev_20230531_fig3 % Figure 3: primary script
 
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 dev_saccade_extraction  % Extract saccade raster (legacy).
 dev_saccade_extraction2 % Extract saccade raster (current) and correlate motor activity against spikes.
+
+dev_motor_ramping_relationship % Plot relationship between gaze and fr
 
 dev_20230505   % Plot main ramping activity and bar plots with precision of ramping (legacy).
 

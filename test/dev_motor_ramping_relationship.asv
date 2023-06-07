@@ -94,7 +94,15 @@ for i = 1:length(trial_type_list)
         sacc_bin_counts = []; spk_bin_counts = [];
   
         sacc_bin_counts = histcounts(sacc_times, 0:100:1500);
-        spk_bin_counts = histcounts(spk_times, 0:100:1500);
+        spk_bin_counts = histcounts(spk_times, -0:100:1500);
+        
+        
+        
+        
+        
+        
+        
+        
         
         
         [corr_val_r(neuron_i,1),...

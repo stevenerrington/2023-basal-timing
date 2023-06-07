@@ -1,4 +1,4 @@
-function [max_ramp_fr] = get_maxFR_ramping_example(data_in,datasheet_in,trial_type_list,example_neuron_i,params)
+function get_maxFR_ramping_example(data_in,datasheet_in,trial_type_list,example_neuron_i,params,subplot_idx)
 
 peak_window = params.stats.peak_window;
 
@@ -61,25 +61,26 @@ for trial_type_i = 1:length(trial_type_list)
     
 end
 
-%%
+%% Figure
 
 omit_trls = find(strcmp(plot_trl_label,'uncert_omit'));
 del_trls = find(strcmp(plot_trl_label,'uncert_delivered'));
 
-figure('Renderer', 'painters', 'Position', [100 100 300 400]);
-subplot(2,1,1); hold on
+subplot(2,2,subplot_idx(1)); hold on
 imagesc('XData',[-5000:5000],'YData',1:size(omit_trls,1),'CData',plot_sdf(omit_trls,:))
 vline(params.plot.xintercept,'w')
-scatter(plot_peak_fr_time(omit_trls),1:size(omit_trls,1),'ro','filled')
+scatter(plot_peak_fr_time(omit_trls),1:size(omit_trls,1),'ko','filled')
 xlim([params.plot.xintercept-500 params.plot.xintercept+500]); ylim([1 size(omit_trls,1)]); caxis([0 80])
+ylabel('Omitted')
 colormap(viridis);
 colorbar;
 
-subplot(2,1,2); hold on
+subplot(2,2,subplot_idx(2)); hold on
 imagesc('XData',[-5000:5000],'YData',1:size(del_trls,1),'CData',plot_sdf(del_trls,:))
 vline(params.plot.xintercept,'w')
-scatter(plot_peak_fr_time(del_trls),1:size(del_trls,1),'ro','filled')
+scatter(plot_peak_fr_time(del_trls),1:size(del_trls,1),'ko','filled')
 xlim([params.plot.xintercept-500 params.plot.xintercept+500]); ylim([1 size(del_trls,1)]); caxis([0 80])
+ylabel('Delivered')
 colormap(viridis);
 colorbar
 
