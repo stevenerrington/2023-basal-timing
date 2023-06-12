@@ -11,7 +11,8 @@ params.saccade.saccade_dur_thres = 5;
 params.saccade.saccade_amp_thres = 0.2;
 
 %% Define input data
-data_in = []; data_in = bf_data_punish;
+data_in = []; data_in = striatum_data_CS;
+datasheet_in = []; datasheet_in = striatum_datasheet_CS;
 
 %% Extract saccade raster
 for neuron_i = 1:size(data_in,1)
@@ -49,11 +50,17 @@ for neuron_i = 1:size(data_in,1)
 end
 
 %% Extract saccade x fr correlation
-trial_type_list = {'prob50','prob50_punish'};
+trial_type_list = {'uncertain'};
 clear figure_plot
 
 min_trl_n = 3;
 p_value_cutoff = 0.05;
+plot_roc_label = [];
+test = [];
+count = 0;
+
+params.eye.window = [5 5]; params.plot.xintercept = 1500;
+params.eye.zero = find(params.eye.alignWin == 0);
 
 for i = 1:length(trial_type_list)
     trial_type = trial_type_list{i};
@@ -79,30 +86,30 @@ for i = 1:length(trial_type_list)
         [~,spk_times] = find(spk_raster_in == 1);
         spk_times = spk_times - find([-5000:1:5000] == 0);
         
-        % Spike density function        
-        timewin_sdf = []; timewin_sdf = [0:1500]+5001;
+        % Spike density function
+        
+        switch datasheet_in.site{neuron_i}
+            case 'nih'
+                outcome_time = 1500;
+            case 'wustl'
+                outcome_time = 2500;
+        end
+        
+        timewin_sdf = []; timewin_sdf = [outcome_time-1000:outcome_time]+5001;
         sdf_raster_in = [];
         sdf_raster_in = data_in.sdf{neuron_i}(data_in.trials{neuron_i}.(trial_type),timewin_sdf);
         
         % Theta eye pos
-        timewin_eye = []; timewin_eye = [0:1500]+find(params.eye.alignWin == 0);
+        timewin_eye = []; timewin_eye = [outcome_time-1000:outcome_time]+find(params.eye.alignWin == 0);
         theta_eyepos_in = [];
         theta_eyepos_in = eyepos_theta_out{neuron_i,1}(data_in.trials{neuron_i}.(trial_type),timewin_eye);
- 
-   
+        
+        
         % Correlation -------------------------------------------------------
         sacc_bin_counts = []; spk_bin_counts = [];
-  
-        sacc_bin_counts = histcounts(sacc_times, 0:100:1500);
-        spk_bin_counts = histcounts(spk_times, -0:100:1500);
         
-        
-        
-        
-        
-        
-        
-        
+        sacc_bin_counts = histcounts(sacc_times, outcome_time-1000:100:outcome_time);
+        spk_bin_counts = histcounts(spk_times, outcome_time-1000:100:outcome_time);
         
         
         [corr_val_r(neuron_i,1),...
@@ -124,55 +131,57 @@ for i = 1:length(trial_type_list)
     figure_plot(i,1).no_legend;
     
     %% Extract: Get high and low p(gaze) trials
-    timewin_eye = []; timewin_eye = [0:1500]+find(params.eye.alignWin == 0);
-    params.eye.window = [5 5]; params.plot.xintercept = 1500;
     
-    params.plot.xintercept = 1500;
-    params.eye.salience_window = find(params.eye.alignWin == 0)+[0:1500];
-    
-    data_in = []; data_in = bf_data_punish;
     [p_gaze_window]  = get_pgaze_window_trial(data_in, params);
-    
     low_p_gaze_sdf_out = []; high_p_gaze_sdf_out = [];
-    
+
     for neuron_i = 1:size(data_in,1)
+        count = count + 1;
+        
+        switch datasheet_in.site{neuron_i}
+            case 'nih'
+                outcome_time = 1500;
+            case 'wustl'
+                outcome_time = 2500;
+        end
+        
+        timewin_eye = []; timewin_eye = [0:outcome_time]+find(params.eye.alignWin == 0);
+        params.eye.window = [5 5];
+        params.plot.xintercept = outcome_time;
         
         trl_in = []; trl_in = data_in.trials{neuron_i}.(trial_type);
-        
         p_gaze_trl = mean(p_gaze_window{neuron_i}(trl_in,timewin_eye),2);
         
         low_p_gaze_trl = []; low_p_gaze_trl = trl_in(find(p_gaze_trl < 0.5));
         high_p_gaze_trl = []; high_p_gaze_trl = trl_in(find(p_gaze_trl > 0.5));
+
+        low_p_gaze_spk = sum(data_in.rasters{neuron_i}(low_p_gaze_trl,5001+[outcome_time-1000:outcome_time]),2);
+        high_p_gaze_spk = sum(data_in.rasters{neuron_i}(high_p_gaze_trl,5001+[outcome_time-1000:outcome_time]),2);
         
-        
-        
-        low_p_gaze_spk = sum(data_in.rasters{neuron_i}(low_p_gaze_trl,5001+[0:1500]),2);
-        high_p_gaze_spk = sum(data_in.rasters{neuron_i}(high_p_gaze_trl,5001+[0:1500]),2);
-        
+        sdf_time_window = [-1000:0];
         
         if length(low_p_gaze_trl) > min_trl_n & length(high_p_gaze_trl) > min_trl_n
-            low_p_gaze_sdf = nanmean(data_in.sdf{neuron_i}(low_p_gaze_trl,:));
-            high_p_gaze_sdf = nanmean(data_in.sdf{neuron_i}(high_p_gaze_trl,:));
+            low_p_gaze_sdf = nanmean(data_in.sdf{neuron_i}(low_p_gaze_trl,5001+outcome_time+sdf_time_window));
+            high_p_gaze_sdf = nanmean(data_in.sdf{neuron_i}(high_p_gaze_trl,5001+outcome_time+sdf_time_window));
             
             ROC_data = roc_curve(low_p_gaze_spk, high_p_gaze_spk, 0, 0);
-            test(neuron_i,1) = ROC_data.param.AROC;
+            test(count,1) = ROC_data.param.AROC;
         else
-            low_p_gaze_sdf = nan(1,length([-5000:5000]));
-            high_p_gaze_sdf = nan(1,length([-5000:5000]));
+            low_p_gaze_sdf = nan(1,length(sdf_time_window));
+            high_p_gaze_sdf = nan(1,length(sdf_time_window));
             
-            test(neuron_i,1) = NaN;
+            test(count,1) = NaN;
         end
         
-        low_p_gaze_sdf_out(neuron_i,:) = low_p_gaze_sdf(5001+[0:1500])./max( low_p_gaze_sdf(5001+[0:1500]));
-        high_p_gaze_sdf_out(neuron_i,:) = high_p_gaze_sdf(5001+[0:1500])./max(high_p_gaze_sdf(5001+[0:1500]));
-        
-        
+        low_p_gaze_sdf_out(neuron_i,:) = low_p_gaze_sdf./max(low_p_gaze_sdf);
+        high_p_gaze_sdf_out(neuron_i,:) = high_p_gaze_sdf./max(high_p_gaze_sdf);
+
     end
     
     n_valid_obs(i,1) = sum(~isnan(test));
     
     %%
-    plot_time = [0:1500];
+    plot_time = sdf_time_window;
     plot_sdf = [low_p_gaze_sdf_out;high_p_gaze_sdf_out];
     plot_roc = [low_p_gaze_sdf_out;high_p_gaze_sdf_out];
     plot_label = [repmat({'1_low'},size(low_p_gaze_sdf_out,1),1); repmat({'2_high'},size(high_p_gaze_sdf_out,1),1)];
@@ -182,7 +191,7 @@ for i = 1:length(trial_type_list)
     % Spike density function
     figure_plot(i,2)=gramm('x',plot_time,'y',plot_sdf,'color',plot_label);
     figure_plot(i,2).stat_summary();
-    figure_plot(i,2).axe_property('XLim',[0 1500],'YLim',[0.3 1]);
+    figure_plot(i,2).axe_property('XLim',[plot_time(1) plot_time(end)],'YLim',[0 1]);
     figure_plot(i,2).set_names('x','Time from CS Onset (ms)','y','Firing rate (Z-score)');
     figure_plot(i,2).no_legend;
     
@@ -202,7 +211,7 @@ figure_plot.draw;
 stat_text = {['N = ', num2str(n_valid_obs(1))],['Min trl n = ', num2str(min_trl_n)]};
 stat_annotation = annotation('textbox',[.5 0.9 .2 .1],'String',stat_text,'FitBoxToText','on','EdgeColor','none');
 stat_annotation.FontSize = 8;
-
-stat_text = {['N = ', num2str(n_valid_obs(2))],['Min trl n = ', num2str(min_trl_n)]};
-stat_annotation = annotation('textbox',[.5 0.4 .2 .1],'String',stat_text,'FitBoxToText','on','EdgeColor','none');
-stat_annotation.FontSize = 8;
+% 
+% stat_text = {['N = ', num2str(n_valid_obs(2))],['Min trl n = ', num2str(min_trl_n)]};
+% stat_annotation = annotation('textbox',[.5 0.4 .2 .1],'String',stat_text,'FitBoxToText','on','EdgeColor','none');
+% stat_annotation.FontSize = 8;
