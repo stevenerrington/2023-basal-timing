@@ -7,7 +7,12 @@
 
 % > CS task >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 plot_trial_types = {'prob0','prob25','prob50','prob75','prob100'};
-colors.appetitive = [247 154 154; 244 107 107; 240 59 59; 230 18 18; 182 14 14]./255;
+%colors.appetitive = [247 154 154; 244 107 107; 240 59 59; 230 18 18; 182 14 14]./255;
+colors.appetitive = [221 153 204; 204 85 153; 170 51 102; 85 34 51; 34 17 17]./255;
+
+
+
+
 params.plot.colormap = colors.appetitive;
 example_neuron_i = 4;
 

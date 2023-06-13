@@ -71,8 +71,8 @@ figure_plot(1,2).set_names('x','Condition','y','P(Gaze at CS)');
 figure('Renderer', 'painters', 'Position', [100 100 1200 350]);
 figure_plot.draw;
 
-out_data.roc_data = roc_data;
-out_data.time_gaze_rocData = time_gaze_rocData;
+% out_data.roc_data = roc_data;
+% out_data.time_gaze_rocData = time_gaze_rocData;
 out_data.mean_gaze_window = mean_gaze_window;
 out_data.label_in = label_in;
 out_data.p_gaze_array = p_gaze_array;

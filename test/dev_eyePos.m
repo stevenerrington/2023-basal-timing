@@ -46,14 +46,6 @@ plot_eyegaze(mean_gaze_array_striatum,time_gaze_window_striatum,params);
 
 
 
-
-
-
-
-
-
-
-
 %%
 % Basal forebrain: timing task
 trial_type_list = {'p50s_50l_short','p50s_50l_long'};
@@ -67,7 +59,7 @@ plot_eyegaze(mean_gaze_array_bf_nih,time_gaze_window_wustl,params);
 
 
 % Basal Forebrain: NIH CS task
-trial_type_list = {'prob0','prob50','prob100'};
+trial_type_list = {'prob0','prob25','prob50','prob75','prob100'};
 params.plot.xintercept = 1500;
 params.eye.salience_window = params.eye.zero+1500+[-200:0];
 
@@ -78,7 +70,6 @@ plot_eyegaze(mean_gaze_array_bf_nih,time_gaze_window_nih,params);
 
 
 % Basal Forebrain: WUSTL CS task
-trial_type_list = {'prob0','prob50','prob100'};
 params.plot.xintercept = 2500;
 params.eye.salience_window = params.eye.zero+2500+[-200:0];
 
@@ -231,18 +222,6 @@ end
 
 
 
-
-
-%%
-% Basal Forebrain: NIH CS task
-trial_type_list = {'prob0_punish','prob50_punish','prob100_punish'};
-params.plot.xintercept = 1500;
-params.eye.salience_window = params.eye.zero+params.plot.xintercept+[-200:0];
-
-data_in = []; data_in = bf_data_punish;
-[~, ~, mean_gaze_array_bf_punish, time_gaze_window_punish]  =...
-    get_pgaze_window(data_in, trial_type_list, params);
-plot_eyegaze(mean_gaze_array_bf_punish,time_gaze_window_punish,params);
 
 
 
