@@ -4,16 +4,18 @@ dev_20230531_fig2 % Figure 2: primary script
 dev_20230531_fig2_striatum % Figure 2: for striatum data only
 dev_20230531_fig3 % Figure 3: primary script
 
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 dev_saccade_extraction  % Extract saccade raster (legacy).
 dev_saccade_extraction2 % Extract saccade raster (current) and correlate motor activity against spikes.
 
 dev_motor_ramping_relationship % Plot relationship between gaze and fr
+dev_motor_ramping_relationship_CStask % Plot relationship between gaze and fr
+dev_motor_bf_striatum % Plot relationship between gaze and fr between bf and striatum
 
 dev_20230505   % Plot main ramping activity and bar plots with precision of ramping (legacy).
 
-dev_outcome_CS % Plot outcome for 25%, 50%, and 75% CS prob task .
+dev_outcome_CS % Plot outcome for 25%, 50%, and 75% CS prob task.
+dev_outcome_CStiming % Precision analyses: Plot outcome for 25%, 50%, and 75% CS prob task.
 dev_outcome_punish % Plot outcome for delivered omitted for punish and reward.
 
 test_20230501         % Plot certain v uncertain activity (raster, sdf; pop and example) [Layout 1].
@@ -40,6 +42,8 @@ dev_20230531_fig3_traceOutcome % Figure 3: plot trace outcome (delivered or unde
 
 dev_20230605_VPbasic % Basic plot some VP neurons in CS task I found on the server (for high FR comparisons).
 
+dev_pca_test % Plot PCA for each dataset in the CS task
+dev_pca_stri_bf_dimension_plot % Plot ndimensions explained above variance
 
 %% Figures:
 figure_primary

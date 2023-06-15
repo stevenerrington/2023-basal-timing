@@ -158,7 +158,7 @@ for i = 1:length(trial_type_list)
         low_p_gaze_spk = sum(data_in.rasters{neuron_i}(low_p_gaze_trl,5001+[outcome_time-1000:outcome_time]),2);
         high_p_gaze_spk = sum(data_in.rasters{neuron_i}(high_p_gaze_trl,5001+[outcome_time-1000:outcome_time]),2);
         
-        sdf_time_window = [-1000:0];
+        sdf_time_window = [-1000:500];
         
         if length(low_p_gaze_trl) > min_trl_n & length(high_p_gaze_trl) > min_trl_n
             low_p_gaze_sdf = nanmean(data_in.sdf{neuron_i}(low_p_gaze_trl,5001+outcome_time+sdf_time_window));
