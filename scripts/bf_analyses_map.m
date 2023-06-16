@@ -11,6 +11,7 @@ dev_saccade_extraction2 % Extract saccade raster (current) and correlate motor a
 dev_motor_ramping_relationship % Plot relationship between gaze and fr
 dev_motor_ramping_relationship_CStask % Plot relationship between gaze and fr
 dev_motor_bf_striatum % Plot relationship between gaze and fr between bf and striatum
+dev_compare_CStuningcurves % Plot curves across all data to compare gaze and neural activity
 
 dev_20230505   % Plot main ramping activity and bar plots with precision of ramping (legacy).
 
@@ -28,6 +29,7 @@ dev_individualtrl_ramp_example % Plot example neuron with fitted linear slope.
 dev_eyePos % Plot p(gaze) at CS across datasets (1500, 2500).
 dev_eyePos_CSall % Plot p(gaze) at CS across datasets (1500, 2500) - collapsed.
 dev_eyePos_punish % Plot p(gaze) in reward/punish.
+dev_eyePos_trace % Plot p(gaze) in trace task.
 
 dev_motor_pSaccXfr % Extract the p(gaze) across time and corr with fr (incomplete)
 

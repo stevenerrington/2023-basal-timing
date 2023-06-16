@@ -76,6 +76,7 @@ figure_plot.draw;
 out_data.mean_gaze_window = mean_gaze_window;
 out_data.label_in = label_in;
 out_data.p_gaze_array = p_gaze_array;
+out_data.data_in = data_in;
 
 
 
