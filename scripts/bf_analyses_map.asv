@@ -14,19 +14,19 @@ bf_appaver_main(bf_data_punish, params);
 % > i   | Example SDF, example fano, population SDF, population fano
 % > ii  | Example uncertainty curve, population uncertainty curve
 % > iii | Fano across uncertainty condtions
-bf_cs_main(bf_data_CS, bf_datasheet_CS, params);
+bf_cs_main(bf_data_CS, bf_datasheet_CS, params)
 
 % Plot Striatum activity in reward uncertainty task (0%, 25%, 50%, 75%, 100%)
 % > i   | Example SDF, example fano, population SDF, population fano
 % > ii  | Example uncertainty curve, population uncertainty curve
 % > iii | Fano across uncertainty condtions
-striatum_cs_main(striatum_data_CS, striatum_datasheet_CS, params);
+striatum_cs_main(striatum_data_CS, striatum_datasheet_CS, params) 
 
 % Plot BF & Striatum activity in trace task (trace/no trace; certain/uncertain)
 % > i   | Example SDF, example fano, population SDF, population fano
 % > ii  | Average firing rates and fano factors across conditions
 bfstri_trace_main (bf_data_traceExp, bf_datasheet_traceExp, ...
-    striatum_data_traceExp, striatum_datasheet_traceExp, params);
+    striatum_data_traceExp, striatum_datasheet_traceExp, params) ;
 
 %% In development
 % Plot gaze and fr activity across uncertainty conditions

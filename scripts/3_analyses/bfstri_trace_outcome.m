@@ -1,23 +1,19 @@
-
-slope_analysis = get_slope_ramping(bf_data_1500_ramping,plot_trial_types,params);
-
-
-
+function bfstri_trace_outcome(bf_data_traceExp, striatum_data_traceExp, params)
 
 % > Trace task >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-plot_trial_types = {'notimingcue_uncertain_nd',...
-    'timingcue_uncertain_nd'};
-params.plot.colormap = [118 175 218; 11 28 41]./255;
+plot_trial_types = {'notimingcue_uncertain_d',...
+    'notimingcue_uncertain_nd'};
+params.plot.colormap = [255 0 0; 0 0 0]./255;
 
 % > Plot outcome-aligned population activity for ramping neurons in the
 %   basal forebrain.
 params.plot.xlim = [-1000 1000]; params.plot.ylim = [-2 3];
-bf_population_trace_outcome = plot_population_traceoutcome(bf_data_traceExp,plot_trial_types,params);
+[~, bf_population_trace_outcome] = plot_population_traceoutcome(bf_data_traceExp,plot_trial_types,params);
 
 % > Plot outcome-aligned population activity for ramping neurons in the
 %   striatum.
 params.plot.ylim = [-2 3];
-striatum_population_trace_outcome = plot_population_traceoutcome(striatum_data_traceExp,plot_trial_types,params);
+[~, striatum_population_trace_outcome] = plot_population_traceoutcome(striatum_data_traceExp,plot_trial_types,params);
 
 clear figure_plot
 figure_plot = [bf_population_trace_outcome, striatum_population_trace_outcome];
@@ -35,7 +31,6 @@ figure_plot(1,2).set_layout_options('Position',[0.55 0.2 0.35 0.7],... %Set the 
     'redraw',false);
 
 figure_plot(1,2).axe_property('YTick',[],'YColor',[1 1 1]);
-
 
 figure('Renderer', 'painters', 'Position', [100 100 400 200]);
 figure_plot.draw()

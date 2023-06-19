@@ -34,7 +34,7 @@ for neuron_i = 1:size(data_in,1)
         n_trls = size(trials_in,2);
         
         sdf_x = []; sdf_x = (nanmean(data_in.sdf{neuron_i}(trials_in,:))-bl_fr_mean)./bl_fr_std;
-        %sdf_x = []; sdf_x = nanmean(data_in.sdf{neuron_i}(trials_in,:))./max_fr;
+%         sdf_x = []; sdf_x = nanmean(data_in.sdf{neuron_i}(trials_in,:))./max_fr;
         
         % If there aren't enough trials, then we will NaN out the SDF
         if any(isinf(sdf_x)) | length(sdf_x) == 1

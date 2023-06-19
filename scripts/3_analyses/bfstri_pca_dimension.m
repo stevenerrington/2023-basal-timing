@@ -1,4 +1,4 @@
-
+function bfstri_pca_dimension(bf_data_CS,bf_datasheet_CS,striatum_data_CS)
 %% Example extraction code
 % Tidy workspace
 clear timewin

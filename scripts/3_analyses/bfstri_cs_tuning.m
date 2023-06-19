@@ -1,7 +1,5 @@
-
-load(fullfile(dirs.root,'data','large','bf_data_CS_spkRemoved.mat'))
-load(fullfile(dirs.root,'data','large','bf_datasheet_CS.mat'))
-
+function bfstri_cs_tuning(bf_data_CS,bf_datasheet_CS,...
+    striatum_data_CS, striatum_datasheet_CS, params)
 
 plot_trial_types = {'prob0','prob25','prob50','prob75','prob100'};
 colors.appetitive = [247 154 154; 244 107 107; 240 59 59; 230 18 18; 182 14 14]./255;
@@ -11,20 +9,21 @@ params.plot.xlim = [0:2500];
 % Get spike x prob curves (BF: NIH)
 site = 'nih';
 data_in = []; datasheet_in = [];
-data_in = bf_data_CS(bf_datasheet_CS.cluster_id == 2 & strcmp(bf_datasheet_CS.site,site),:);
-datasheet_in = bf_datasheet_CS(bf_datasheet_CS.cluster_id == 2 & strcmp(bf_datasheet_CS.site,site),:);
+data_in = bf_data_CS(strcmp(bf_datasheet_CS.site,site),:);
+datasheet_in = bf_datasheet_CS(strcmp(bf_datasheet_CS.site,site),:);
 
 [~, ~, ~, bf_nih_yfit_out] =...
-    plot_fr_x_uncertain(data_in,datasheet_in,plot_trial_types,params,0);
+    plot_fr_x_uncertain(data_in,datasheet_in,plot_trial_types,params,0,'max');
 
 % Get spike x prob curves (BF: WUSTL)
 site = 'wustl';
 data_in = []; datasheet_in = [];
-data_in = bf_data_CS(bf_datasheet_CS.cluster_id == 2 & strcmp(bf_datasheet_CS.site,site),:);
-datasheet_in = bf_datasheet_CS(bf_datasheet_CS.cluster_id == 2 & strcmp(bf_datasheet_CS.site,site),:);
+data_in = []; datasheet_in = [];
+data_in = bf_data_CS(strcmp(bf_datasheet_CS.site,site),:);
+datasheet_in = bf_datasheet_CS(strcmp(bf_datasheet_CS.site,site),:);
 
 [~, ~, ~, bf_wustl_yfit_out] =...
-    plot_fr_x_uncertain(data_in,datasheet_in,plot_trial_types,params,0);
+    plot_fr_x_uncertain(data_in,datasheet_in,plot_trial_types,params,0,'max');
 
 % Get spike x prob curves (Striatum)
 site = 'wustl';
@@ -33,7 +32,7 @@ data_in = striatum_data_CS;
 datasheet_in = striatum_datasheet_CS;
 
 [~, ~, ~, striatum_yfit_out] =...
-    plot_fr_x_uncertain(data_in,datasheet_in,plot_trial_types,params,0);
+    plot_fr_x_uncertain(data_in,datasheet_in,plot_trial_types,params,0,'max');
 
 % Get p(gaze | prob) curves
 dev_eyePos_CSall

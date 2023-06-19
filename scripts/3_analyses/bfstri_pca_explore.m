@@ -1,4 +1,4 @@
-
+function bfstri_pca_explore(bf_data_CS,striatum_data_CS)
 %% Example extraction code
 % Tidy workspace   
 clear timewin 

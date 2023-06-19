@@ -1,7 +1,11 @@
-function [figure_plot_out, figure_plot, figure_plot_b, y_fit_out] = plot_fr_x_uncertain(data_in,datasheet_in,plot_trial_types,params,fig_flag)
+function [figure_plot_out, figure_plot, figure_plot_b, y_fit_out] = plot_fr_x_uncertain(data_in,datasheet_in,plot_trial_types,params,fig_flag,norm_method)
 
 if nargin < 4
     fig_flag = 0;
+end
+
+if nargin < 5
+    norm_method = 'zscore';
 end
 
 plot_time = [-5000:5000];
@@ -48,8 +52,12 @@ for neuron_i = 1:size(data_in,1)
         trials_in = []; trials_in = data_in.trials{neuron_i}.(trial_type_label);
         n_trls = size(trials_in,2);
         
-%         sdf_x = []; sdf_x = (nanmean(data_in.sdf{neuron_i}(trials_in,:))-bl_fr_mean)./bl_fr_std;
-        sdf_x = []; sdf_x = (nanmean(data_in.sdf{neuron_i}(trials_in,:))./fr_max);
+        switch norm_method
+            case 'zscore'
+                sdf_x = []; sdf_x = (nanmean(data_in.sdf{neuron_i}(trials_in,:))-bl_fr_mean)./bl_fr_std;
+            case 'max'
+                sdf_x = []; sdf_x = (nanmean(data_in.sdf{neuron_i}(trials_in,:))./fr_max);
+        end
 
         
         plot_label = [plot_label; {[int2str(trial_type_i) '_' (trial_type_label)]}];

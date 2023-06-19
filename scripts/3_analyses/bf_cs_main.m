@@ -1,8 +1,12 @@
-load(fullfile(dirs.root,'data','large','bf_data_CS_spkRemoved.mat'))
-load(fullfile(dirs.root,'data','large','bf_datasheet_CS.mat'))
+function bf_cs_main(bf_data_CS, bf_datasheet_CS, params)
 
-bf_data_CS = bf_data_CS(bf_datasheet_CS.cluster_id == 2,:);
-bf_datasheet_CS = bf_datasheet_CS(bf_datasheet_CS.cluster_id == 2,:);
+%% Parameters & setup
+% % Load in spike removed data
+% load(fullfile(dirs.root,'data','large','bf_data_CS_spkRemoved.mat'))
+% load(fullfile(dirs.root,'data','large','bf_datasheet_CS.mat'))
+% % Clean up to just include ramping neurons
+% bf_data_CS = bf_data_CS(bf_datasheet_CS.cluster_id == 2,:);
+% bf_datasheet_CS = bf_datasheet_CS(bf_datasheet_CS.cluster_id == 2,:);
 
 %% Example neurons
 % In this section, we plot example neurons from the basal forebrain 
@@ -27,7 +31,6 @@ params.plot.xlim = [0 750]; params.plot.ylim = [0 60];
 params.plot.ylim = [-2 4];
 [~,~,bf_population_CS_ramping_onset] = plot_population_neuron(bf_data_CS,plot_trial_types,params,0);
 
-
 % > Offset -----------------------------------------------------------
 params.plot.xlim = [750 1500]; params.plot.ylim = [0 60];
 % Example
@@ -41,7 +44,7 @@ params.plot.xlim = [-750 0]; params.plot.ylim = [-2 4];
 [~, uncertainty_curve_example_point, uncertainty_curve_example_line] =...
     plot_fr_x_uncertain_example(bf_data_CS,bf_datasheet_CS,plot_trial_types,params,16,0);
 [~, uncertainty_curve_population_point, uncertainty_curve_population_line] =...
-    plot_fr_x_uncertain(bf_data_CS,bf_datasheet_CS,plot_trial_types,params,0);
+    plot_fr_x_uncertain(bf_data_CS,bf_datasheet_CS,plot_trial_types,params,0,'zscore');
 
 % Uncertainty fano
 clear figure_plot fano_x_uncertaintyA
@@ -169,10 +172,8 @@ figure_plot(8,2).set_layout_options('Position',[0.75 0.25 0.2 0.2],... %Set the 
     'margin_width',[0.00 0.00],...
     'redraw',false);
 
-
 figure_plot(6,1).axe_property('YTick',[0 20 40 60]);
 figure_plot(8,1).axe_property('YTick',[0 20 40 60]);
-
 
 for i = [6]
     figure_plot(i,1).axe_property('XTick',[],'XColor',[1 1 1]);

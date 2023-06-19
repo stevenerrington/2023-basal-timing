@@ -1,3 +1,5 @@
+function bfstri_trace_main (bf_data_traceExp, bf_datasheet_traceExp, ...
+    striatum_data_traceExp, striatum_datasheet_traceExp, params)
 
 % > Trace task >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 plot_trial_types = {'notrace_uncertain','notrace_certain','uncertain','certain'};

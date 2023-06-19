@@ -1,8 +1,11 @@
+function bfstri_cs_precision(bf_data_CS, bf_datasheet_CS,...
+    striatum_data_CS,striatum_datasheet_CS, params)
+
 %% Extract: get precision timing analyses
 params.stats.peak_window = [-250:250];
 plot_trial_types = {'uncert_delivered','uncert_omit'};
-[max_ramp_fr_bf] = get_maxFR_ramping_outcome(bf_data_CS(strcmp(bf_datasheet_CS.site,'nih'),:),bf_datasheet_CS(strcmp(bf_datasheet_CS.site,'nih'),:),plot_trial_types,params);
-slope_analysis_bf = get_slope_ramping_outcome(bf_data_CS(strcmp(bf_datasheet_CS.site,'nih'),:),bf_datasheet_CS(strcmp(bf_datasheet_CS.site,'nih'),:),plot_trial_types,params);
+[max_ramp_fr_bf] = get_maxFR_ramping_outcome(bf_data_CS,bf_datasheet_CS,plot_trial_types,params);
+slope_analysis_bf = get_slope_ramping_outcome(bf_data_CS,bf_datasheet_CS,plot_trial_types,params);
 [max_ramp_fr_bg] = get_maxFR_ramping_outcome(striatum_data_CS,striatum_datasheet_CS,plot_trial_types,params);
 slope_analysis_bg = get_slope_ramping_outcome(striatum_data_CS,striatum_datasheet_CS,plot_trial_types,params);
 
@@ -20,7 +23,7 @@ for trial_type_i = 1:length(plot_trial_types)
         repmat({plot_trial_types{trial_type_i}},...
         length(max_ramp_fr_bf.mean_averageSDF.(plot_trial_types{trial_type_i})),1)];
     
-    for neuron_i = 1:size(bf_data_CS(strcmp(bf_datasheet_CS.site,'nih'),:),1)
+    for neuron_i = 1:size(bf_data_CS,1)
            plot_slope_bf = [plot_slope_bf; nanmean(slope_analysis_bf.(plot_trial_types{trial_type_i}).slope{neuron_i}(:))];    
     end
 end

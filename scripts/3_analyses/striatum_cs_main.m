@@ -1,3 +1,4 @@
+function striatum_cs_main(striatum_data_CS, striatum_datasheet_CS, params)
 
 %% Example neurons
 % In this section, we plot example neurons from the basal forebrain 
@@ -9,9 +10,6 @@
 plot_trial_types = {'prob0','prob25','prob50','prob75','prob100'};
 %colors.appetitive = [247 154 154; 244 107 107; 240 59 59; 230 18 18; 182 14 14]./255;
 colors.appetitive = [221 153 204; 204 85 153; 170 51 102; 85 34 51; 34 17 17]./255;
-
-
-
 
 params.plot.colormap = colors.appetitive;
 example_neuron_i = 4;
@@ -31,7 +29,7 @@ params.plot.ylim = [-2 4];
 [~, uncertainty_curve_example_point, uncertainty_curve_example_line] =...
     plot_fr_x_uncertain_example(striatum_data_CS,striatum_datasheet_CS,plot_trial_types,params,16,0);
 [~, uncertainty_curve_population_point, uncertainty_curve_population_line] =...
-    plot_fr_x_uncertain(striatum_data_CS,striatum_datasheet_CS,plot_trial_types,params,0);
+    plot_fr_x_uncertain(striatum_data_CS,striatum_datasheet_CS,plot_trial_types,params,0,'zscore');
 
 % Uncertainty fano
 clear figure_plot fano_x_uncertaintyA
@@ -50,7 +48,7 @@ figure_plot = [striatum_example_CS_ramping_onset;...
  fano_x_uncertainty_example; fano_x_uncertainty_population;...
  uncertainty_curve_example_line; uncertainty_curve_population_line]; 
 
-% XXXXXXXXXXXXXX
+% Configure figure layout
 figure_plot(1,1).set_layout_options('Position',[0.1 0.9 0.3 0.075],... %Set the position in the figure (as in standard 'Position' axe property)
     'legend',false,... % No need to display legend for side histograms
     'margin_height',[0.00 0.00],... %We set custom margins, values must be coordinated between the different elements so that alignment is maintained

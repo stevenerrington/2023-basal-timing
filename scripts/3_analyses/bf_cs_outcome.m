@@ -1,3 +1,5 @@
+function bf_cs_outcome(bf_data_CS,bf_datasheet_CS,params)
+
 plot_trial_types = {'prob25nd','prob25d','prob50nd','prob50d','prob75nd','prob75d'};
 params.plot.colormap = cool(length(plot_trial_types));
 
