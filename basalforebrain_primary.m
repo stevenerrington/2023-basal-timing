@@ -21,12 +21,6 @@ switch status
 end
 
 %% Analyses
-% 1 | Basal forebrain neurons ramp to salient events (appetetive and
-%     aversive)
-
-
-
-%% Worksheet
 bf_analyses_map
 
 
