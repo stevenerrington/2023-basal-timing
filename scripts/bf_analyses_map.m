@@ -78,6 +78,7 @@ dev_eyePos_CSall % Plot p(gaze) at CS across datasets (1500, 2500) - collapsed.
 dev_eyePos_punish % Plot p(gaze) in reward/punish.
 dev_eyePos_trace % Plot p(gaze) in trace task.
 dev_individualtrl_ramp_example % Plot example neuron with fitted linear slope.
+dev_eye_pupilCS_rough  % Consider blinks through time x prob (outcome)
 
 % Motor analyses
 dev_motor_pSaccXfr % Extract the p(gaze) across time and corr with fr (incomplete)

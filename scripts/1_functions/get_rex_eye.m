@@ -1,5 +1,5 @@
 function eye_pos_table = get_rex_eye(REX, params)
-    eye_x_trial = []; eye_y_trial = []; location = [];
+    eye_x_trial = []; eye_y_trial = []; eye_pupil_trial = []; location = [];
     
     eye_alignWin = params.eye.alignWin;
     
@@ -42,7 +42,7 @@ function eye_pos_table = get_rex_eye(REX, params)
         
     end
     
-    eye_pos_table = table({eye_x_trial},{eye_y_trial}, {location},...
-        'VariableNames',{'eye_x','eye_y','targ_location'});
+    eye_pos_table = table({eye_x_trial},{eye_y_trial},{eye_pupil_trial},{location},...
+        'VariableNames',{'eye_x','eye_y','eye_pupil','targ_location'});
     
 end

@@ -27,4 +27,15 @@ params.licking.gauss_ms = 10;
 % % Eye
 params.eye.alignWin = [-1000:3000];
 
+% % Saccade
+params.saccade.fill_missing_data = false;
+params.saccade.smoothen = true;
+params.saccade.sampling_rate = 1000;
+params.saccade.fix_vel_thres = 30;
+params.saccade.lambda = 20;
+params.saccade.combine_intv_thres = 20;
+params.saccade.saccade_dur_thres = 5;
+params.saccade.saccade_amp_thres = 0.2;
+
+
 end
