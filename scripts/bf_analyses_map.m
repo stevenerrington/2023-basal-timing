@@ -22,6 +22,7 @@ bf_cs_main(bf_data_CS, bf_datasheet_CS, params);
 % > iii | Fano across uncertainty condtions
 striatum_cs_main(striatum_data_CS, striatum_datasheet_CS, params);
 
+
 % Plot BF & Striatum activity in trace task (trace/no trace; certain/uncertain)
 % > i   | Example SDF, example fano, population SDF, population fano
 % > ii  | Average firing rates and fano factors across conditions

@@ -1,5 +1,6 @@
 function striatum_cs_main(striatum_data_CS, striatum_datasheet_CS, params)
 
+%% Parameters & setup
 %% Example neurons
 % In this section, we plot example neurons from the basal forebrain 
 % phasic and ramping) and the striatum during the CS and trace task.
@@ -7,16 +8,30 @@ function striatum_cs_main(striatum_data_CS, striatum_datasheet_CS, params)
 % averaged fano-factor through time
 
 % > CS task >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-plot_trial_types = {'prob0','prob25','prob50','prob75','prob100'};
-%colors.appetitive = [247 154 154; 244 107 107; 240 59 59; 230 18 18; 182 14 14]./255;
-colors.appetitive = [221 153 204; 204 85 153; 170 51 102; 85 34 51; 34 17 17]./255;
-
-params.plot.colormap = colors.appetitive;
+% Spike density function --------------------------------------------
 example_neuron_i = 4;
 
-% Spike density function --------------------------------------------
 % > Onset -----------------------------------------------------------
-params.plot.xlim = [0 2500]; params.plot.ylim = [0 60];
+plot_trial_types = {'probAll'};
+params.plot.xlim = [-1000 0]; params.plot.ylim = [0 60];
+params.plot.colormap = [34 17 17]./255;
+
+% Example
+[~,~,striatum_example_CS_ramping_preCS] = plot_example_neuron(striatum_data_CS,plot_trial_types,params,example_neuron_i,0);
+
+% Population
+params.plot.ylim = [-2 4];
+[~,~,striatum_population_CS_ramping_preCS] = plot_population_neuron(striatum_data_CS,plot_trial_types,params,0);
+
+
+plot_trial_types = {'prob0','prob25','prob50','prob75','prob100'};
+
+% > Onset -----------------------------------------------------------
+plot_trial_types = {'prob0','prob25','prob50','prob75','prob100'};
+colors.appetitive = [221 153 204; 204 85 153; 170 51 102; 85 34 51; 34 17 17]./255;
+params.plot.colormap = colors.appetitive;
+
+params.plot.xlim = [0 750]; params.plot.ylim = [0 60];
 
 % Example
 [~,~,striatum_example_CS_ramping_onset] = plot_example_neuron(striatum_data_CS,plot_trial_types,params,example_neuron_i,0);
@@ -25,10 +40,19 @@ params.plot.xlim = [0 2500]; params.plot.ylim = [0 60];
 params.plot.ylim = [-2 4];
 [~,~,striatum_population_CS_ramping_onset] = plot_population_neuron(striatum_data_CS,plot_trial_types,params,0);
 
+% > Offset -----------------------------------------------------------
+params.plot.xlim = [1750 2500]; params.plot.ylim = [0 60];
+% Example
+[~,~,striatum_example_CS_ramping_offset] = plot_example_neuron(striatum_data_CS,plot_trial_types,params,example_neuron_i,0);
+
+% Population
+params.plot.xlim = [-750 0]; params.plot.ylim = [-2 4];
+[~,~,striatum_population_CS_ramping_offset] = plot_population_neuron_csOutcome(striatum_data_CS,striatum_datasheet_CS,plot_trial_types,params,0);
+
 % Uncertainty curves --------------------------------------------------
-[~, uncertainty_curve_example_point, uncertainty_curve_example_line] =...
-    plot_fr_x_uncertain_example(striatum_data_CS,striatum_datasheet_CS,plot_trial_types,params,16,0);
-[~, uncertainty_curve_population_point, uncertainty_curve_population_line] =...
+[~, uncertainty_curve_example_point, ~] =...
+    plot_fr_x_uncertain_example(striatum_data_CS,striatum_datasheet_CS,plot_trial_types,params,example_neuron_i,0);
+[~, uncertainty_curve_population_point, ~] =...
     plot_fr_x_uncertain(striatum_data_CS,striatum_datasheet_CS,plot_trial_types,params,0,'zscore');
 
 % Uncertainty fano
@@ -42,94 +66,150 @@ params.plot.ylim = [0 2];
 
 %% Generate figure
 clear figure_plot
-figure_plot = [striatum_example_CS_ramping_onset;...
- striatum_population_CS_ramping_onset;...
- uncertainty_curve_example_point; uncertainty_curve_population_point;...
- fano_x_uncertainty_example; fano_x_uncertainty_population;...
- uncertainty_curve_example_line; uncertainty_curve_population_line]; 
+figure_plot = [striatum_example_CS_ramping_preCS; striatum_population_CS_ramping_preCS;...
+    striatum_example_CS_ramping_onset; striatum_population_CS_ramping_onset;...
+    striatum_example_CS_ramping_offset; striatum_population_CS_ramping_offset;...
+    uncertainty_curve_example_point; fano_x_uncertainty_example;...
+    uncertainty_curve_population_point; fano_x_uncertainty_population];
+    
 
-% Configure figure layout
-figure_plot(1,1).set_layout_options('Position',[0.1 0.9 0.3 0.075],... %Set the position in the figure (as in standard 'Position' axe property)
+% Pre-CS: Raster, SDF, Fano (Example)
+figure_plot(1,1).set_layout_options('Position',[0.1 0.9 0.1 0.075],... %Set the position in the figure (as in standard 'Position' axe property)
     'legend',false,... % No need to display legend for side histograms
     'margin_height',[0.00 0.00],... %We set custom margins, values must be coordinated between the different elements so that alignment is maintained
     'margin_width',[0.00 0.00],...
     'redraw',false);
 
-figure_plot(2,1).set_layout_options('Position',[0.1 0.6 0.3 0.25],... %Set the position in the figure (as in standard 'Position' axe property)
+figure_plot(2,1).set_layout_options('Position',[0.1 0.6 0.1 0.25],... %Set the position in the figure (as in standard 'Position' axe property)
     'legend',false,... % No need to display legend for side histograms
     'margin_height',[0.00 0.00],... %We set custom margins, values must be coordinated between the different elements so that alignment is maintained
     'margin_width',[0.00 0.00],...
     'redraw',false);
 
-figure_plot(3,1).set_layout_options('Position',[0.1 0.5 0.3 0.075],... %Set the position in the figure (as in standard 'Position' axe property)
+figure_plot(3,1).set_layout_options('Position',[0.1 0.5 0.1 0.075],... %Set the position in the figure (as in standard 'Position' axe property)
     'legend',false,... % No need to display legend for side histograms
     'margin_height',[0.00 0.00],... %We set custom margins, values must be coordinated between the different elements so that alignment is maintained
     'margin_width',[0.00 0.00],...
     'redraw',false);
 
-figure_plot(4,1).set_layout_options('Position',[0.1 0.2 0.3 0.25],... %Set the position in the figure (as in standard 'Position' axe property)
+% Pre-CS: SDF, Fano (Population)
+figure_plot(4,1).set_layout_options('Position',[0.1 0.2 0.1 0.3],... %Set the position in the figure (as in standard 'Position' axe property)
     'legend',false,... % No need to display legend for side histograms
     'margin_height',[0.00 0.00],... %We set custom margins, values must be coordinated between the different elements so that alignment is maintained
     'margin_width',[0.00 0.00],...
     'redraw',false);
 
-figure_plot(5,1).set_layout_options('Position',[0.1 0.1 0.3 0.075],... %Set the position in the figure (as in standard 'Position' axe property)
+figure_plot(5,1).set_layout_options('Position',[0.1 0.1 0.1 0.075],... %Set the position in the figure (as in standard 'Position' axe property)
     'legend',false,... % No need to display legend for side histograms
     'margin_height',[0.00 0.00],... %We set custom margins, values must be coordinated between the different elements so that alignment is maintained
     'margin_width',[0.00 0.00],...
     'redraw',false);
 
-figure_plot(6,1).set_layout_options('Position',[0.5 0.75 0.2 0.2],... %Set the position in the figure (as in standard 'Position' axe property)
-    'legend',false,... % No need to display legend for side histograms
-    'margin_height',[0.00 0.00],... %We set custom margins, values must be coordinated between the different elements so that alignment is maintained
-    'margin_width',[0.00 0.00],...
-    'redraw',false);
-figure_plot(8,1).set_layout_options('Position',[0.5 0.6 0.2 0.1],... %Set the position in the figure (as in standard 'Position' axe property)
-    'legend',false,... % No need to display legend for side histograms
-    'margin_height',[0.00 0.00],... %We set custom margins, values must be coordinated between the different elements so that alignment is maintained
-    'margin_width',[0.00 0.00],...
-    'redraw',false);
-
-figure_plot(7,1).set_layout_options('Position',[0.5 0.25 0.2 0.2],... %Set the position in the figure (as in standard 'Position' axe property)
-    'legend',false,... % No need to display legend for side histograms
-    'margin_height',[0.00 0.00],... %We set custom margins, values must be coordinated between the different elements so that alignment is maintained
-    'margin_width',[0.00 0.00],...
-    'redraw',false);
-figure_plot(9,1).set_layout_options('Position',[0.5 0.1 0.2 0.1],... %Set the position in the figure (as in standard 'Position' axe property)
+% Post CS -------------------------------------------------------------
+figure_plot(6,1).set_layout_options('Position',[0.22 0.9 0.1 0.075],... %Set the position in the figure (as in standard 'Position' axe property)
     'legend',false,... % No need to display legend for side histograms
     'margin_height',[0.00 0.00],... %We set custom margins, values must be coordinated between the different elements so that alignment is maintained
     'margin_width',[0.00 0.00],...
     'redraw',false);
 
-figure_plot(10,1).set_layout_options('Position',[0.75 0.75 0.2 0.2],... %Set the position in the figure (as in standard 'Position' axe property)
-    'legend',false,... % No need to display legend for side histograms
-    'margin_height',[0.00 0.00],... %We set custom margins, values must be coordinated between the different elements so that alignment is maintained
-    'margin_width',[0.00 0.00],...
-    'redraw',false);
-figure_plot(11,1).set_layout_options('Position',[0.75 0.25 0.2 0.2],... %Set the position in the figure (as in standard 'Position' axe property)
+figure_plot(7,1).set_layout_options('Position',[0.22 0.6 0.1 0.25],... %Set the position in the figure (as in standard 'Position' axe property)
     'legend',false,... % No need to display legend for side histograms
     'margin_height',[0.00 0.00],... %We set custom margins, values must be coordinated between the different elements so that alignment is maintained
     'margin_width',[0.00 0.00],...
     'redraw',false);
 
+figure_plot(8,1).set_layout_options('Position',[0.22 0.5 0.1 0.075],... %Set the position in the figure (as in standard 'Position' axe property)
+    'legend',false,... % No need to display legend for side histograms
+    'margin_height',[0.00 0.00],... %We set custom margins, values must be coordinated between the different elements so that alignment is maintained
+    'margin_width',[0.00 0.00],...
+    'redraw',false);
 
-% for i = [6]
-%     figure_plot(i,1).axe_property('XTick',[],'XColor',[1 1 1]);
-%     figure_plot(i,2).axe_property('XTick',[],'XColor',[1 1 1]);
-%     figure_plot(i,2).set_names('x','','y','');
-% 
-% end
+figure_plot(9,1).set_layout_options('Position',[0.22 0.2 0.1 0.3],... %Set the position in the figure (as in standard 'Position' axe property)
+    'legend',false,... % No need to display legend for side histograms
+    'margin_height',[0.00 0.00],... %We set custom margins, values must be coordinated between the different elements so that alignment is maintained
+    'margin_width',[0.00 0.00],...
+    'redraw',false);
+
+figure_plot(10,1).set_layout_options('Position',[0.22 0.1 0.1 0.075],... %Set the position in the figure (as in standard 'Position' axe property)
+    'legend',false,... % No need to display legend for side histograms
+    'margin_height',[0.00 0.00],... %We set custom margins, values must be coordinated between the different elements so that alignment is maintained
+    'margin_width',[0.00 0.00],...
+    'redraw',false);
+
+% Pre Outcome -------------------------------------------------------------
+figure_plot(11,1).set_layout_options('Position',[0.34 0.9 0.1 0.075],... %Set the position in the figure (as in standard 'Position' axe property)
+    'legend',false,... % No need to display legend for side histograms
+    'margin_height',[0.00 0.00],... %We set custom margins, values must be coordinated between the different elements so that alignment is maintained
+    'margin_width',[0.00 0.00],...
+    'redraw',false);
+
+figure_plot(12,1).set_layout_options('Position',[0.34 0.6 0.1 0.25],... %Set the position in the figure (as in standard 'Position' axe property)
+    'legend',false,... % No need to display legend for side histograms
+    'margin_height',[0.00 0.00],... %We set custom margins, values must be coordinated between the different elements so that alignment is maintained
+    'margin_width',[0.00 0.00],...
+    'redraw',false);
+
+figure_plot(13,1).set_layout_options('Position',[0.34 0.5 0.1 0.075],... %Set the position in the figure (as in standard 'Position' axe property)
+    'legend',false,... % No need to display legend for side histograms
+    'margin_height',[0.00 0.00],... %We set custom margins, values must be coordinated between the different elements so that alignment is maintained
+    'margin_width',[0.00 0.00],...
+    'redraw',false);
+
+figure_plot(14,1).set_layout_options('Position',[0.34 0.2 0.1 0.3],... %Set the position in the figure (as in standard 'Position' axe property)
+    'legend',false,... % No need to display legend for side histograms
+    'margin_height',[0.00 0.00],... %We set custom margins, values must be coordinated between the different elements so that alignment is maintained
+    'margin_width',[0.00 0.00],...
+    'redraw',false);
+
+figure_plot(15,1).set_layout_options('Position',[0.34 0.1 0.1 0.075],... %Set the position in the figure (as in standard 'Position' axe property)
+    'legend',false,... % No need to display legend for side histograms
+    'margin_height',[0.00 0.00],... %We set custom margins, values must be coordinated between the different elements so that alignment is maintained
+    'margin_width',[0.00 0.00],...
+    'redraw',false);
+
+% Tuning -------------------------------------------------------------
+
+figure_plot(16,1).set_layout_options('Position',[0.55 0.72 0.25 0.2],... %Set the position in the figure (as in standard 'Position' axe property)
+    'legend',false,... % No need to display legend for side histograms
+    'margin_height',[0.00 0.00],... %We set custom margins, values must be coordinated between the different elements so that alignment is maintained
+    'margin_width',[0.00 0.00],...
+    'redraw',false);
+
+figure_plot(17,1).set_layout_options('Position',[0.55 0.6 0.25 0.1],... %Set the position in the figure (as in standard 'Position' axe property)
+    'legend',false,... % No need to display legend for side histograms
+    'margin_height',[0.00 0.00],... %We set custom margins, values must be coordinated between the different elements so that alignment is maintained
+    'margin_width',[0.00 0.00],...
+    'redraw',false);
+
+figure_plot(18,1).set_layout_options('Position',[0.55 0.22 0.25 0.2],... %Set the position in the figure (as in standard 'Position' axe property)
+    'legend',false,... % No need to display legend for side histograms
+    'margin_height',[0.00 0.00],... %We set custom margins, values must be coordinated between the different elements so that alignment is maintained
+    'margin_width',[0.00 0.00],...
+    'redraw',false);
+
+figure_plot(19,1).set_layout_options('Position',[0.55 0.1 0.25 0.1],... %Set the position in the figure (as in standard 'Position' axe property)
+    'legend',false,... % No need to display legend for side histograms
+    'margin_height',[0.00 0.00],... %We set custom margins, values must be coordinated between the different elements so that alignment is maintained
+    'margin_width',[0.00 0.00],...
+    'redraw',false);
 
 
-
-% 
-for i = [1,2,3,4, 6, 7, 8]
-    figure_plot(i,1).axe_property('XTick',[],'XColor',[1 1 1]);
-    figure_plot(i,1).set_names('x','');
+for i = [1 2 3 4 6 7 8 9 11 12 13 14 16 18]
+    figure_plot(i,1).axe_property('XTick',[],'XColor','None');
 end
+
+for i = [6 7 8 9 10 11 12 13 14 15]
+    figure_plot(i,1).axe_property('YTick',[],'YColor','None');
+end
+
+for i = 1:size(figure_plot,1)
+    figure_plot(i,1).set_line_options('base_size',0.5);
+end
+
+figure_plot(5,1).axe_property('XTick',[-1000:250:0]);
+figure_plot(10,1).axe_property('XTick',[0:250:750]);
+figure_plot(15,1).axe_property('XTick',[-750:250:0]);
 
 
 figure('Renderer', 'painters', 'Position', [100 100 600 400]);
 figure_plot.draw;
-
-

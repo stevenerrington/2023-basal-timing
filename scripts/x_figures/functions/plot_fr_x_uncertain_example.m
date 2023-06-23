@@ -53,11 +53,10 @@ xlim_input = params.plot.xlim; ylim_input = params.plot.ylim;
 color_scheme = params.plot.colormap;
 
 % Raster plot
-figure_plot(1,1)=gramm('x',plot_label,'y',plot_sdf_data,'color',plot_label);
-figure_plot(1,1).geom_jitter('alpha',0.2);
-figure_plot(1,1).stat_summary('geom',{'point','errorbar'});
-figure_plot(1,1).set_color_options('map',color_scheme);
+figure_plot(1,1)=gramm('x',plot_label,'y',plot_sdf_data);
+figure_plot(1,1).stat_summary('geom',{'point','errorbar','line'});
 figure_plot(1,1).no_legend;
+figure_plot(1,1).set_color_options('map',color_scheme);
 figure_plot(1,1).axe_property('YLim',[0 60]);
 
 figure_plot_b(1,1)=gramm('x',x_fit_data,'y',y_fit_data);
