@@ -20,7 +20,7 @@ params.plot.colormap = [34 17 17]./255;
 [~,~,striatum_example_CS_ramping_preCS] = plot_example_neuron(striatum_data_CS,plot_trial_types,params,example_neuron_i,0);
 
 % Population
-params.plot.ylim = [-2 4];
+params.plot.ylim = [-2 5];
 [~,~,striatum_population_CS_ramping_preCS] = plot_population_neuron(striatum_data_CS,plot_trial_types,params,0);
 
 
@@ -37,7 +37,7 @@ params.plot.xlim = [0 750]; params.plot.ylim = [0 60];
 [~,~,striatum_example_CS_ramping_onset] = plot_example_neuron(striatum_data_CS,plot_trial_types,params,example_neuron_i,0);
 
 % Population
-params.plot.ylim = [-2 4];
+params.plot.ylim = [-2 5];
 [~,~,striatum_population_CS_ramping_onset] = plot_population_neuron(striatum_data_CS,plot_trial_types,params,0);
 
 % > Offset -----------------------------------------------------------
@@ -46,7 +46,7 @@ params.plot.xlim = [1750 2500]; params.plot.ylim = [0 60];
 [~,~,striatum_example_CS_ramping_offset] = plot_example_neuron(striatum_data_CS,plot_trial_types,params,example_neuron_i,0);
 
 % Population
-params.plot.xlim = [-750 0]; params.plot.ylim = [-2 4];
+params.plot.xlim = [-750 0]; params.plot.ylim = [-2 5];
 [~,~,striatum_population_CS_ramping_offset] = plot_population_neuron_csOutcome(striatum_data_CS,striatum_datasheet_CS,plot_trial_types,params,0);
 
 % Uncertainty curves --------------------------------------------------
@@ -93,7 +93,7 @@ figure_plot(3,1).set_layout_options('Position',[0.1 0.5 0.1 0.075],... %Set the 
     'redraw',false);
 
 % Pre-CS: SDF, Fano (Population)
-figure_plot(4,1).set_layout_options('Position',[0.1 0.2 0.1 0.3],... %Set the position in the figure (as in standard 'Position' axe property)
+figure_plot(4,1).set_layout_options('Position',[0.1 0.2 0.1 0.25],... %Set the position in the figure (as in standard 'Position' axe property)
     'legend',false,... % No need to display legend for side histograms
     'margin_height',[0.00 0.00],... %We set custom margins, values must be coordinated between the different elements so that alignment is maintained
     'margin_width',[0.00 0.00],...
@@ -124,7 +124,7 @@ figure_plot(8,1).set_layout_options('Position',[0.22 0.5 0.1 0.075],... %Set the
     'margin_width',[0.00 0.00],...
     'redraw',false);
 
-figure_plot(9,1).set_layout_options('Position',[0.22 0.2 0.1 0.3],... %Set the position in the figure (as in standard 'Position' axe property)
+figure_plot(9,1).set_layout_options('Position',[0.22 0.2 0.1 0.25],... %Set the position in the figure (as in standard 'Position' axe property)
     'legend',false,... % No need to display legend for side histograms
     'margin_height',[0.00 0.00],... %We set custom margins, values must be coordinated between the different elements so that alignment is maintained
     'margin_width',[0.00 0.00],...
@@ -155,7 +155,7 @@ figure_plot(13,1).set_layout_options('Position',[0.34 0.5 0.1 0.075],... %Set th
     'margin_width',[0.00 0.00],...
     'redraw',false);
 
-figure_plot(14,1).set_layout_options('Position',[0.34 0.2 0.1 0.3],... %Set the position in the figure (as in standard 'Position' axe property)
+figure_plot(14,1).set_layout_options('Position',[0.34 0.2 0.1 0.25],... %Set the position in the figure (as in standard 'Position' axe property)
     'legend',false,... % No need to display legend for side histograms
     'margin_height',[0.00 0.00],... %We set custom margins, values must be coordinated between the different elements so that alignment is maintained
     'margin_width',[0.00 0.00],...
@@ -169,25 +169,25 @@ figure_plot(15,1).set_layout_options('Position',[0.34 0.1 0.1 0.075],... %Set th
 
 % Tuning -------------------------------------------------------------
 
-figure_plot(16,1).set_layout_options('Position',[0.55 0.72 0.25 0.2],... %Set the position in the figure (as in standard 'Position' axe property)
+figure_plot(16,1).set_layout_options('Position',[0.55 0.72 0.15 0.2],... %Set the position in the figure (as in standard 'Position' axe property)
     'legend',false,... % No need to display legend for side histograms
     'margin_height',[0.00 0.00],... %We set custom margins, values must be coordinated between the different elements so that alignment is maintained
     'margin_width',[0.00 0.00],...
     'redraw',false);
 
-figure_plot(17,1).set_layout_options('Position',[0.55 0.6 0.25 0.1],... %Set the position in the figure (as in standard 'Position' axe property)
+figure_plot(17,1).set_layout_options('Position',[0.55 0.6 0.15 0.1],... %Set the position in the figure (as in standard 'Position' axe property)
     'legend',false,... % No need to display legend for side histograms
     'margin_height',[0.00 0.00],... %We set custom margins, values must be coordinated between the different elements so that alignment is maintained
     'margin_width',[0.00 0.00],...
     'redraw',false);
 
-figure_plot(18,1).set_layout_options('Position',[0.55 0.22 0.25 0.2],... %Set the position in the figure (as in standard 'Position' axe property)
+figure_plot(18,1).set_layout_options('Position',[0.55 0.22 0.15 0.2],... %Set the position in the figure (as in standard 'Position' axe property)
     'legend',false,... % No need to display legend for side histograms
     'margin_height',[0.00 0.00],... %We set custom margins, values must be coordinated between the different elements so that alignment is maintained
     'margin_width',[0.00 0.00],...
     'redraw',false);
 
-figure_plot(19,1).set_layout_options('Position',[0.55 0.1 0.25 0.1],... %Set the position in the figure (as in standard 'Position' axe property)
+figure_plot(19,1).set_layout_options('Position',[0.55 0.1 0.15 0.1],... %Set the position in the figure (as in standard 'Position' axe property)
     'legend',false,... % No need to display legend for side histograms
     'margin_height',[0.00 0.00],... %We set custom margins, values must be coordinated between the different elements so that alignment is maintained
     'margin_width',[0.00 0.00],...

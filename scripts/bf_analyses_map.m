@@ -30,13 +30,6 @@ bfstri_trace_main (bf_data_traceExp, bf_datasheet_traceExp, ...
     striatum_data_traceExp, striatum_datasheet_traceExp, params);
 
 %% In development
-% Plot gaze and fr activity across uncertainty conditions
-% > i   | Show curves for each condition (p(gaze)
-% > ii  | Plot first parameters of curve fit (denotes "curviness")
-bfstri_cs_tuning(bf_data_CS,bf_datasheet_CS,...
-    striatum_data_CS, striatum_datasheet_CS, params);
-% ! CHECK CALL TO dev_eyePos_CSall (line 38)
-
 % Plot activity of BF neurons post-outcome in uncertain conditions
 % > i   | SDF of activity in delivered/omitted conditions
 % > ii  | Summary mean activity across conditions
@@ -67,6 +60,12 @@ bfstri_trace_cue(bf_data_traceExp, striatum_data_traceExp, params);
 % Plot outcome in the trace task, based on delivered/omitted outcome
 bfstri_trace_outcome(bf_data_traceExp, striatum_data_traceExp, params);
 
+% Plot gaze and fr activity across uncertainty conditions
+% > i   | Show curves for each condition (p(gaze)
+% > ii  | Plot first parameters of curve fit (denotes "curviness")
+bfstri_cs_tuning(bf_data_CS,bf_datasheet_CS,...
+    striatum_data_CS, striatum_datasheet_CS, params);
+% ! CHECK CALL TO dev_eyePos_CSall (line 38)
 
 %% Workspace %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Plot/exploration code
