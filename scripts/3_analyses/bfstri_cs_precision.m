@@ -191,6 +191,11 @@ print_stats(statistics_data, [0.78 0.40]);
 %% Figure: plot heatmaps and peak
 example_neuron_i = 16;
 
+bf_color = [247 154 154; 244 107 107; 240 59 59; 230 18 18; 182 14 14]./255;
+striatum_color = [221 153 204; 204 85 153; 170 51 102; 85 34 51; 34 17 17]./255;
+
+
+
 figure('Renderer', 'painters', 'Position', [100 100 700 400]);
 
 plot_trial_types = {'uncert_delivered','uncert_omit'};

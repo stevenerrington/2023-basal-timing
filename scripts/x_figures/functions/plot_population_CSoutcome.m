@@ -114,7 +114,6 @@ figure_plot(1,1).stat_summary();
 figure_plot(1,1).axe_property('XLim',xlim_input,'YLim',ylim_input,'XTick',[],'XColor',[1 1 1]);
 figure_plot(1,1).set_names('x','Time from Outcome (ms)','y','Firing rate (Z-score)');
 figure_plot(1,1).set_color_options('map',color_scheme);
-figure_plot(1,1).geom_vline('xintercept',0,'style','k-');
 figure_plot(1,1).no_legend;
 figure_plot(1,1).facet_grid([],plot_group,'column_labels',false,'row_labels',false);
 
@@ -124,7 +123,6 @@ figure_plot(2,1).stat_summary();
 figure_plot(2,1).axe_property('XLim',xlim_input,'YLim',[0 2]);
 figure_plot(2,1).set_names('x','Time from Outcome (ms)','y','Fano Factor');
 figure_plot(2,1).set_color_options('map',color_scheme);
-figure_plot(2,1).geom_vline('xintercept',0,'style','k-');
 figure_plot(2,1).geom_hline('yintercept',1,'style','k--');
 figure_plot(2,1).no_legend;
 figure_plot(2,1).facet_grid([],plot_group,'column_labels',false,'row_labels',false);
@@ -136,15 +134,6 @@ figure_plot(3,1).stat_summary('geom',{'point','errorbar','line'});
 % figure_plot(3,1).geom_jitter('alpha',0.2,'dodge',0.5,'width',0.1);
 figure_plot(3,1).set_color_options('map',color_scheme);
 figure_plot(3,1).axe_property('YLim',[-1 1]);
-
-% Bar Plot (fano) >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-figure_plot(4,1)=gramm('x',plot_group,'y',plot_fano_window_data,'color',plot_label_rwd);
-figure_plot(4,1).stat_summary('geom',{'point','errorbar','line'});
-% figure_plot(4,1).stat_summary('geom',{'bar','black_errorbar'},'width',0.2);
-% figure_plot(4,1).geom_jitter('alpha',0.2,'dodge',0.5,'width',0.1);
-figure_plot(4,1).set_color_options('map',color_scheme);
-% figure_plot(4,1).geom_hline('yintercept',1);
-figure_plot(4,1).axe_property('YLim',[0 1]);
 
 
 

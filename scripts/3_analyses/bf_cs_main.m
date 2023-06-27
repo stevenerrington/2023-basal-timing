@@ -35,8 +35,7 @@ plot_trial_types = {'prob0','prob25','prob50','prob75','prob100'};
 
 % > Onset -----------------------------------------------------------
 plot_trial_types = {'prob0','prob25','prob50','prob75','prob100'};
-colors.appetitive = [247 154 154; 244 107 107; 240 59 59; 230 18 18; 182 14 14]./255;
-params.plot.colormap = colors.appetitive;
+params.plot.colormap = [247 154 154; 244 107 107; 240 59 59; 230 18 18; 182 14 14]./255;
 
 params.plot.xlim = [0 500]; params.plot.ylim = [0 60];
 

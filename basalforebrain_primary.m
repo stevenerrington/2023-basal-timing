@@ -10,7 +10,7 @@
 clear all; close all; clc; beep off; warning off;
 
 % Define paths & key directories
-dirs = get_dirs_bf('mac'); params = get_params; status = get_status(dirs);
+dirs = get_dirs_bf('wustl'); params = get_params; status = get_status(dirs);
 
 %% Data extraction
 switch status
