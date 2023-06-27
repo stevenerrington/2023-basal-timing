@@ -13,7 +13,7 @@ example_neuron_i = 4;
 
 % > Onset -----------------------------------------------------------
 plot_trial_types = {'probAll'};
-params.plot.xlim = [-1000 0]; params.plot.ylim = [0 60];
+params.plot.xlim = [-500 0]; params.plot.ylim = [0 60];
 params.plot.colormap = [34 17 17]./255;
 
 % Example
@@ -31,7 +31,7 @@ plot_trial_types = {'prob0','prob25','prob50','prob75','prob100'};
 colors.appetitive = [221 153 204; 204 85 153; 170 51 102; 85 34 51; 34 17 17]./255;
 params.plot.colormap = colors.appetitive;
 
-params.plot.xlim = [0 750]; params.plot.ylim = [0 60];
+params.plot.xlim = [0 500]; params.plot.ylim = [0 60];
 
 % Example
 [~,~,striatum_example_CS_ramping_onset] = plot_example_neuron(striatum_data_CS,plot_trial_types,params,example_neuron_i,0);
@@ -46,7 +46,7 @@ params.plot.xlim = [1750 2500]; params.plot.ylim = [0 60];
 [~,~,striatum_example_CS_ramping_offset] = plot_example_neuron(striatum_data_CS,plot_trial_types,params,example_neuron_i,0);
 
 % Population
-params.plot.xlim = [-750 0]; params.plot.ylim = [-2 5];
+params.plot.xlim = [-500 0]; params.plot.ylim = [-2 5];
 [~,~,striatum_population_CS_ramping_offset] = plot_population_neuron_csOutcome(striatum_data_CS,striatum_datasheet_CS,plot_trial_types,params,0);
 
 % Uncertainty curves --------------------------------------------------

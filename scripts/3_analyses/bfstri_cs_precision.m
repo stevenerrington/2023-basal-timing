@@ -1,6 +1,8 @@
 function bfstri_cs_precision(bf_data_CS, bf_datasheet_CS,...
     striatum_data_CS,striatum_datasheet_CS, params)
 
+load("heatmap_color.mat");
+
 %% Extract: get precision timing analyses
 params.stats.peak_window = [-250:250];
 plot_trial_types = {'uncert_delivered','uncert_omit'};
@@ -199,10 +201,11 @@ striatum_color = [221 153 204; 204 85 153; 170 51 102; 85 34 51; 34 17 17]./255;
 figure('Renderer', 'painters', 'Position', [100 100 700 400]);
 
 plot_trial_types = {'uncert_delivered','uncert_omit'};
-params.plot.colormap = [1 0 0; 0 0 0];
+params.plot.colormap = bf_colormap;
 params.plot.xintercept = 1500;
 get_maxFR_ramping_example(bf_data_CS,bf_datasheet_CS,plot_trial_types,example_neuron_i,params,[1, 3]);
 
+params.plot.colormap = striatum_colormap;
 params.plot.xintercept = 2500;
 get_maxFR_ramping_example(striatum_data_CS,striatum_datasheet_CS,plot_trial_types,4,params, [2, 4]);
 

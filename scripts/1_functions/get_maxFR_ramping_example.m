@@ -72,7 +72,7 @@ vline(params.plot.xintercept,'w')
 scatter(plot_peak_fr_time(omit_trls),1:size(omit_trls,1),'ko','filled')
 xlim([params.plot.xintercept-500 params.plot.xintercept+500]); ylim([1 size(omit_trls,1)]); caxis([0 80])
 ylabel('Omitted')
-colormap(viridis);
+colormap(gca, params.plot.colormap);
 colorbar;
 
 subplot(2,2,subplot_idx(2)); hold on
@@ -81,7 +81,7 @@ vline(params.plot.xintercept,'w')
 scatter(plot_peak_fr_time(del_trls),1:size(del_trls,1),'ko','filled')
 xlim([params.plot.xintercept-500 params.plot.xintercept+500]); ylim([1 size(del_trls,1)]); caxis([0 80])
 ylabel('Delivered')
-colormap(viridis);
+colormap(gca, params.plot.colormap);
 colorbar
 
 %% % figure gen
