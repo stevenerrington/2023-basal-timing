@@ -1,11 +1,11 @@
-function bfstri_pca_explore(bf_data_CS,striatum_data_CS)
+function bfstri_pca_explore(bf_data_CS,bf_datasheet_CS,striatum_data_CS)
 %% Example extraction code
 % Tidy workspace   
 clear timewin 
 
 % Define trials/area/sdf normalization
 trial_type_in = 'prob50'; % Corresponds to a trial type in the data_in structure
-area_in = 'striatum'; % striatum, bf_nih, bf_wustl
+area_in = 'bf_wustl'; % striatum, bf_nih, bf_wustl
 sdf_norm = 'zscore'; % zscore or max
 
 % Switch the inputted dataset based on the area, and define the outcome
@@ -25,25 +25,27 @@ end
 
 % Define the plot window
 timewin = [];
-timewin = [0:5:outcome_time]; % Denotes the time window to extract the SDF from (rel to CS onset)
+timewin = [0:5:outcome_time+2000]; % Denotes the time window to extract the SDF from (rel to CS onset)
 
 
 %% Get average SDF
 % Then for each neuron in the data_in table
 clear sdf_50_max sdf_50_z;
 
+time_zero_sdf = 5001;
+
 for neuron_i = 1:size(data_in,1)
     % Get the mean SDF within the defined window, in the defined trials
     sdf_50_max(neuron_i,:) =...
-        nanmean(data_in.sdf{neuron_i}(data_in.trials{neuron_i}.(trial_type_in),timewin+5001))./...
-        max(nanmean(data_in.sdf{neuron_i}(data_in.trials{neuron_i}.probAll,timewin+5001)));
+        nanmean(data_in.sdf{neuron_i}(data_in.trials{neuron_i}.(trial_type_in),timewin+time_zero_sdf))./...
+        max(nanmean(data_in.sdf{neuron_i}(data_in.trials{neuron_i}.probAll,timewin+time_zero_sdf)));
     % Note: this is normalized to the max FR across ALL probability trials
     % in the same window.
     
     sdf_50_z(neuron_i,:) =...
-        (nanmean(data_in.sdf{neuron_i}(data_in.trials{neuron_i}.(trial_type_in),timewin+5001))-...
-        mean(nanmean(data_in.sdf{neuron_i}(data_in.trials{neuron_i}.probAll,timewin+5001))))./...
-        std(nanmean(data_in.sdf{neuron_i}(data_in.trials{neuron_i}.probAll,timewin+5001)));
+        (nanmean(data_in.sdf{neuron_i}(data_in.trials{neuron_i}.(trial_type_in),timewin+time_zero_sdf))-...
+        mean(nanmean(data_in.sdf{neuron_i}(data_in.trials{neuron_i}.probAll,timewin+time_zero_sdf))))./...
+        std(nanmean(data_in.sdf{neuron_i}(data_in.trials{neuron_i}.probAll,timewin+time_zero_sdf)));
     % Note: this is z-score normalized across ALL probability trials
     % in the same window.
 end
@@ -144,6 +146,7 @@ scatter3(pc1(onset_time_idx),pc2(onset_time_idx),pc3(onset_time_idx),75,'k','^',
 scatter3(pc1(outcome_time_idx),pc2(outcome_time_idx),pc3(outcome_time_idx),75,'k','v','filled')
 xlabel('PC1'); ylabel('PC2'); zlabel('PC3')
 view(149.4879,23.6129); colorbar
+xlim([-6 6]); ylim([-6 6]); zlim([-6 6]);
 title([area_in ' - ' sdf_norm ' - ' trial_type_in], 'Interpreter', 'none')
 
 %%

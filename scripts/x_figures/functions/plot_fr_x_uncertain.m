@@ -11,7 +11,7 @@ end
 plot_time = [-5000:5000];
 time_zero = abs(plot_time(1));
 x_fit_data = 1:0.1:length(plot_trial_types);
-analysis_window = [-200:0];
+analysis_window = [-500:0];
 
 % Initialize plot data structures
 plot_sdf_data = [];
@@ -87,7 +87,7 @@ figure_plot(1,1)=gramm('x',plot_label,'y',plot_sdf_data);
 figure_plot(1,1).stat_summary('geom',{'line','point','errorbar'});
 figure_plot(1,1).no_legend;
 figure_plot(1,1).set_color_options('map',color_scheme);
-figure_plot(1,1).axe_property('YLim',[-2 5]);
+figure_plot(1,1).axe_property('YLim',[-2.5 5]);
 
 figure_plot_b = [];
 % figure_plot_b(1,1)=gramm('x',x_fit_data,'y',y_fit_data);

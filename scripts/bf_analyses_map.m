@@ -4,12 +4,7 @@
 % variable workspace
 
 %% Completed
-% Plot appetitive and aversive data
-% > i   | Example SDF, example fano, population SDF, population fano
-% > ii  | Slope, average uncertainty FR, average fano
-% > iii | Fano across epochs 
-bf_appaver_main(bf_data_punish, params);
-
+% Figure 1 ------------------------------------------------------------
 % Plot BF activity in reward uncertainty task (0%, 25%, 50%, 75%, 100%)
 % > i   | Example SDF, example fano, population SDF, population fano
 % > ii  | Example uncertainty curve, population uncertainty curve
@@ -22,13 +17,6 @@ bf_cs_main(bf_data_CS, bf_datasheet_CS, params);
 % > iii | Fano across uncertainty condtions
 striatum_cs_main(striatum_data_CS, striatum_datasheet_CS, params);
 
-% Plot BF & Striatum activity in trace task (trace/no trace; certain/uncertain)
-% > i   | Example SDF, example fano, population SDF, population fano
-% > ii  | Average firing rates and fano factors across conditions
-bfstri_trace_main (bf_data_traceExp, bf_datasheet_traceExp, ...
-    striatum_data_traceExp, striatum_datasheet_traceExp, params);
-
-%% In development
 % Plot activity of BF neurons post-outcome in uncertain conditions
 % > i   | SDF of activity in delivered/omitted conditions
 % > ii  | Summary mean activity across conditions
@@ -41,14 +29,27 @@ bfstri_cs_outcome(bf_data_CS,bf_datasheet_CS,striatum_data_CS,striatum_datasheet
 bfstri_cs_precision(bf_data_CS, bf_datasheet_CS,...
     striatum_data_CS,striatum_datasheet_CS, params);
 
+% Figure 2 ------------------------------------------------------------
+% Plot appetitive and aversive data
+% > i   | Example SDF, example fano, population SDF, population fano
+% > ii  | Slope, average uncertainty FR, average fano
+% > iii | Fano across epochs 
+bf_appaver_main(bf_data_punish, params);
+
+% Figure 3 ------------------------------------------------------------
+% Plot BF & Striatum activity in trace task (trace/no trace; certain/uncertain)
+% > i   | Example SDF, example fano, population SDF, population fano
+% > ii  | Average firing rates and fano factors across conditions
+bfstri_trace_main (bf_data_traceExp, bf_datasheet_traceExp, ...
+    striatum_data_traceExp, striatum_datasheet_traceExp, params);
+
+%% In development
 %(!) REPEAT FOR BF AND STRIATUM - MAKE ONE FIGURE
 dev_motor_ramping_relationship_CStask; % Plot relationship between gaze and fr
 
-% Explore principle components across the bf and striatum during ramping
-% > i  | Plot PCA [1,2,3] individually, and in space.
-% > ii | Plot P(var) explained
-% ! NOTE: This will need to be manipulated manually to see each dataset
-bfstri_pca_explore(bf_data_CS,striatum_data_CS);
+pca_data_out = bfstri_pca_space(bf_data_CS,bf_datasheet_CS,striatum_data_CS);
+
+plot_pca_analysis_fig(pca_data_out)
 
 % Plot dimensionality plot from PCA, for BF and striatum data
 bfstri_pca_dimension(bf_data_CS,bf_datasheet_CS,striatum_data_CS);
@@ -98,4 +99,8 @@ dev_20230505          % Plot main ramping activity and bar plots with precision 
 dev_outcome_punish % Plot outcome for delivered omitted for punish and reward.
 bf_striatum_outcome % Plot pre-and-post- outcome fano factor for basal ganglia data.
 
-
+% Explore principle components across the bf and striatum during ramping
+% > i  | Plot PCA [1,2,3] individually, and in space.
+% > ii | Plot P(var) explained
+% ! NOTE: This will need to be manipulated manually to see each dataset
+bfstri_pca_explore(bf_data_CS,bf_datasheet_CS,striatum_data_CS);

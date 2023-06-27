@@ -52,7 +52,7 @@ for neuron_i = 1:size(bf_datasheet_CS2,1)
     fprintf('Extracting data from neuron %i of %i   |  %s   \n',neuron_i,size(bf_datasheet_CS2,1), filename)
 
     % Get trial indices
-    trials = get_trials_2500CS(PDS);
+    trials = get_trials(PDS);
     % Get event aligned rasters
     Rasters = get_raster(PDS, trials, params); % Derived from Timing2575Group.m
     % Get event aligned spike-density function

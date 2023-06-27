@@ -15,7 +15,7 @@ fit_label = [];
 plot_time = [-5000:5000];
 time_zero = abs(plot_time(1));
 
-analysis_window = [-200:0];
+analysis_window = [-500:0];
 
 switch datasheet_in.site{neuron_i}
     case 'nih'

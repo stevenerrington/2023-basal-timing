@@ -130,15 +130,15 @@ figure_plot(1,1).stat_summary('type', custom_statfun,'geom',{'area'});
 figure_plot(1,1).axe_property('XLim',[0 6],'XTick',[1:1:5],'YLim',[0 100]);
 figure_plot(1,1).set_names('x','Principal Components','y','Proportion of variance explained');
 
-figure_plot(1,2)=gramm('x',[1:5],'y',pca_var_out.striatum.perc_var_explained(1:5));
-figure_plot(1,2).stat_summary('geom',{'bar'});
-figure_plot(1,2).axe_property('XLim',[0 6],'XTick',[1:1:5],'YLim',[0 100]);
-figure_plot(1,2).set_names('x','Principal Components','y','Proportion of variance explained');
-
-figure_plot(2,1)=gramm('x',[1:5],'y',var_exp_bootstrap);
-figure_plot(2,1).stat_summary('type', custom_statfun,'geom',{'area'});
+figure_plot(2,1)=gramm('x',[1:5],'y',pca_var_out.striatum.perc_var_explained(1:5));
+figure_plot(2,1).stat_summary('geom',{'bar'});
 figure_plot(2,1).axe_property('XLim',[0 6],'XTick',[1:1:5],'YLim',[0 100]);
 figure_plot(2,1).set_names('x','Principal Components','y','Proportion of variance explained');
+
+figure_plot(1,2)=gramm('x',[1:5],'y',var_exp_bootstrap);
+figure_plot(1,2).stat_summary('type', custom_statfun,'geom',{'area'});
+figure_plot(1,2).axe_property('XLim',[0 6],'XTick',[1:1:5],'YLim',[0 100]);
+figure_plot(1,2).set_names('x','Principal Components','y','Proportion of variance explained');
 
 figure_plot(2,2)=gramm('x',[1:5],'y',var_explained_obs);
 figure_plot(2,2).stat_summary('geom',{'bar'});

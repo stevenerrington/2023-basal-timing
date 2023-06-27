@@ -108,7 +108,6 @@ for neuron_i = 1:size(bf_datasheet_CS,1)
             
             % Load the data (PDS structure)
             load(fullfile(bf_datasheet_CS.dir{neuron_i},bf_datasheet_CS.file{neuron_i}),'PDS');
-            
             % Get trial indices
             trials = get_trials(PDS);
             % Get event aligned rasters

@@ -1,7 +1,7 @@
 function bfstri_cs_precision(bf_data_CS, bf_datasheet_CS,...
     striatum_data_CS,striatum_datasheet_CS, params)
 
-load("heatmap_color.mat");
+load('heatmap_color.mat');
 
 %% Extract: get precision timing analyses
 params.stats.peak_window = [-250:250];
@@ -85,7 +85,7 @@ figure_plot(2,3).axe_property('YLim',[-0.2 0]);
 figure_plot(2,3).no_legend;
 
 figure('Renderer', 'painters', 'Position', [100 100 600 400]);
-figure_plot.draw
+figure_plot.draw;
 
 %% Statistics:
 

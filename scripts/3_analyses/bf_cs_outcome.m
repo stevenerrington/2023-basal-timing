@@ -8,4 +8,3 @@ params.plot.xlim = [0 500]; params.plot.ylim = [-2 4];
 
 bf_population_CS_outcome = plot_population_CSoutcome(data_CS,datasheet_CS, plot_trial_types,params);
 
-%% 

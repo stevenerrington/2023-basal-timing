@@ -80,3 +80,4 @@ bf_datasheet_CS = bf_datasheet_CS(bf_datasheet_CS.cluster_id == 2,:);
 
 striatum_data_CS([2 6 7 8 9 11 12 15 31 33 38 41 42 44 48 51 52 58], :) = [];
 striatum_datasheet_CS([2 6 7 8 9 11 12 15 31 33 38 41 42 44 48 51 52 58], :) = [];
+
