@@ -1,4 +1,4 @@
-function pca_data_out = bfstri_pca_space(bf_data_CS,bf_datasheet_CS,striatum_data_CS)
+function pca_data_out = bfstri_pca_space(bf_data_CS,bf_datasheet_CS,striatum_data_CS,params)
 %% Example extraction code
 % Tidy workspace
 clear timewin
@@ -26,7 +26,7 @@ for area_i = 1:length(area_list)
     
     % Define the plot window
     timewin = [];
-    timewin = [0:5:outcome_time]; % Denotes the time window to extract the SDF from (rel to CS onset)
+    timewin = [params.pca.timewin(1):params.pca.step:params.pca.timewin(2)+outcome_time]; % Denotes the time window to extract the SDF from (rel to CS onset)
     
     
     %% Get average SDF

@@ -21,11 +21,11 @@ switch data_type
             target_on = [];
             if ~isempty(find(eventcodes == 1101,1)) | ~isempty(find(eventcodes == 1100,1))
                 target_on = double(times(find(eventcodes == 1100,1)));
-            else
-                continue
+                smooth_sdf(trl_i,:) = SessionSDF(target_on+[-5000:10000]);
+           else
+                smooth_sdf(trl_i,:) = NaN(1,length([-5000:10000]));
             end
             
-            smooth_sdf(trl_i,:) = SessionSDF(target_on+[-2500:10000]);
         end
         
         
@@ -45,9 +45,9 @@ switch data_type
                 round(in_data.timetargeton(trial_i)*1000);
             
             if ~isnan(raw_targ_time)
-                smooth_sdf(trial_i,:) = SessionSDF(raw_targ_time+[-2500:10000]);
+                smooth_sdf(trial_i,:) = SessionSDF(raw_targ_time+[-5000:10000]);
             else
-                smooth_sdf(trial_i,:) = NaN(1,length([-2500:10000]));
+                smooth_sdf(trial_i,:) = NaN(1,length([-5000:10000]));
             end
         end
         
