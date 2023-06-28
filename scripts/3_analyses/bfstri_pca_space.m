@@ -4,7 +4,7 @@ function pca_data_out = bfstri_pca_space(bf_data_CS,bf_datasheet_CS,striatum_dat
 clear timewin
 
 % Define trials/area/sdf normalization
-trial_type_in = 'uncertain'; % Corresponds to a trial type in the data_in structure
+trial_type_in = 'prob50'; % Corresponds to a trial type in the data_in structure
 sdf_norm = 'zscore'; % zscore or max
 area_list = {'striatum_wustl','bf_wustl'}; % striatum, bf_nih, bf_wustl
 

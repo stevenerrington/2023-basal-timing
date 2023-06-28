@@ -43,13 +43,17 @@ bf_appaver_main(bf_data_punish, params);
 bfstri_trace_main (bf_data_traceExp, bf_datasheet_traceExp, ...
     striatum_data_traceExp, striatum_datasheet_traceExp, params);
 
+% Explore principle components across the bf and striatum during ramping
+% > i  | Plot PCA in space.
+% > ii | Plot P(var) explained
+% ! NOTE: This will need to be manipulated manually to see each dataset
+pca_data_out = bfstri_pca_space(bf_data_CS,bf_datasheet_CS,striatum_data_CS);
+plot_pca_analysis_fig(pca_data_out);
+
+
 %% In development
 %(!) REPEAT FOR BF AND STRIATUM - MAKE ONE FIGURE
 dev_motor_ramping_relationship_CStask; % Plot relationship between gaze and fr
-
-pca_data_out = bfstri_pca_space(bf_data_CS,bf_datasheet_CS,striatum_data_CS);
-
-plot_pca_analysis_fig(pca_data_out)
 
 % Plot dimensionality plot from PCA, for BF and striatum data
 bfstri_pca_dimension(bf_data_CS,bf_datasheet_CS,striatum_data_CS);
