@@ -31,12 +31,12 @@ for x=1:length(ProbAmtDataStruct)
     t=t-min(t);
     t=t./max(t);
     Vectors=[Vectors; (t)];
-    %
-    %if size(ProbAmtDataStruct(x).CorvalP,2)==1400
-    CorvalP=[CorvalP; ProbAmtDataStruct(x).CorvalP(1:500)];
-    CoruncP=[CoruncP; ProbAmtDataStruct(x).CoruncP(1:500)];
-    CorvalP_a=[CorvalP_a; ProbAmtDataStruct(x).CorvalP_a(1:500)];
-    CoruncP_a=[CoruncP_a; ProbAmtDataStruct(x).CoruncP_a(1:500)];
+%     %
+%     %if size(ProbAmtDataStruct(x).CorvalP,2)==1400
+%     CorvalP=[CorvalP; ProbAmtDataStruct(x).CorvalP(1:500)];
+%     CoruncP=[CoruncP; ProbAmtDataStruct(x).CoruncP(1:500)];
+%     CorvalP_a=[CorvalP_a; ProbAmtDataStruct(x).CorvalP_a(1:500)];
+%     CoruncP_a=[CoruncP_a; ProbAmtDataStruct(x).CoruncP_a(1:500)];
     %else
 end
 

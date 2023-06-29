@@ -47,7 +47,8 @@ bfstri_trace_main (bf_data_traceExp, bf_datasheet_traceExp, ...
 % > i  | Plot PCA in space.
 % > ii | Plot P(var) explained
 % ! NOTE: This will need to be manipulated manually to see each dataset
-pca_data_out = bfstri_pca_space(bf_data_CS,bf_datasheet_CS,striatum_data_CS);
+params.pca.timewin = [0 0]; params.pca.step = 10;
+pca_data_out = bfstri_pca_space(bf_data_CS,bf_datasheet_CS,striatum_data_CS,params);
 plot_pca_analysis_fig(pca_data_out);
 
 

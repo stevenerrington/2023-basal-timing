@@ -1,4 +1,4 @@
-function pca_data_out = bfstri_pca_space(bf_data_CS,bf_datasheet_CS,striatum_data_CS,params)
+function pca_data_out = bfstri_pca_space_ind(bf_data_CS,bf_datasheet_CS,striatum_data_CS,params)
 %% Example extraction code
 % Tidy workspace
 clear timewin
@@ -36,54 +36,49 @@ for area_i = 1:length(area_list)
     time_zero_sdf = 5001;
     
     for neuron_i = 1:size(data_in,1)
-        % Get the mean SDF within the defined window, in the defined trials
-        sdf_50_max(neuron_i,:) =...
-            nanmean(data_in.sdf{neuron_i}(data_in.trials{neuron_i}.(trial_type_in),timewin+time_zero_sdf))./...
-            max(nanmean(data_in.sdf{neuron_i}(data_in.trials{neuron_i}.probAll,timewin+time_zero_sdf)));
-        % Note: this is normalized to the max FR across ALL probability trials
-        % in the same window.
+        % Get the mean SDF within the defined window, in the defined trials       
+        sdf_50_z{neuron_i,:} =...
+            (data_in.sdf{neuron_i}(data_in.trials{neuron_i}.(trial_type_in),timewin+time_zero_sdf)-...
+            mean(nanmean(data_in.sdf{neuron_i}(data_in.trials{neuron_i}.(trial_type_in),timewin+time_zero_sdf))))./...
+            std(nanmean(data_in.sdf{neuron_i}(data_in.trials{neuron_i}.(trial_type_in),timewin+time_zero_sdf)));
+
+        sdf_50_max{neuron_i,:} =...
+            data_in.sdf{neuron_i}(data_in.trials{neuron_i}.(trial_type_in),timewin+time_zero_sdf)./...
+            max(data_in.sdf{neuron_i}(data_in.trials{neuron_i}.(trial_type_in),timewin+time_zero_sdf));
         
-        sdf_50_z(neuron_i,:) =...
-            (nanmean(data_in.sdf{neuron_i}(data_in.trials{neuron_i}.(trial_type_in),timewin+time_zero_sdf))-...
-            mean(nanmean(data_in.sdf{neuron_i}(data_in.trials{neuron_i}.probAll,timewin+time_zero_sdf))))./...
-            std(nanmean(data_in.sdf{neuron_i}(data_in.trials{neuron_i}.probAll,timewin+time_zero_sdf)));
-        % Note: this is z-score normalized across ALL probability trials
-        % in the same window.
     end
     
     
     %% Shuffle data:
     % Parameterize bootstrap
     n_bootstraps = 1000;
-    
-    % Switch inputted data based on normalization method
-    switch sdf_norm
-        case 'zscore'
-            sdf_data_in = []; sdf_data_in = sdf_50_z;
-        case 'max'
-            sdf_data_in = []; sdf_data_in = sdf_50_max;
-    end
+    sdf_data_in = []; sdf_data_in = sdf_50_z;
+
     
     % Run bootstrap and get explained variance
-    clear var_exp_bootstrap
-    for bootstrap_i = 1:n_bootstraps
-        shuffled_sdf50 = [];
-        
-        % For each neuron, shuffled the data in time
-        for neuron_i = 1:size(sdf_data_in,1)
-            shuffled_sdf50(neuron_i,:) = sdf_data_in(neuron_i,randperm(size(sdf_data_in,2)));
+    for neuron_i = 1:size(sdf_data_in,1)
+
+        clear var_exp_bootstrap shuffled_sdf50 explained
+        for bootstrap_i = 1:n_bootstraps
+            % For each neuron, shuffled the data in time
+            shuffled_sdf50 = [];
+            shuffled_sdf50 = sdf_data_in{neuron_i}(:,randperm(size(sdf_data_in{neuron_i},2)));
+            
+            % Run the PCA and get the explained proportion of variance
+            [~,~,~,~,explained,~] =...
+                pca(shuffled_sdf50','Rows','pairwise'); %lets calculate Principal Comp
+            
+            % Convert this into a percentage of the total variance
+            var_explained_bootstrap_i = [];
+            var_explained_bootstrap_i = explained./sum(explained) * 100;
+            
+            % Save in the loop for future plotting.
+            var_exp_bootstrap(bootstrap_i,:) = var_explained_bootstrap_i';
+            
         end
         
-        % Run the PCA and get the explained proportion of variance
-        [~,~,~,~,explained,~] =...
-            pca(shuffled_sdf50','Rows','pairwise'); %lets calculate Principal Comp
+        test{neuron_i,1} = var_exp_bootstrap;
         
-        % Convert this into a percentage of the total variance
-        var_explained_bootstrap_i = [];
-        var_explained_bootstrap_i = explained./sum(explained) * 100;
-        
-        % Save in the loop for future plotting.
-        var_exp_bootstrap(bootstrap_i,:) = var_explained_bootstrap_i';
     end
     
     
