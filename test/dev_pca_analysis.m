@@ -68,9 +68,22 @@ plot([-5000:10000],nanmean(striatum_data_CS.sdf{neuron_i}(striatum_data_CS.trial
 plot([-5000:10000],nanmean(striatum_data_CS.sdf{neuron_i}(striatum_data_CS.trials{neuron_i}.prob100,:)),'color',params.plot.colormap(5,:))
 
 %% Run PCA
-params.pca.timewin = [-2000 7500];
+params.pca.timewin = [0 0];
 params.pca.step = 10;
 
 pca_data_out = bfstri_pca_space(bf_data_CS,bf_datasheet_CS,striatum_data_CS,params);
 plot_pca_analysis_fig(pca_data_out);
 
+
+
+
+%%
+params.pca.timewin = [0 0];
+params.pca.step = 2;
+
+[n_pc_above_shuffled, observed_var, shuffled_var] = bfstri_pca_space_ind(bf_data_CS,bf_datasheet_CS,striatum_data_CS,params);
+
+pca_data_out.striatum_wustl
+pca_data_out.bf_wustl
+
+shuffled_var{1}
