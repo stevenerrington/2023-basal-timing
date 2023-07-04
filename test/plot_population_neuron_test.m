@@ -86,18 +86,9 @@ figure_plot(1,1).set_names('x','Time from CS Onset (ms)','y','Firing rate (Z-sco
 figure_plot(1,1).set_color_options('map',color_scheme);
 figure_plot(1,1).no_legend;
 
-% Fano factor
-figure_plot(2,1)=gramm('x',data_in.fano(1).time,'y',plot_fano_data,'color',plot_label);
-figure_plot(2,1).stat_summary();
-figure_plot(2,1).axe_property('XLim',xlim_input,'YLim',[0 2.5]);
-figure_plot(2,1).set_names('x','Time from CS Onset (ms)','y','Fano Factor');
-figure_plot(2,1).set_color_options('map',color_scheme);
-figure_plot(2,1).geom_hline('yintercept',1,'style','k--');
-figure_plot(2,1).no_legend;
-
 
 if fig_flag == 1
-    figure_plot_out = figure('Renderer', 'painters', 'Position', [100 100 300 400]);
+    figure_plot_out = figure('Renderer', 'painters', 'Position', [100 100 300 200]);
     figure_plot.draw();
 else
     figure_plot_out = [];

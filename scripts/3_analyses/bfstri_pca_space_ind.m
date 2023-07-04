@@ -5,7 +5,7 @@ clear timewin
 
 % Define trials/area/sdf normalization
 trial_type_in = 'prob50'; % Corresponds to a trial type in the data_in structure
-sdf_norm = 'zscore'; % zscore or max
+sdf_norm = 'sdf_50_z'; % zscore or max
 area_list = {'striatum_wustl','bf_wustl'}; % striatum, bf_nih, bf_wustl
 
 for area_i = 1:length(area_list)
@@ -55,6 +55,7 @@ for area_i = 1:length(area_list)
     sdf_data_in = []; sdf_data_in = sdf_50_z;
     
     clear shuffled_var
+    
     for neuron_i = 1:size(sdf_data_in,1)
         
         fprintf('Extracting data from neuron %i of %i   |   \n',neuron_i,size(sdf_data_in,1))
@@ -70,8 +71,9 @@ for area_i = 1:length(area_list)
             for bootstrap_i = 1:n_bootstraps
                 % For each neuron, shuffled the data in time
                 shuffled_sdf50 = [];
-                shuffled_sdf50 = sdf_data_in{neuron_i}(:,randperm(size(sdf_data_in{neuron_i},2)));
-                
+                for trial_i = 1:size(sdf_data_in{neuron_i},1)
+                    shuffled_sdf50(trial_i,:) = sdf_data_in{neuron_i}(trial_i,randperm(size(sdf_data_in{neuron_i},2)));
+                end
                 % Run the PCA and get the explained proportion of variance
                 [~,~,~,~,explained,~] =...
                     pca(shuffled_sdf50','Rows','complete'); %lets calculate Principal Comp

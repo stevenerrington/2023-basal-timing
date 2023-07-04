@@ -75,15 +75,28 @@ pca_data_out = bfstri_pca_space(bf_data_CS,bf_datasheet_CS,striatum_data_CS,para
 plot_pca_analysis_fig(pca_data_out);
 
 
-
-
-%%
 params.pca.timewin = [0 0];
 params.pca.step = 2;
 
 [n_pc_above_shuffled, observed_var, shuffled_var] = bfstri_pca_space_ind(bf_data_CS,bf_datasheet_CS,striatum_data_CS,params);
 
-pca_data_out.striatum_wustl
-pca_data_out.bf_wustl
+figure; hold on
+histogram(n_pc_above_shuffled.striatum_wustl,0:1:5)
+histogram(n_pc_above_shuffled.bf_wustl,0:1:5)
 
-shuffled_var{1}
+for i = 1:5
+    striatum_n(i) = sum(n_pc_above_shuffled.striatum_wustl == i);
+    bf_n(i) = sum(n_pc_above_shuffled.bf_wustl == i);    
+end
+
+figure('Renderer', 'painters', 'Position', [100 100 500 200]);
+
+subplot(1,2,1)
+donut(bf_n)
+title('BF')
+xlim([-2 2]); ylim([-2 2])
+
+subplot(1,2,2)
+donut(striatum_n);
+title('Striatum')
+xlim([-2 2]); ylim([-2 2])
