@@ -10,7 +10,8 @@
 clear all; close all; clc; beep off; warning off;
 
 % Define paths & key directories
-dirs = get_dirs_bf('wustl'); params = get_params; status = get_status(dirs);
+system_id = 'home';
+dirs = get_dirs_bf(system_id); params = get_params; status = get_status(dirs);
 
 %% Data extraction
 switch status

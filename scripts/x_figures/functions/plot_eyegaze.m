@@ -1,4 +1,4 @@
-function [out_data] = plot_eyegaze(mean_gaze_array,time_gaze_window,params)
+function [out_data, figure_plot] = plot_eyegaze(mean_gaze_array,time_gaze_window,params)
 
 
 trial_type_list = fieldnames(mean_gaze_array);
@@ -53,13 +53,13 @@ figure_plot(1,1).axe_property('XLim',[-1000 3000],'YLim',[0 1]);
 figure_plot(1,1).set_names('x','Time from CS Onset (ms)','y','P(Gaze at CS)');
 figure_plot(1,1).geom_vline('xintercept',0,'style','k-');
 figure_plot(1,1).geom_vline('xintercept',params.plot.xintercept,'style','k-');
-
-figure_plot(1,2)=gramm('x',label_in,'y',mean_gaze_window,'color',label_in);
-% figure_plot(1,2).geom_jitter('alpha',0.2);
-figure_plot(1,2).stat_summary('geom',{'point','black_errorbar','line'});
-figure_plot(1,2).axe_property('YLim',[0 1]);
-figure_plot(1,2).set_names('x','Condition','y','P(Gaze at CS)');
 % 
+% figure_plot(1,2)=gramm('x',label_in,'y',mean_gaze_window,'color',label_in);
+% % figure_plot(1,2).geom_jitter('alpha',0.2);
+% figure_plot(1,2).stat_summary('geom',{'point','black_errorbar','line'});
+% figure_plot(1,2).axe_property('YLim',[0 1]);
+% figure_plot(1,2).set_names('x','Condition','y','P(Gaze at CS)');
+% % 
 % figure_plot(1,3)=gramm('x',roc_data.plot.label,...
 %     'y',roc_data.plot.data,...
 %     'color',roc_data.plot.label);
@@ -68,8 +68,8 @@ figure_plot(1,2).set_names('x','Condition','y','P(Gaze at CS)');
 % figure_plot(1,3).set_names('x','Condition','y','AUROC');
 % figure_plot(1,3).geom_hline('yintercept',0.5);
 
-figure('Renderer', 'painters', 'Position', [100 100 1200 350]);
-figure_plot.draw;
+% figure('Renderer', 'painters', 'Position', [100 100 1200 350]);
+% figure_plot.draw;
 
 % out_data.roc_data = roc_data;
 % out_data.time_gaze_rocData = time_gaze_rocData;

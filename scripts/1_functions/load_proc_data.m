@@ -1,12 +1,18 @@
 %% Load processed data
 clc; fprintf('Loading pre-extracted data \n')
 
-if ispc()
-    data_dir = fullfile(dirs.root,'data','large');
+switch system_id
+    case 'wustl'
+        data_dir = fullfile(dirs.root,'data','large');
+        
+    case 'home'
+        data_dir = 'C:\Users\Steven\Box Sync\Research\2023-basal-timing\data';
+        
+    case 'mac'
+        data_dir = '/Users/stevenerrington/Box Sync/Research/2023-basal-timing/data';
 end
-if ismac()
-    data_dir = '/Users/stevenerrington/Box Sync/Research/2023-basal-timing/data';
-end
+
+
 
 %% Load data:
 % Neurophysiology files
