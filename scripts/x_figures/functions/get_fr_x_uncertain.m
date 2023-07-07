@@ -33,18 +33,20 @@ for neuron_i = 1:size(data_in,1)
         outcome_time = 2500;
     end
 
-    all_prob_trials = [];
+    all_prob_trials = []; fr_max_i = [];
     for trial_type_i = 1:length(plot_trial_types)
         all_prob_trials = [all_prob_trials, data_in.trials{neuron_i}.(plot_trial_types{trial_type_i})];
-    end
+        fr_max_i(trial_type_i) =...
+            max(nanmean(data_in.sdf{neuron_i}(data_in.trials{neuron_i}.(plot_trial_types{trial_type_i}),analysis_window+outcome_time+time_zero)));
+   end
 
     % Normalization
     baseline_win = [-1500:3500];
     time_zero = abs(plot_time(1));
     bl_fr_mean = nanmean(nanmean(data_in.sdf{neuron_i}(all_prob_trials,baseline_win+time_zero)));
     bl_fr_std = nanstd(nanmean(data_in.sdf{neuron_i}(all_prob_trials,baseline_win+time_zero)));
-    fr_max = max(nanmean(data_in.sdf{neuron_i}(all_prob_trials,analysis_window+outcome_time+time_zero)));
-        
+    fr_max = max(fr_max_i);
+    
     %% Setup figure %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     %  Raster & SDF restructuring
     for trial_type_i = 1:length(plot_trial_types)

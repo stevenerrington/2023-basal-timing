@@ -16,9 +16,8 @@ params.plot.ylim = [-1 6]; params.plot.xintercept = [2500];
 
 % Gaze
 params.plot.xintercept = 2500;
-params.eye.zero = find(params.eye.alignWin == 0);
 params.eye.salience_window = params.eye.zero+2500+[-200:0];
-params.eye.window = [5 5];
+
 
 data_in = []; data_in = [bf_data_traceExp; striatum_data_traceExp];
 plot_trial_types = {'notrace_uncertain','notrace_certain','uncertain','certain'};

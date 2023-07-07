@@ -49,7 +49,7 @@ end
 clear figure_plot
 figure_plot(1,1)=gramm('x',params.eye.alignWin,'y',data_in,'color',label_in);
 figure_plot(1,1).stat_summary();
-figure_plot(1,1).axe_property('XLim',[-1000 3000],'YLim',[0 1]);
+figure_plot(1,1).axe_property('XLim',[0 2500],'YLim',[0 1]);
 figure_plot(1,1).set_names('x','Time from CS Onset (ms)','y','P(Gaze at CS)');
 figure_plot(1,1).geom_vline('xintercept',0,'style','k-');
 figure_plot(1,1).geom_vline('xintercept',params.plot.xintercept,'style','k-');

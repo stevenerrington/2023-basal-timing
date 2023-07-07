@@ -26,6 +26,8 @@ params.licking.gauss_ms = 10;
 
 % % Eye
 params.eye.alignWin = [-1000:3000];
+params.eye.zero = find(params.eye.alignWin == 0);
+params.eye.window = [5 5];
 
 % % Saccade
 params.saccade.fill_missing_data = false;
