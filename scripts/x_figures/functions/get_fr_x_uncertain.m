@@ -42,7 +42,6 @@ for neuron_i = 1:size(data_in,1)
 
     % Normalization
     baseline_win = [-1500:3500];
-    time_zero = abs(plot_time(1));
     bl_fr_mean = nanmean(nanmean(data_in.sdf{neuron_i}(all_prob_trials,baseline_win+time_zero)));
     bl_fr_std = nanstd(nanmean(data_in.sdf{neuron_i}(all_prob_trials,baseline_win+time_zero)));
     fr_max = max(fr_max_i);
@@ -57,12 +56,13 @@ for neuron_i = 1:size(data_in,1)
         switch norm_method
             case 'zscore'
                 sdf_x = []; sdf_x = (nanmean(data_in.sdf{neuron_i}(trials_in,:))-bl_fr_mean)./bl_fr_std;
+                fr_uncertainty(neuron_i, trial_type_i) = nanmean(sdf_x(:,analysis_window+outcome_time+time_zero),2);
             case 'max'
-                sdf_x = []; sdf_x = (nanmean(data_in.sdf{neuron_i}(trials_in,:))./fr_max);
+                sdf_x = []; sdf_x = nanmean(data_in.sdf{neuron_i}(trials_in,:));
+                fr_uncertainty(neuron_i, trial_type_i) = nanmean(sdf_x(:,analysis_window+outcome_time+time_zero),2)./fr_max;
         end
 
         
-       fr_uncertainty(neuron_i, trial_type_i) = nanmean(sdf_x(:,analysis_window+outcome_time+time_zero),2);
     end
     
 

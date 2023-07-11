@@ -34,7 +34,7 @@ params.plot.colormap = colors.aversive;
 [~, plot_data_aversive, bf_pop_CS1500_ramping_aversive] = plot_population_neuron(bf_data_punish,plot_trial_types,params,0);
 
 %% Extract slopes, mean firing rates, and fano of example neuron and population
-params.stats.peak_window = [-200:0];
+params.stats.peak_window = [-500:0];
 params.plot.xintercept = 1500;
 params.fano.timewindow = 0:1500;
 

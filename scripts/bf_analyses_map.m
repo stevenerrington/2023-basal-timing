@@ -31,8 +31,18 @@ bfstri_cs_precision(bf_data_CS, bf_datasheet_CS,...
 
 % Figure 2 ------------------------------------------------------------
 % Plot BF, Striatum, and gaze activity in reward uncertainty task (0%, 25%, 50%, 75%, 100%)
+bfstri_gaze_fr_tuning(bf_data_CS, bf_datasheet_CS,...
+    striatum_data_CS, striatum_datasheet_CS, params)
 
+% Plot BF and Striatum activity split by high/low gaze percentage at CS in the 
+% reward uncertainty task (0%, 25%, 50%, 75%, 100%)
+bfstri_cs_motor(bf_data_CS, bf_datasheet_CS,...
+    striatum_data_CS, striatum_datasheet_CS, params)
 
+% Plot BF & Striatum activity in trace task (trace/no trace; certain/uncertain)
+% > i   | Example SDF, example fano, population SDF, population fano
+% > ii  | Average firing rates and fano factors across conditions
+bfstri_trace_main (bf_data_traceExp, striatum_data_traceExp, params);
 
 
 % Figure 3 ------------------------------------------------------------
@@ -46,11 +56,6 @@ bfstri_cs_precision(bf_data_CS, bf_datasheet_CS,...
 % > iii | Fano across epochs 
 bf_appaver_main(bf_data_punish, params);
 
-% Plot BF & Striatum activity in trace task (trace/no trace; certain/uncertain)
-% > i   | Example SDF, example fano, population SDF, population fano
-% > ii  | Average firing rates and fano factors across conditions
-bfstri_trace_main (bf_data_traceExp, striatum_data_traceExp, params);
-
 % Explore principle components across the bf and striatum during ramping
 % > i  | Plot PCA in space.
 % > ii | Plot P(var) explained
@@ -60,8 +65,6 @@ pca_data_out = bfstri_pca_space(bf_data_CS,bf_datasheet_CS,striatum_data_CS,para
 plot_pca_analysis_fig(pca_data_out);
 
 
-bfstri_cs_motor(bf_data_CS, bf_datasheet_CS,...
-    striatum_data_CS, striatum_datasheet_CS, params)
 
 
 %(!) REPEAT FOR BF AND STRIATUM - MAKE ONE FIGURE

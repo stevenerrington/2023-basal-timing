@@ -1,5 +1,5 @@
 function [low_p_gaze_sdf_out, high_p_gaze_sdf_out,...
-    low_p_gaze_fano_out, high_p_gaze_fano_out] =...
+    low_p_gaze_fano_out, high_p_gaze_fano_out, low_high_gaze_ROC] =...
     get_pgaze_sdf(data_in, datasheet_in, trial_type_list, params)
 
 min_trl_n  = 3;
@@ -45,9 +45,6 @@ for trial_type_i = 1:length(trial_type_list)
         mean_bl_fr = nanmean(nanmean(data_in.sdf{neuron_i}(baseline_trials{neuron_i},5001+[-1000:3500])));
         std_bl_fr = nanstd(nanmean(data_in.sdf{neuron_i}(baseline_trials{neuron_i},5001+[-1000:3500])));
         
-
-
-        
         [fano_out_low,~] = get_simple_fano(data_in.rasters{neuron_i}(low_p_gaze_trl,:),params);
         [fano_out_high,time] = get_simple_fano(data_in.rasters{neuron_i}(high_p_gaze_trl,:),params);
         
@@ -56,26 +53,47 @@ for trial_type_i = 1:length(trial_type_list)
         
         fano_x_low = []; fano_x_low = fano_out_low(fano_continuous);
         fano_x_high = []; fano_x_high = fano_out_high(fano_continuous);
-        
+        low_high_ROC = [];
         
         
         if length(low_p_gaze_trl) > min_trl_n & length(high_p_gaze_trl) > min_trl_n
-            low_p_gaze_sdf = nanmean(data_in.sdf{neuron_i}(low_p_gaze_trl,5001+outcome_time+[-1000:0]));
-            high_p_gaze_sdf = nanmean(data_in.sdf{neuron_i}(high_p_gaze_trl,5001+outcome_time+[-1000:0]));
+            low_p_gaze_sdf_onset = nanmean(data_in.sdf{neuron_i}(low_p_gaze_trl,5001+[-250:1000]));
+            low_p_gaze_sdf_offset = nanmean(data_in.sdf{neuron_i}(low_p_gaze_trl,5001+outcome_time+[-1000:0]));
+            
+            high_p_gaze_sdf_onset = nanmean(data_in.sdf{neuron_i}(high_p_gaze_trl,5001+[-250:1000]));
+            high_p_gaze_sdf_offset = nanmean(data_in.sdf{neuron_i}(high_p_gaze_trl,5001+outcome_time+[-1000:0]));
+            
+            temp = []; temp = roc_curve(nanmean(data_in.sdf{neuron_i}(low_p_gaze_trl,5001+outcome_time+[-500:0]),2),...
+                nanmean(data_in.sdf{neuron_i}(high_p_gaze_trl,5001+outcome_time+[-500:0]),2));
+            
+            low_high_ROC = temp.param.AROC;
+           
             low_p_gaze_fano = fano_x_low;
             high_p_gaze_fano = fano_x_high;
         else
-            low_p_gaze_sdf = nan(1,length([-1000:0]));
-            high_p_gaze_sdf = nan(1,length([-1000:0]));
+            low_p_gaze_sdf_onset = nan(1,length(5001+[-250:1000]));
+            low_p_gaze_sdf_offset = nan(1,length(5001+outcome_time+[-1000:0]));
+            
+            high_p_gaze_sdf_onset = nan(1,length(5001+[-250:1000]));
+            high_p_gaze_sdf_offset = nan(1,length(5001+outcome_time+[-1000:0]));
+            
             low_p_gaze_fano = nan(1,length(fano_continuous));
             high_p_gaze_fano = nan(1,length(fano_continuous));
+            
+            low_high_ROC = NaN;
         end
         
-        low_p_gaze_sdf_out{trial_type_i}(neuron_i,:) = (low_p_gaze_sdf-mean_bl_fr)./std_bl_fr;
-        high_p_gaze_sdf_out{trial_type_i}(neuron_i,:) = (high_p_gaze_sdf-mean_bl_fr)./std_bl_fr;
+        low_p_gaze_sdf_out{1,trial_type_i}(neuron_i,:) = (low_p_gaze_sdf_onset-mean_bl_fr)./std_bl_fr;
+        low_p_gaze_sdf_out{2,trial_type_i}(neuron_i,:) = (low_p_gaze_sdf_offset-mean_bl_fr)./std_bl_fr;
+        
+        high_p_gaze_sdf_out{1,trial_type_i}(neuron_i,:) = (high_p_gaze_sdf_onset-mean_bl_fr)./std_bl_fr;
+        high_p_gaze_sdf_out{2,trial_type_i}(neuron_i,:) = (high_p_gaze_sdf_offset-mean_bl_fr)./std_bl_fr;
         
         low_p_gaze_fano_out{trial_type_i}(neuron_i,:) = low_p_gaze_fano;
         high_p_gaze_fano_out{trial_type_i}(neuron_i,:) = high_p_gaze_fano;
+        
+        low_high_gaze_ROC{trial_type_i}(neuron_i,:) = low_high_ROC;
+        
         
     end
     

@@ -16,6 +16,7 @@ for trial_type_i = 1:length(plot_trial_types)
     end
 end
 
+
 data_out.max_fr_out = max_fr_out;
 data_out.trial_type_out = trial_type_out;
 

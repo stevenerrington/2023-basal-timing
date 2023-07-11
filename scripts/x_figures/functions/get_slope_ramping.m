@@ -2,12 +2,12 @@ function slope_analysis = get_slope_ramping(data_in,plot_trial_types,params)
 
 
 for neuron_i = 1:size(data_in,1)
-    
     fprintf('Analysing neuron %i of %i | %s    \n',neuron_i,size(data_in,1),data_in.filename{neuron_i});
     
+
     % Find the appropriate windows
     max_win = params.plot.xintercept + params.stats.peak_window;
-    slope_win = params.plot.xintercept + [-params.plot.xintercept+750:0];
+    slope_win = params.plot.xintercept + [-500:0];
     
     
     % For each defined trial type inputted
