@@ -44,18 +44,21 @@ bfstri_cs_motor(bf_data_CS, bf_datasheet_CS,...
 % > ii  | Average firing rates and fano factors across conditions
 bfstri_trace_main (bf_data_traceExp, striatum_data_traceExp, params);
 
-
-% Figure 3 ------------------------------------------------------------
-
-
-
-%% In development
 % Plot appetitive and aversive data
 % > i   | Example SDF, example fano, population SDF, population fano
 % > ii  | Slope, average uncertainty FR, average fano
 % > iii | Fano across epochs 
 bf_appaver_main(bf_data_punish, params);
 
+
+
+% Figure 3 ------------------------------------------------------------
+
+
+
+
+
+%% In development
 % Explore principle components across the bf and striatum during ramping
 % > i  | Plot PCA in space.
 % > ii | Plot P(var) explained

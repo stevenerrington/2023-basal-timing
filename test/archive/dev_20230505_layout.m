@@ -1,7 +1,3 @@
-clear figure_plot
-figure_plot = [bf_example_CS1500_ramping_appetitive, bf_example_CS1500_ramping_aversive;...
- bf_pop_CS1500_ramping_appetitive,  bf_pop_CS1500_ramping_aversive;...
- precision_figure_data_appetitive, precision_figure_data_aversive]; 
 
 
 

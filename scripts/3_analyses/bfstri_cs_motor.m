@@ -109,26 +109,26 @@ figure_plot(1,1)=gramm('x',[-250:1000],'y',num2cell(area_gaze_sdf_onset,2),'colo
 figure_plot(1,1).stat_summary();
 figure_plot(1,1).axe_property('XLim',xlim_input_onset,'YLim',ylim_input);
 figure_plot(1,1).set_names('x','Time from outcome (ms)','y','Firing rate (Z-score)');
-figure_plot(1,1).no_legend;
+% figure_plot(1,1).no_legend;
 
 figure_plot(1,2)=gramm('x',[-1000:0],'y',num2cell(area_gaze_sdf_offset,2),'color',certainty_label,'subset',strcmp(area_label,'1_BF'));
 figure_plot(1,2).stat_summary();
 figure_plot(1,2).axe_property('XLim',xlim_input_offset,'YLim',ylim_input);
 figure_plot(1,2).set_names('x','Time from outcome (ms)','y','Firing rate (Z-score)');
-figure_plot(1,2).no_legend;
+% figure_plot(1,2).no_legend;
 
 % > Striatum
 figure_plot(2,1)=gramm('x',[-250:1000],'y',num2cell(area_gaze_sdf_onset,2),'color',certainty_label,'subset',strcmp(area_label,'1_BF'));
 figure_plot(2,1).stat_summary();
 figure_plot(2,1).axe_property('XLim',xlim_input_onset,'YLim',ylim_input);
 figure_plot(2,1).set_names('x','Time from outcome (ms)','y','Firing rate (Z-score)');
-figure_plot(2,1).no_legend;
+% figure_plot(2,1).no_legend;
 
 figure_plot(2,2)=gramm('x',[-1000:0],'y',num2cell(area_gaze_sdf_offset,2),'color',certainty_label,'subset',strcmp(area_label,'2_Striatum'));
 figure_plot(2,2).stat_summary();
 figure_plot(2,2).axe_property('XLim',xlim_input_offset,'YLim',ylim_input);
 figure_plot(2,2).set_names('x','Time from outcome (ms)','y','Firing rate (Z-score)');
-figure_plot(2,2).no_legend;
+% figure_plot(2,2).no_legend;
 
 % Summary plots (Firing rate)
 % > Basal forebrain
@@ -153,24 +153,24 @@ figure_plot(1,4).stat_summary('geom',{'bar','errorbar'},'width',2.5,'dodge',1);
 figure_plot(1,4).axe_property('YLim',[0.5 1]);
 figure_plot(1,4).geom_hline('yintercept',0.5);
 figure_plot(1,4).set_names('y','');
-figure_plot(1,4).no_legend;
+% figure_plot(1,4).no_legend;
 
 % Summary plots (Slope)
  % > Basal forebrain
 % >> Slope
 figure_plot(2,4)=gramm('x',bf_slope_label,'y',bf_slope_data,'color',bf_slope_label);
 figure_plot(2,4).stat_summary('geom',{'bar','errorbar'},'width',3,'dodge',1);
-figure_plot(2,4).axe_property('YLim',[0.005 0.03]);
+figure_plot(2,4).axe_property('YLim',[0.00 0.03]);
 figure_plot(2,4).set_names('y','');
-figure_plot(2,4).no_legend;
+% figure_plot(2,4).no_legend;
 
 % > Striatum
 % >> Slope
 figure_plot(2,5)=gramm('x',striatum_slope_label,'y',striatum_slope_data,'color',striatum_slope_label);
 figure_plot(2,5).stat_summary('geom',{'bar','errorbar'},'width',3,'dodge',1);
-figure_plot(2,5).axe_property('YLim',[0.005 0.03]);
+figure_plot(2,5).axe_property('YLim',[0.00 0.03]);
 figure_plot(2,5).set_names('y','');
-figure_plot(2,5).no_legend;
+% figure_plot(2,5).no_legend;
 
 
 % Figure setup ------------------------------------------------------
@@ -219,28 +219,28 @@ figure_plot(2,5).axe_property('XTick',[],'XColor',[1 1 1],'YTick',[],'YColor',[1
 
 % Spike density function
 % > BF (Onset)
-figure_plot(1,1).set_layout_options('Position',[0.1 0.6 0.1 0.2],... %Set the position in the figure (as in standard 'Position' axe property)
-    'legend',false,... % No need to display legend for side histograms
+figure_plot(1,1).set_layout_options('Position',[0.075 0.6 0.1 0.2],... %Set the position in the figure (as in standard 'Position' axe property)
+    'legend_position',[0.075 0.1 0.2 0.2],... % No need to display legend for side histograms
     'margin_height',[0.00 0.00],... %We set custom margins, values must be coordinated between the different elements so that alignment is maintained
     'margin_width',[0.00 0.00],...
     'redraw',false);
 
 % > BF (Offset)
-figure_plot(1,2).set_layout_options('Position',[0.21 0.6 0.1 0.2],... %Set the position in the figure (as in standard 'Position' axe property)
+figure_plot(1,2).set_layout_options('Position',[0.185 0.6 0.1 0.2],... %Set the position in the figure (as in standard 'Position' axe property)
     'legend',false,... % No need to display legend for side histograms
     'margin_height',[0.00 0.00],... %We set custom margins, values must be coordinated between the different elements so that alignment is maintained
     'margin_width',[0.00 0.00],...
     'redraw',false);
 
 % > Striatum (Onset)
-figure_plot(2,1).set_layout_options('Position',[0.4 0.6 0.1 0.2],... %Set the position in the figure (as in standard 'Position' axe property)
-    'legend',false,... % No need to display legend for side histograms
+figure_plot(2,1).set_layout_options('Position',[0.375 0.6 0.1 0.2],... %Set the position in the figure (as in standard 'Position' axe property)
+    'legend_position',[0.375 0.1 0.2 0.2],... % No need to display legend for side histograms
     'margin_height',[0.00 0.00],... %We set custom margins, values must be coordinated between the different elements so that alignment is maintained
     'margin_width',[0.00 0.00],...
     'redraw',false);
 
 % > Striatum (Offset)
-figure_plot(2,2).set_layout_options('Position',[0.51 0.6 0.1 0.2],... %Set the position in the figure (as in standard 'Position' axe property)
+figure_plot(2,2).set_layout_options('Position',[0.4850 0.6 0.1 0.2],... %Set the position in the figure (as in standard 'Position' axe property)
     'legend',false,... % No need to display legend for side histograms
     'margin_height',[0.00 0.00],... %We set custom margins, values must be coordinated between the different elements so that alignment is maintained
     'margin_width',[0.00 0.00],...
@@ -248,14 +248,14 @@ figure_plot(2,2).set_layout_options('Position',[0.51 0.6 0.1 0.2],... %Set the p
 
 % Summary plots
 % > BF
-figure_plot(1,3).set_layout_options('Position',[0.13 0.725 0.06 0.06],... %Set the position in the figure (as in standard 'Position' axe property)
+figure_plot(1,3).set_layout_options('Position',[0.105 0.725 0.06 0.06],... %Set the position in the figure (as in standard 'Position' axe property)
     'legend',false,... % No need to display legend for side histograms
     'margin_height',[0.00 0.00],... %We set custom margins, values must be coordinated between the different elements so that alignment is maintained
     'margin_width',[0.00 0.00],...
     'redraw',false);
 
 % > Striatum
-figure_plot(2,3).set_layout_options('Position',[0.43 0.725 0.06 0.06],... %Set the position in the figure (as in standard 'Position' axe property)
+figure_plot(2,3).set_layout_options('Position',[0.405 0.725 0.06 0.06],... %Set the position in the figure (as in standard 'Position' axe property)
     'legend',false,... % No need to display legend for side histograms
     'margin_height',[0.00 0.00],... %We set custom margins, values must be coordinated between the different elements so that alignment is maintained
     'margin_width',[0.00 0.00],...
@@ -263,21 +263,21 @@ figure_plot(2,3).set_layout_options('Position',[0.43 0.725 0.06 0.06],... %Set t
 
 % > ROC
 figure_plot(1,4).set_layout_options('Position',[0.85 0.6 0.12 0.2],... %Set the position in the figure (as in standard 'Position' axe property)
-    'legend',true,... % No need to display legend for side histograms
+    'legend_position',[0.85 0.1 0.1 0.2],... % No need to display legend for side histograms
     'margin_height',[0.00 0.00],... %We set custom margins, values must be coordinated between the different elements so that alignment is maintained
     'margin_width',[0.00 0.00],...
     'redraw',false);
 
 % > BF (Slope)
 figure_plot(2,4).set_layout_options('Position',[0.66 0.6 0.08 0.2],... %Set the position in the figure (as in standard 'Position' axe property)
-    'legend',false,... % No need to display legend for side histograms
+    'legend_position',[0.60 0.3 0.1 0.2],... % No need to display legend for side histograms
     'margin_height',[0.00 0.00],... %We set custom margins, values must be coordinated between the different elements so that alignment is maintained
     'margin_width',[0.00 0.00],...
     'redraw',false);
 
 % > Striatum (Slope)
 figure_plot(2,5).set_layout_options('Position',[0.75 0.6 0.08 0.2],... %Set the position in the figure (as in standard 'Position' axe property)
-    'legend',false,... % No need to display legend for side histograms
+    'legend_position',[0.75 0.3 0.1 0.2],... % No need to display legend for side histograms
     'margin_height',[0.00 0.00],... %We set custom margins, values must be coordinated between the different elements so that alignment is maintained
     'margin_width',[0.00 0.00],...
     'redraw',false);
