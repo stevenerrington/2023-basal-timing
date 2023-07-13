@@ -50,8 +50,6 @@ bfstri_trace_main (bf_data_traceExp, striatum_data_traceExp, params);
 % > iii | Fano across epochs 
 bf_appaver_main(bf_data_punish, params);
 
-
-
 % Figure 3 ------------------------------------------------------------
 
 

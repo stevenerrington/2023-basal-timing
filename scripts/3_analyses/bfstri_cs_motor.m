@@ -5,7 +5,7 @@ function bfstri_cs_motor(bf_data_CS, bf_datasheet_CS,...
 % Define trial types to extract
 params.plot.xintercept = 2500;
 params.stats.peak_window = [-500:0];
-trial_type_list = {'certain','uncertain'};
+trial_type_list = {'prob0','uncertain'};
 
 % Extract gaze (high/low) SDFs: basal forebrain
 [bf_lowgaze_sdf, bf_highgaze_sdf, bf_lowgaze_fano, bf_highgaze_fano, bf_low_high_gaze_ROC] =...

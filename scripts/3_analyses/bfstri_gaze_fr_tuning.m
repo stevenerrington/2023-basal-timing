@@ -7,8 +7,12 @@ params.eye.window = [5 5];
 
 %% Extract
 data_in_bf = []; datasheet_in_bf = [];
-data_in_bf = bf_data_CS;%(strcmp(bf_datasheet_CS.site,'wustl'),:);
-datasheet_in_bf = bf_datasheet_CS;%(strcmp(bf_datasheet_CS.site,'wustl'),:);
+data_in_bf = bf_data_CS;
+datasheet_in_bf = bf_datasheet_CS;
+
+% Gaze x time plot
+gaze_time_plot = get_eyePlot_CS(data_in_bf,datasheet_in_bf,...
+    striatum_data_CS,striatum_datasheet_CS,params);
 
 clear p_*
 % Gaze tuning curves
@@ -69,22 +73,64 @@ end
 %% Figure
 
 clear figure_plot
-figure_plot(1,1)=gramm('x',1:5,...
+
+% Gaze through time (onset)
+figure_plot(1,1)=gramm('x', gaze_time_plot.onset_x,'y',gaze_time_plot.onset_data,'color',gaze_time_plot.onset_label);
+figure_plot(1,1).stat_summary();
+figure_plot(1,1).axe_property('XLim',[0 750],'YLim',[0 1]);
+figure_plot(1,1).set_color_options('map',params.plot.colormap);
+figure_plot(1,1).no_legend;
+
+% Gaze through time (offset)
+figure_plot(1,2)=gramm('x', gaze_time_plot.offset_x,'y',gaze_time_plot.offset_data,'color',gaze_time_plot.offset_label);
+figure_plot(1,2).stat_summary();
+figure_plot(1,2).axe_property('XLim',[-750 0],'YLim',[0 1]);
+figure_plot(1,2).set_color_options('map',params.plot.colormap);
+figure_plot(1,2).no_legend;
+
+figure_plot(1,3)=gramm('x',1:5,...
     'y',[p_fr_uncertainty_bf;p_fr_uncertainty_striatum;p_gaze_uncertainty_bf;p_gaze_uncertainty_striatum],...
     'color',[label_bf;label_striatum;repmat({'3_Gaze'},length([p_gaze_uncertainty_bf;p_gaze_uncertainty_striatum]),1)]);
-figure_plot(1,1).stat_summary('geom',{'point','errorbar','line'});
-figure_plot(1,1).axe_property('YLim',[0 1]);
-figure_plot(1,1).set_names('y','');
-figure_plot(1,1).no_legend();
+figure_plot(1,3).stat_summary('geom',{'point','errorbar','line'});
+figure_plot(1,3).axe_property('YLim',[0 1]);
+figure_plot(1,3).set_names('y','');
+figure_plot(1,3).no_legend();
 
-figure_plot(1,2)=gramm('x',corr_label,'y',test_r,'color',corr_label);
-figure_plot(1,2).stat_summary('geom',{'bar','errorbar'},'width',1);
-figure_plot(1,2).axe_property('YLim',[0.5 1.000001]);
-figure_plot(1,2).no_legend();
+figure_plot(1,4)=gramm('x',corr_label,'y',test_r,'color',corr_label);
+figure_plot(1,4).stat_summary('geom',{'bar','errorbar'},'width',1);
+figure_plot(1,4).axe_property('YLim',[0.5 1.000001]);
+figure_plot(1,4).no_legend();
 
-figure('Renderer', 'painters', 'Position', [100 100 400 200]);
+% Layout >>>>>>>>>>>>>>>>>>>
+figure_plot(1,1).set_layout_options('Position',[0.05 0.2 0.2 0.75],... %Set the position in the figure (as in standard 'Position' axe property)
+    'legend',false,... % No need to display legend for side histograms
+    'margin_height',[0.00 0.00],... %We set custom margins, values must be coordinated between the different elements so that alignment is maintained
+    'margin_width',[0.0 0.00],...
+    'redraw',false);
+
+figure_plot(1,2).set_layout_options('Position',[0.27 0.2 0.2 0.75],... %Set the position in the figure (as in standard 'Position' axe property)
+    'legend',false,... % No need to display legend for side histograms
+    'margin_height',[0.00 0.00],... %We set custom margins, values must be coordinated between the different elements so that alignment is maintained
+    'margin_width',[0.0 0.00],...
+    'redraw',false);
+figure_plot(1,2).axe_property('YTick',[],'YColor',[1 1 1]);
+
+figure_plot(1,3).set_layout_options('Position',[0.55 0.2 0.2 0.75],... %Set the position in the figure (as in standard 'Position' axe property)
+    'legend',false,... % No need to display legend for side histograms
+    'margin_height',[0.00 0.00],... %We set custom margins, values must be coordinated between the different elements so that alignment is maintained
+    'margin_width',[0.0 0.00],...
+    'redraw',false);
+
+figure_plot(1,4).set_layout_options('Position',[0.62 0.32 0.075 0.20],... %Set the position in the figure (as in standard 'Position' axe property)
+    'legend',false,... % No need to display legend for side histograms
+    'margin_height',[0.00 0.00],... %We set custom margins, values must be coordinated between the different elements so that alignment is maintained
+    'margin_width',[0.0 0.00],...
+    'redraw',false);
+figure_plot(1,4).set_names('y','');
+
+figure('Renderer', 'painters', 'Position', [100 100 800 200]);
 figure_plot.draw;
-
-figure
-heatmap([mode([rank_gaze_bf; rank_gaze_striatum])', mode(rank_neuron_bf)', mode(rank_neuron_striatum)'])
-colormap(viridis)
+% 
+% figure
+% heatmap([mode([rank_gaze_bf; rank_gaze_striatum])', mode(rank_neuron_bf)', mode(rank_neuron_striatum)'])
+% colormap(viridis)

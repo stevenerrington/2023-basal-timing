@@ -60,7 +60,7 @@ for trial_type_i = 1:length(trial_type_list)
         
         mean_window_duration = [];
         for trial_i = 1:size(p_gaze_window.(trial_type_label){neuron_i},1)
-            mean_window_duration(trial_i,1) = sum(p_gaze_window.(trial_type_label){neuron_i}(trial_i,params.eye.salience_window));        
+            mean_window_duration(trial_i,1) = sum(p_gaze_window.(trial_type_label){neuron_i}(trial_i,zero_time+params.eye.salience_window));        
         end
         
         time_gaze_window.(trial_type_label){neuron_i,:} =...

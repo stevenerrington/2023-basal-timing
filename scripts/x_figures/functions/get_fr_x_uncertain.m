@@ -37,7 +37,7 @@ for neuron_i = 1:size(data_in,1)
     for trial_type_i = 1:length(plot_trial_types)
         all_prob_trials = [all_prob_trials, data_in.trials{neuron_i}.(plot_trial_types{trial_type_i})];
         fr_max_i(trial_type_i) =...
-            max(nanmean(data_in.sdf{neuron_i}(data_in.trials{neuron_i}.(plot_trial_types{trial_type_i}),analysis_window+outcome_time+time_zero)));
+            nanmean(nanmean(data_in.sdf{neuron_i}(data_in.trials{neuron_i}.(plot_trial_types{trial_type_i}),analysis_window+outcome_time+time_zero)));
    end
 
     % Normalization
