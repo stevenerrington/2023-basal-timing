@@ -55,13 +55,14 @@ SDFFREE = SDFFREE(:,event_zero+params.sdf.window(1):event_zero+params.sdf.window
 %% Clean rasters (reward artifact)
 if params.raster.cleanFlag == 1
     % % Define periods of interest
+    % % Define periods of interest
     %   For uncertain trials (25, 50, 75% probability)
-    time_win_contam_a = [7500-45 7500+15];
-    time_win_clean_a = [7500-45 7500+15];
+    time_win_contam_a = [event_zero+1500-50 event_zero+1500+50];
+    time_win_clean_a = [event_zero+1500-50 event_zero+1500+50];
     
     %   For uncertain trials (25, 50, 75% probability)
-    time_win_contam_b = [7500-15 7500+15];
-    time_win_clean_b = [7500-15-30 7500-15];
+    time_win_contam_b = [event_zero+1500-50 event_zero+1500+50];
+    time_win_clean_b = [event_zero+1500-50 event_zero+1500+50];
     
     % % Define trials (reward artifact removal)
     cleanreward75n = intersect(trials.prob75,ndeliv); cleanreward75 = intersect(trials.prob75,deliv);

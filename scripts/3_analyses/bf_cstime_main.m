@@ -1,4 +1,4 @@
-function ()
+function bf_cstime_main(bf_data_CS, bf_datasheet_CS, params)
 
 % Population
 plot_trial_types = {'uncertain'};
@@ -66,8 +66,7 @@ end
 
 clear bf_timingComp_fig
 [~,~,bf_timingComp_fig] =...
-    plot_population_neuron_test([bf_data_CS; bf_data_CS2],[bf_datasheet_CS; bf_datasheet_CS2],plot_trial_types,params,0);
-
+    plot_population_neuron_test(bf_data_CS,bf_datasheet_CS,plot_trial_types,params,0);
 
 bar_width = 1;
 
