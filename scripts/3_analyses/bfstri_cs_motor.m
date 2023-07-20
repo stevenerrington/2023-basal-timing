@@ -5,7 +5,7 @@ function bfstri_cs_motor(bf_data_CS, bf_datasheet_CS,...
 % Define trial types to extract
 params.plot.xintercept = 2500;
 params.stats.peak_window = [-500:0];
-trial_type_list = {'prob0','uncertain'};
+trial_type_list = {'prob0','prob25','prob50','prob75','prob100'};
 
 % Extract gaze (high/low) SDFs: basal forebrain
 [bf_lowgaze_sdf, bf_highgaze_sdf, bf_lowgaze_fano, bf_highgaze_fano, bf_low_high_gaze_ROC] =...
@@ -25,8 +25,13 @@ trial_type_list = {'prob0','uncertain'};
 data_in = []; data_in = [bf_data_CS; striatum_data_CS];
 datasheet_in = []; datasheet_in = [bf_datasheet_CS(:,[1,8]); striatum_datasheet_CS(:,[1,8])];
 
+
 % Get gaze plots for high and low probability gaze data
 [low_pgaze_prob, high_pgaze_prob] = get_pgazeCS_plotdata(data_in,datasheet_in,trial_type_list,params);
+
+
+%% Curate: Restructure probabilities into certain and uncertain
+
 
 
 %% Curate: restructure data for use with gramm figure
@@ -150,7 +155,7 @@ figure_plot(2,3).no_legend;
 % Summary plots (ROC)
 figure_plot(1,4)=gramm('x',area_gaze_ROC_label,'y',area_gaze_ROC,'color',area_gaze_ROC_label);
 figure_plot(1,4).stat_summary('geom',{'bar','errorbar'},'width',2.5,'dodge',1);
-figure_plot(1,4).axe_property('YLim',[0.5 1]);
+figure_plot(1,4).axe_property('YLim',[0 1]);
 figure_plot(1,4).geom_hline('yintercept',0.5);
 figure_plot(1,4).set_names('y','');
 % figure_plot(1,4).no_legend;

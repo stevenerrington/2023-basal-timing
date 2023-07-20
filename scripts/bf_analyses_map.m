@@ -65,9 +65,6 @@ params.pca.timewin = [0 0]; params.pca.step = 1;
 pca_data_out = bfstri_pca_space(bf_data_CS,bf_datasheet_CS,striatum_data_CS,params);
 plot_pca_analysis_fig(pca_data_out);
 
-
-
-
 %(!) REPEAT FOR BF AND STRIATUM - MAKE ONE FIGURE
 dev_motor_ramping_relationship_CStask; % Plot relationship between gaze and fr
 

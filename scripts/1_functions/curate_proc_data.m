@@ -58,6 +58,8 @@ for trace_data_i = 1:size(bf_datasheet_traceExp,1)
         
 end
 
+clear trace_data_i timing_data_i cs_data_i
+
 %% Export: Save Data
 save(fullfile(dirs.root,'data','master_datatable_bf.mat'),'master_datatable_bf')
 

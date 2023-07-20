@@ -9,6 +9,16 @@ for neuron_i = 1:size(data_in,1)
     for trial_type_i = 1:length(plot_trial_types)       
        trial_type = plot_trial_types{trial_type_i};
        
+       switch trial_type
+           case 'prob0'
+               group_label = 'certain';
+           case 'prob100'
+               group_label = 'certain';   
+           otherwise
+               group_label = 'uncertain';
+       end
+       
+       
         switch datasheet_in.site{neuron_i}
             case 'wustl'
                 outcome_time = 2500;
@@ -38,10 +48,10 @@ for neuron_i = 1:size(data_in,1)
             switch gaze_p_type{1}
                 case 'low_p_gaze_trl'
                     trials_in = []; trials_in = low_p_gaze_trl;
-                    trial_type_label_out = [trial_type,'_',trial_type_label];
+                    trial_type_label_out = [group_label,'_',trial_type_label];
                 case 'high_p_gaze_trl'
                     trials_in = []; trials_in = high_p_gaze_trl;
-                    trial_type_label_out = [trial_type,'_',trial_type_label];
+                    trial_type_label_out = [group_label,'_',trial_type_label];
             end
             
             for trial_i = 1:length(trials_in)
