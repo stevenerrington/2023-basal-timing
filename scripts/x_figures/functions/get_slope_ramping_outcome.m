@@ -5,13 +5,18 @@ for neuron_i = 1:size(data_in,1)
     
     fprintf('Analysing neuron %i of %i | %s    \n',neuron_i,size(data_in,1),data_in.filename{neuron_i});
     
-    switch datasheet_in.site{neuron_i}
-        case 'nih'
-            params.plot.xintercept = 1500;
-        case 'wustl'
-            params.plot.xintercept = 2500;
+    if any(strcmp('site',datasheet_in.Properties.VariableNames))
+        % Switch outcome time, depending on exp setup
+        switch datasheet_in.site{neuron_i}
+            case 'nih'
+                params.plot.xintercept = 1500;
+            case 'wustl'
+                params.plot.xintercept = 2500;
+        end
+    else
+        params.plot.xintercept = 2500;
     end
-        
+    
     % Find the appropriate windows
     max_win = params.plot.xintercept + params.stats.peak_window;
     slope_win = params.plot.xintercept + [100:400];

@@ -104,7 +104,7 @@ figure_plot(1,1).set_names('x','Time from Outcome (ms)','y','Firing rate (Z-scor
 figure_plot(1,1).set_color_options('map',color_scheme);
 figure_plot(1,1).geom_vline('xintercept',0,'style','k-');
 
-figure_plot_rwd(1,1)=gramm('x',plot_time,'y',plot_sdf_data,'color',plot_label_rwd);
+figure_plot_rwd(1,1)=gramm('x',plot_time,'y',plot_sdf_data,'color',plot_fano_label);
 figure_plot_rwd(1,1).stat_summary();
 figure_plot_rwd(1,1).axe_property('XLim',xlim_input,'YLim',ylim_input);
 figure_plot_rwd(1,1).set_names('x','Time from Outcome (ms)','y','Firing rate (Z-score)');

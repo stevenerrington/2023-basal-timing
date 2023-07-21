@@ -10,11 +10,16 @@ max_ramp_fr.var = table();
 
 for neuron_i = 1:size(data_in,1)
     
-    switch datasheet_in.site{neuron_i}
-        case 'nih'
-            params.plot.xintercept = 1500;
-        case 'wustl'
-            params.plot.xintercept = 2500;
+    if any(strcmp('site',datasheet_in.Properties.VariableNames))
+        % Switch outcome time, depending on exp setup
+        switch datasheet_in.site{neuron_i}
+            case 'nih'
+                params.plot.xintercept = 1500;
+            case 'wustl'
+                params.plot.xintercept = 2500;
+        end
+    else
+        params.plot.xintercept = 2500;
     end
     
     for trial_type_i = 1:length(trial_type_list)

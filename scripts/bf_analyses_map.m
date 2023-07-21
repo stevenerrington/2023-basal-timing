@@ -44,11 +44,16 @@ bfstri_cs_motor(bf_data_CS, bf_datasheet_CS,...
 % > ii  | Average firing rates and fano factors across conditions
 bfstri_trace_main (bf_data_traceExp, striatum_data_traceExp, params);
 
+% Plot outcome in the trace task, based on cued/no cued outcome
+bfstri_trace_cue(bf_data_traceExp, params);
+
 % Plot appetitive and aversive data
 % > i   | Example SDF, example fano, population SDF, population fano
 % > ii  | Slope, average uncertainty FR, average fano
 % > iii | Fano across epochs 
 bf_appaver_main(bf_data_punish, params);
+
+
 
 % Figure 3 ------------------------------------------------------------
 % Plot appetitive and aversive data
@@ -74,8 +79,7 @@ dev_motor_ramping_relationship_CStask; % Plot relationship between gaze and fr
 % Plot dimensionality plot from PCA, for BF and striatum data
 bfstri_pca_dimension(bf_data_CS,bf_datasheet_CS,striatum_data_CS);
 
-% Plot outcome in the trace task, based on cued/no cued outcome
-bfstri_trace_cue(bf_data_traceExp, striatum_data_traceExp, params);
+
 
 % Plot outcome in the trace task, based on delivered/omitted outcome
 bfstri_trace_outcome(bf_data_traceExp, striatum_data_traceExp, params);
