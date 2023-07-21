@@ -45,7 +45,7 @@ bfstri_cs_motor(bf_data_CS, bf_datasheet_CS,...
 bfstri_trace_main (bf_data_traceExp, striatum_data_traceExp, params);
 
 % Plot outcome in the trace task, based on cued/no cued outcome
-bfstri_trace_cue(bf_data_traceExp, params);
+bfstri_trace_cue(bf_data_traceExp, bf_datasheet_traceExp, params);
 
 % Plot appetitive and aversive data
 % > i   | Example SDF, example fano, population SDF, population fano

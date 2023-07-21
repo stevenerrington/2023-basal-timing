@@ -12,6 +12,7 @@ fano = struct();
 for trial_type_i = 1:length(trial_type_list)
     trial_type_label = trial_type_list{trial_type_i};
     
+    if length(trials.(trial_type_label)) > 1
     raster_in = [];
     raster_in = Rasters (trials.(trial_type_label),:);
     
@@ -34,6 +35,10 @@ for trial_type_i = 1:length(trial_type_list)
     
     fano.smooth.(trial_type_label) = smooth(fano.raw.(trial_type_label), params.fano.smooth_bin)';
     
+    else
+        fano.raw.(trial_type_label) = [];
+        fano.smooth.(trial_type_label) = [];
+    end
 end
 
 fano.time = time;

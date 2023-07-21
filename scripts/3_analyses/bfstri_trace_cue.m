@@ -5,6 +5,7 @@ plot_trial_types = {'notimingcue_uncertain_nd',...
     'timingcue_uncertain_nd','notimingcue_uncertain_d'};
 % params.plot.colormap = [118 175 218; 11 28 41]./255;
 params.plot.colormap = cool(length(plot_trial_types));
+params.stats.peak_window = [-250:250];
 slope_analysis_cued = get_slope_ramping_outcome(bf_data_traceExp,bf_datasheet_traceExp,plot_trial_types,params);
 [max_ramp_fr_bf] = get_maxFR_ramping_outcome(bf_data_traceExp,bf_datasheet_traceExp,plot_trial_types,params);
 
