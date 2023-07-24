@@ -6,7 +6,7 @@ function Rasters = get_timing_raster(PDS, trials, params)
 % Initialise relevant variables %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % ????  <<< UNKNOWN: task relevant measures
 n_trls = length(PDS.timetargeton);
-
+params.raster.cleanFlag = 1;
 %% Get relevant trial indices %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % % General:
 try
@@ -65,19 +65,15 @@ if params.raster.cleanFlag == 1
     time_win_clean_b = [event_zero+1500-50 event_zero+1500+50];
     
     % % Define trials (reward artifact removal)
-    cleanreward75n = intersect(trials.prob75,ndeliv); cleanreward75 = intersect(trials.prob75,deliv);
-    cleanreward50n = intersect(trials.prob50,ndeliv); cleanreward50 = intersect(trials.prob50,deliv);
-    cleanreward25n = intersect(trials.prob25,ndeliv); cleanreward25 = intersect(trials.prob25,deliv);
+    cleanreward75n = intersect(trials.p75s_25l_short,ndeliv); cleanreward75 = intersect(trials.p75s_25l_short,deliv);
+    cleanreward50n = intersect(trials.p50s_50l_short,ndeliv); cleanreward50 = intersect(trials.p50s_50l_short,deliv);
+    cleanreward25n = intersect(trials.p25s_75l_short,ndeliv); cleanreward25 = intersect(trials.p25s_75l_short,deliv);
     
     % % Clean trials (reward artifact removal)
-    Rasters = clean_spk_artifact(Rasters,cleanreward75n,cleanreward75,time_win_contam_a,time_win_clean_a);
-    Rasters = clean_spk_artifact(Rasters,cleanreward50n,cleanreward50,time_win_contam_a,time_win_clean_a);
-    Rasters = clean_spk_artifact(Rasters,cleanreward25n,cleanreward25,time_win_contam_a,time_win_clean_a);
+    Rasters = clean_spk_artifact(Rasters,trials.p75s_25l_short,trials.p75s_25l_long,time_win_contam_a,time_win_clean_a);
+    Rasters = clean_spk_artifact(Rasters,trials.p50s_50l_short,trials.p50s_50l_long,time_win_contam_a,time_win_clean_a);
+    Rasters = clean_spk_artifact(Rasters,trials.p25s_75l_short,trials.p25s_75l_long,time_win_contam_a,time_win_clean_a);
     Rasters = clean_spk_artifact(Rasters,trials.prob100,trials.prob100,time_win_contam_b,time_win_clean_b);
-    Rasters = clean_spk_artifact(Rasters,trials.a100,trials.a100,time_win_contam_b,time_win_clean_b);
-    Rasters = clean_spk_artifact(Rasters,trials.a75,trials.a75,time_win_contam_b,time_win_clean_b);
-    Rasters = clean_spk_artifact(Rasters,trials.a50,trials.a50,time_win_contam_b,time_win_clean_b);
-    Rasters = clean_spk_artifact(Rasters,trials.a25,trials.a25,time_win_contam_b,time_win_clean_b);
     
 end
 % % Cut raster to period of interest
