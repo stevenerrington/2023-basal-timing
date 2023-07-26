@@ -1,6 +1,8 @@
 function bfstri_cs_precision(bf_data_CS, bf_datasheet_CS,...
     striatum_data_CS,striatum_datasheet_CS, params)
 
+global dirs
+
 %% Import heatmap colors
 load('heatmap_color.mat');
 
@@ -128,107 +130,147 @@ figure_plot(1,4).no_legend;
 figure('Renderer', 'painters', 'Position', [100 100 900 300]);
 figure_plot.draw;
 
+%% Statistics: Export analysis table
+
+anova_table = table();
+
+% Area label (independent groups)
+anova_table.area = [repmat({'Basal Forebrain'},size(bf_data_CS,1),1);...
+    repmat({'Striatum'},size(striatum_data_CS,1),1)];
+
+% Latency
+anova_table.prob25_latency = [plot_latency_bf(endsWith(plot_latency_bf_label,'prob25'));...
+    plot_latency_bg(endsWith(plot_latency_bg_label,'prob25'))];
+anova_table.prob50_latency = [plot_latency_bf(endsWith(plot_latency_bf_label,'prob50'));...
+    plot_latency_bg(endsWith(plot_latency_bg_label,'prob50'))];
+anova_table.prob75_latency = [plot_latency_bf(endsWith(plot_latency_bf_label,'prob75'));...
+    plot_latency_bg(endsWith(plot_latency_bg_label,'prob75'))];
+
+% Peak times (mean)
+anova_table.uncertain_omitted_peakMean= [plot_peak_time_bf(endsWith(plot_peak_prob_label_bf,'uncert_omit'));...
+    plot_peak_time_bg(endsWith(plot_peak_prob_label_bg,'uncert_omit'))];
+anova_table.uncertain_delivered_peakMean= [plot_peak_time_bf(endsWith(plot_peak_prob_label_bf,'uncert_delivered'));...
+    plot_peak_time_bg(endsWith(plot_peak_prob_label_bg,'uncert_delivered'))];
+
+% Peak times (var)
+anova_table.uncertain_omitted_peakVar= [plot_peak_time_var_bf(endsWith(plot_peak_prob_label_bf,'uncert_omit'));...
+    plot_peak_time_var_bg(endsWith(plot_peak_prob_label_bg,'uncert_omit'))];
+anova_table.uncertain_delivered_peakVar= [plot_peak_time_var_bf(endsWith(plot_peak_prob_label_bf,'uncert_delivered'));...
+    plot_peak_time_var_bg(endsWith(plot_peak_prob_label_bg,'uncert_delivered'))];
+
+% Slope
+anova_table.prob25_slope = [plot_slope_bf(endsWith(plot_slope_bf_label,'prob25nd'));...
+    plot_slope_bg(endsWith(plot_slope_bg_label,'prob25nd'))];
+anova_table.prob50_slope = [plot_slope_bf(endsWith(plot_slope_bf_label,'prob50nd'));...
+    plot_slope_bg(endsWith(plot_slope_bg_label,'prob50nd'))];
+anova_table.prob75_slope = [plot_slope_bf(endsWith(plot_slope_bf_label,'prob75nd'));...
+    plot_slope_bg(endsWith(plot_slope_bg_label,'prob75nd'))];
+
+writetable(anova_table,fullfile(dirs.root,'results','statistics','csv','bfstri_outcome_precision.csv'),'WriteRowNames',true)
+
+
+
 %% Statistics:
-
-stat_function_name = 'ranksum'; 
-stat_function = str2func(stat_function_name);
-
-% Compare mean peak time for del x omit in basal forebrain
-stat_data_a = []; stat_data_b = [];
-stat_data_a = plot_peak_time_bf(strcmp(plot_peak_prob_label_bf,'uncert_delivered'));
-stat_data_b = plot_peak_time_bf(strcmp(plot_peak_prob_label_bf,'uncert_omit'));
-
-[p,h,stats] = stat_function(stat_data_a, stat_data_b);
-
-statistics_data = [];
-statistics_data.stat_function_name = stat_function_name;
-statistics_data.stat_data_a = stat_data_a;
-statistics_data.stat_data_b = stat_data_b;
-statistics_data.output = stats;
-statistics_data.p = p;
-
-print_stats(statistics_data, [0.10 0.90]);
-
-% Compare variance peak time for del x omit in basal forebrain
-stat_data_a = []; stat_data_b = [];
-stat_data_a = plot_peak_time_var_bf(strcmp(plot_peak_prob_label_bf,'uncert_delivered'));
-stat_data_b = plot_peak_time_var_bf(strcmp(plot_peak_prob_label_bf,'uncert_omit'));
-
-[p,h,stats] = stat_function(stat_data_a, stat_data_b);
-
-statistics_data = [];
-statistics_data.stat_function_name = stat_function_name;
-statistics_data.stat_data_a = stat_data_a;
-statistics_data.stat_data_b = stat_data_b;
-statistics_data.output = stats;
-statistics_data.p = p;
-
-print_stats(statistics_data, [0.45 0.90]);
-
-% Compare variance peak time for del x omit in basal forebrain
-stat_data_a = []; stat_data_b = [];
-stat_data_a = plot_slope_bf(strcmp(plot_peak_prob_label_bf,'uncert_delivered'));
-stat_data_b = plot_slope_bf(strcmp(plot_peak_prob_label_bf,'uncert_omit'));
-
-[p,h,stats] = stat_function(stat_data_a, stat_data_b);
-
-statistics_data = [];
-statistics_data.stat_function_name = stat_function_name;
-statistics_data.stat_data_a = stat_data_a;
-statistics_data.stat_data_b = stat_data_b;
-statistics_data.output = stats;
-statistics_data.p = p;
-
-print_stats(statistics_data, [0.78 0.90]);
-
-% Compare mean peak time for del x omit in basal forebrain
-stat_data_a = []; stat_data_b = [];
-stat_data_a = plot_peak_time_bg(strcmp(plot_peak_prob_label_bg,'uncert_delivered'));
-stat_data_b = plot_peak_time_bg(strcmp(plot_peak_prob_label_bg,'uncert_omit'));
-
-[p,h,stats] = stat_function(stat_data_a, stat_data_b);
-
-statistics_data = [];
-statistics_data.stat_function_name = stat_function_name;
-statistics_data.stat_data_a = stat_data_a;
-statistics_data.stat_data_b = stat_data_b;
-statistics_data.output = stats;
-statistics_data.p = p;
-
-print_stats(statistics_data, [0.10 0.40]);
-
-% Compare variance peak time for del x omit in basal forebrain
-stat_data_a = []; stat_data_b = [];
-stat_data_a = plot_peak_time_var_bg(strcmp(plot_peak_prob_label_bg,'uncert_delivered'));
-stat_data_b = plot_peak_time_var_bg(strcmp(plot_peak_prob_label_bg,'uncert_omit'));
-
-[p,h,stats] = stat_function(stat_data_a, stat_data_b);
-
-statistics_data = [];
-statistics_data.stat_function_name = stat_function_name;
-statistics_data.stat_data_a = stat_data_a;
-statistics_data.stat_data_b = stat_data_b;
-statistics_data.output = stats;
-statistics_data.p = p;
-
-print_stats(statistics_data, [0.45 0.40]);
-
-% Compare variance peak time for del x omit in basal forebrain
-stat_data_a = []; stat_data_b = [];
-stat_data_a = plot_slope_bg(strcmp(plot_peak_prob_label_bg,'uncert_delivered'));
-stat_data_b = plot_slope_bg(strcmp(plot_peak_prob_label_bg,'uncert_omit'));
-
-[p,h,stats] = stat_function(stat_data_a, stat_data_b);
-
-statistics_data = [];
-statistics_data.stat_function_name = stat_function_name;
-statistics_data.stat_data_a = stat_data_a;
-statistics_data.stat_data_b = stat_data_b;
-statistics_data.output = stats;
-statistics_data.p = p;
-
-print_stats(statistics_data, [0.78 0.40]);
-
+% 
+% stat_function_name = 'ranksum'; 
+% stat_function = str2func(stat_function_name);
+% 
+% % Compare mean peak time for del x omit in basal forebrain
+% stat_data_a = []; stat_data_b = [];
+% stat_data_a = plot_peak_time_bf(strcmp(plot_peak_prob_label_bf,'uncert_delivered'));
+% stat_data_b = plot_peak_time_bf(strcmp(plot_peak_prob_label_bf,'uncert_omit'));
+% 
+% [p,h,stats] = stat_function(stat_data_a, stat_data_b);
+% 
+% statistics_data = [];
+% statistics_data.stat_function_name = stat_function_name;
+% statistics_data.stat_data_a = stat_data_a;
+% statistics_data.stat_data_b = stat_data_b;
+% statistics_data.output = stats;
+% statistics_data.p = p;
+% 
+% print_stats(statistics_data, [0.10 0.90]);
+% 
+% % Compare variance peak time for del x omit in basal forebrain
+% stat_data_a = []; stat_data_b = [];
+% stat_data_a = plot_peak_time_var_bf(strcmp(plot_peak_prob_label_bf,'uncert_delivered'));
+% stat_data_b = plot_peak_time_var_bf(strcmp(plot_peak_prob_label_bf,'uncert_omit'));
+% 
+% [p,h,stats] = stat_function(stat_data_a, stat_data_b);
+% 
+% statistics_data = [];
+% statistics_data.stat_function_name = stat_function_name;
+% statistics_data.stat_data_a = stat_data_a;
+% statistics_data.stat_data_b = stat_data_b;
+% statistics_data.output = stats;
+% statistics_data.p = p;
+% 
+% print_stats(statistics_data, [0.45 0.90]);
+% 
+% % Compare variance peak time for del x omit in basal forebrain
+% stat_data_a = []; stat_data_b = [];
+% stat_data_a = plot_slope_bf(strcmp(plot_peak_prob_label_bf,'uncert_delivered'));
+% stat_data_b = plot_slope_bf(strcmp(plot_peak_prob_label_bf,'uncert_omit'));
+% 
+% [p,h,stats] = stat_function(stat_data_a, stat_data_b);
+% 
+% statistics_data = [];
+% statistics_data.stat_function_name = stat_function_name;
+% statistics_data.stat_data_a = stat_data_a;
+% statistics_data.stat_data_b = stat_data_b;
+% statistics_data.output = stats;
+% statistics_data.p = p;
+% 
+% print_stats(statistics_data, [0.78 0.90]);
+% 
+% % Compare mean peak time for del x omit in basal forebrain
+% stat_data_a = []; stat_data_b = [];
+% stat_data_a = plot_peak_time_bg(strcmp(plot_peak_prob_label_bg,'uncert_delivered'));
+% stat_data_b = plot_peak_time_bg(strcmp(plot_peak_prob_label_bg,'uncert_omit'));
+% 
+% [p,h,stats] = stat_function(stat_data_a, stat_data_b);
+% 
+% statistics_data = [];
+% statistics_data.stat_function_name = stat_function_name;
+% statistics_data.stat_data_a = stat_data_a;
+% statistics_data.stat_data_b = stat_data_b;
+% statistics_data.output = stats;
+% statistics_data.p = p;
+% 
+% print_stats(statistics_data, [0.10 0.40]);
+% 
+% % Compare variance peak time for del x omit in basal forebrain
+% stat_data_a = []; stat_data_b = [];
+% stat_data_a = plot_peak_time_var_bg(strcmp(plot_peak_prob_label_bg,'uncert_delivered'));
+% stat_data_b = plot_peak_time_var_bg(strcmp(plot_peak_prob_label_bg,'uncert_omit'));
+% 
+% [p,h,stats] = stat_function(stat_data_a, stat_data_b);
+% 
+% statistics_data = [];
+% statistics_data.stat_function_name = stat_function_name;
+% statistics_data.stat_data_a = stat_data_a;
+% statistics_data.stat_data_b = stat_data_b;
+% statistics_data.output = stats;
+% statistics_data.p = p;
+% 
+% print_stats(statistics_data, [0.45 0.40]);
+% 
+% % Compare variance peak time for del x omit in basal forebrain
+% stat_data_a = []; stat_data_b = [];
+% stat_data_a = plot_slope_bg(strcmp(plot_peak_prob_label_bg,'uncert_delivered'));
+% stat_data_b = plot_slope_bg(strcmp(plot_peak_prob_label_bg,'uncert_omit'));
+% 
+% [p,h,stats] = stat_function(stat_data_a, stat_data_b);
+% 
+% statistics_data = [];
+% statistics_data.stat_function_name = stat_function_name;
+% statistics_data.stat_data_a = stat_data_a;
+% statistics_data.stat_data_b = stat_data_b;
+% statistics_data.output = stats;
+% statistics_data.p = p;
+% 
+% print_stats(statistics_data, [0.78 0.40]);
+% 
 
 
 %% Figure: plot heatmaps and peak

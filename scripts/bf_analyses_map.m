@@ -56,12 +56,11 @@ bf_appaver_main(bf_data_punish, params);
 
 
 % Figure 3 ------------------------------------------------------------
-% Plot appetitive and aversive data
-% > i   | Example SDF
-% > ii  | Slope, average uncertainty FR, average fano
-% > iii | Fano across epochs 
+% Plot 1500 ms and 2500 ms CS dataset ramping
 bf_cstime_main(bf_data_CS, bf_datasheet_CS, params)
 
+% Plot timing task data
+dev_timingUncertainty
 
 
 %% In development

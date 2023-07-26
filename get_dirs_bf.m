@@ -1,5 +1,7 @@
 function dirs = get_dirs_bf(user)
 
+global dirs
+
 switch user
     case 'mac'
         dirs.root = '/Users/stevenerrington/Desktop/Projects/2023-basal-timing';
@@ -21,6 +23,7 @@ end
 addpath(genpath(dirs.root));
 addpath(genpath(dirs.toolbox));
 addpath(genpath(dirs.inherit));
+
 
 end
 

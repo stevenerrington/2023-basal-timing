@@ -23,9 +23,9 @@ for neuron_i = 1:size(bf_data_traceExp,1)
     slope_uncertain_timing(neuron_i,1) = nanmean(slope_analysis_cued.timingcue_uncertain_nd.slope{neuron_i}(:));
     slope_uncertain_notiming_d(neuron_i,1) = nanmean(slope_analysis_cued.notimingcue_uncertain_d.slope{neuron_i}(:));
 
-    time_uncertain_notiming(neuron_i,1) = max_ramp_fr_bf.var.notimingcue_uncertain_nd(neuron_i);
-    time_uncertain_timing(neuron_i,1) = max_ramp_fr_bf.var.timingcue_uncertain_nd(neuron_i);
-    time_uncertain_notiming_d(neuron_i,1) = max_ramp_fr_bf.var.notimingcue_uncertain_d(neuron_i);
+    time_uncertain_notiming(neuron_i,1) = max_ramp_fr_bf.mean_averageSDF.notimingcue_uncertain_nd(neuron_i);
+    time_uncertain_timing(neuron_i,1) = max_ramp_fr_bf.mean_averageSDF.timingcue_uncertain_nd(neuron_i);
+    time_uncertain_notiming_d(neuron_i,1) = max_ramp_fr_bf.mean_averageSDF.notimingcue_uncertain_d(neuron_i);
     
     slope_label_notiming{neuron_i,1} = '1_notiming';
     slope_label_timing{neuron_i,1} = '2_timing';
@@ -48,7 +48,7 @@ figure_plot(1,3)=gramm('x',[slope_label_notiming;slope_label_timing;slope_label_
 'y',[time_uncertain_notiming; time_uncertain_timing; time_uncertain_notiming_d],...
 'color',[slope_label_notiming;slope_label_timing;slope_label_notiming_d]);
 figure_plot(1,3).stat_summary('geom',{'bar','errorbar'},'width',2.5);
-figure_plot(1,3).axe_property('YLim',[0 500],'XTickLabel',[]);
+figure_plot(1,3).axe_property('YLim',[-200 200],'XTickLabel',[]);
 figure_plot(1,3).set_names('y','Peak time var (ms)');
 figure_plot(1,3).set_color_options('map',params.plot.colormap);
 

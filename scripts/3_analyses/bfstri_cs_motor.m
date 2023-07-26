@@ -123,7 +123,7 @@ figure_plot(1,2).set_names('x','Time from outcome (ms)','y','Firing rate (Z-scor
 % figure_plot(1,2).no_legend;
 
 % > Striatum
-figure_plot(2,1)=gramm('x',[-250:1000],'y',num2cell(area_gaze_sdf_onset,2),'color',certainty_label,'subset',strcmp(area_label,'1_BF'));
+figure_plot(2,1)=gramm('x',[-250:1000],'y',num2cell(area_gaze_sdf_onset,2),'color',certainty_label,'subset',strcmp(area_label,'2_Striatum'));
 figure_plot(2,1).stat_summary();
 figure_plot(2,1).axe_property('XLim',xlim_input_onset,'YLim',ylim_input);
 figure_plot(2,1).set_names('x','Time from outcome (ms)','y','Firing rate (Z-score)');
