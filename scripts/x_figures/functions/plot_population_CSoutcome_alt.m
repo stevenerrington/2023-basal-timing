@@ -132,6 +132,7 @@ figure_plot(3,1).stat_summary('geom',{'point','errorbar','line'});
 % figure_plot(3,1).geom_jitter('alpha',0.2,'dodge',0.5,'width',0.1);
 figure_plot(3,1).set_color_options('map',color_scheme);
 figure_plot(3,1).axe_property('YLim',[-1 1]);
+figure_plot(3,1).set_names('y','Firing Rate');
 
 
 

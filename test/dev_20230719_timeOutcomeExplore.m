@@ -1,16 +1,16 @@
-plot_trial_types = {'p50s_50l_short','p50s_50l_long'};
-% plot_trial_types = {'fractal6105_1500','fractal6105_2500','fractal6105_3500'};
+% plot_trial_types = {'p50s_50l_short','p50s_50l_long'};
+plot_trial_types = {'fractal6105_1500','fractal6105_2500','fractal6105_3500'};
 
 params.plot.colormap = cool(length(plot_trial_types));
-outcome_times = [1500, 1499];
+outcome_times = [1500, 2500, 3500];
 % % Population
 % params.plot.xlim = [0 2500]; params.plot.ylim = [-2 5];
 % [~,~,bf_population_timing_ramping] = plot_population_neuron(bf_data_timingTask,plot_trial_types,params,1);
 % [~,~,striatum_population_timing_ramping] = plot_population_neuron(striatum_data_timingTask,plot_trial_types,params,1);
 
-data_in = bf_data_timingTask;
+data_in = striatum_data_timingTask;
 
-plot_win = [-1000:500];
+plot_win = [0:500];
 
 for neuron_i = 1:size(data_in,1)
     
@@ -45,14 +45,14 @@ end
 
 clear figure_plot
 
-xlim_input = [-1000 400]; ylim_input = [-2 4];
+xlim_input = [0 500]; ylim_input = [-2 4];
 
 % Ramping %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Spike density function
 
 figure_plot(1,1)=gramm('x',plot_win,...
-    'y',[sdf_out.p50s_50l_long; sdf_out.p50s_50l_short],...
-    'color',[sdf_label(:,1);sdf_label(:,2)]);
+    'y',[sdf_out.fractal6105_1500; sdf_out.fractal6105_2500; sdf_out.fractal6105_3500],...
+    'color',[sdf_label(:,1);sdf_label(:,2);sdf_label(:,3)]);
 figure_plot(1,1).stat_summary();
 figure_plot(1,1).axe_property('XLim',xlim_input,'YLim',ylim_input);
 figure_plot(1,1).set_names('x','Time from outcome (ms)','y','Firing rate (Z-score)');
