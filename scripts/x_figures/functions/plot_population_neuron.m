@@ -13,7 +13,12 @@ plot_time_adjust = [];
 plot_time = [-5000:5000];
 time_zero = abs(plot_time(1));
 
-baseline_win = [-1000:3500];
+if any(strcmp('baseline_win',fieldnames(params.sdf)))
+    baseline_win = params.sdf.baseline_win;
+else
+    baseline_win = [-1000:3500];
+end
+
 max_win = [2000:2500];
 
 for neuron_i = 1:size(data_in,1)
@@ -75,6 +80,7 @@ figure_plot(1,1).stat_summary();
 figure_plot(1,1).axe_property('XLim',xlim_input,'YLim',ylim_input);
 figure_plot(1,1).set_names('x','Time from CS Onset (ms)','y','Firing rate (Z-score)');
 figure_plot(1,1).set_color_options('map',color_scheme);
+figure_plot(1,1).set_line_options('base_size', 0.5);
 figure_plot(1,1).no_legend;
 
 % Fano factor

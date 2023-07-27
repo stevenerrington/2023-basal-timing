@@ -54,7 +54,6 @@ bfstri_trace_cue(bf_data_traceExp, bf_datasheet_traceExp, params);
 bf_appaver_main(bf_data_punish, params);
 
 
-
 % Figure 3 ------------------------------------------------------------
 % Plot 1500 ms and 2500 ms CS dataset ramping
 bf_cstime_main(bf_data_CS, bf_datasheet_CS, params)

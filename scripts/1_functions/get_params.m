@@ -18,6 +18,7 @@ params.fano.timewindow = [0:500];
 params.stats.n_perms = 100; % Number of permutations for permutation tests (NumberofPermutations)
 params.stats.corr_thresh = 0.01; % Statistical threshold for correlational analysis (CorTh)
 params.stats.stat_bin = 101; % UNKNOWN (2023-01-23; BinForStat)
+params.stats.peak_window = [-250:250];
 
 % % Licking
 params.licking.signal_cutoff = 2; % SD of baseline

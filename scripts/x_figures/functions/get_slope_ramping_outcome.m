@@ -1,5 +1,6 @@
 function expo_fit_data = get_slope_ramping_outcome(data_in,datasheet_in,plot_trial_types,params)
-
+warning off
+opts = optimset('Display','off');
 
 for neuron_i = 1:size(data_in,1)
     
@@ -49,7 +50,7 @@ for neuron_i = 1:size(data_in,1)
             beta0 = [0, .06, 0]; % Guess values to start with.  Just make your best guess.
             % Now the next line is where the actual model computation is done.
             try
-                mdl = lsqcurvefit(modelfun, beta0, tbl.Var1,tbl.Var2,[0 0 0],[3 0.06 3]);
+                mdl = lsqcurvefit(modelfun, beta0, tbl.Var1,tbl.Var2,[0 0 0],[3 0.06 3],opts);
 %                 mdl = fitnlm(tbl, modelfun, beta0);
                 % Now the model creation is done and the coefficients have been determined.
                 % Export coefficient
