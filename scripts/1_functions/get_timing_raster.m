@@ -57,17 +57,12 @@ if params.raster.cleanFlag == 1
     % % Define periods of interest
     % % Define periods of interest
     %   For uncertain trials (25, 50, 75% probability)
-    time_win_contam_a = [event_zero+1500-50 event_zero+1500+50];
-    time_win_clean_a = [event_zero+1500-50 event_zero+1500+50];
+    time_win_contam_a = [event_zero+1500-100 event_zero+1500+100];
+    time_win_clean_a = [event_zero+1500-100 event_zero+1500+100];
     
     %   For uncertain trials (25, 50, 75% probability)
-    time_win_contam_b = [event_zero+1500-50 event_zero+1500+50];
-    time_win_clean_b = [event_zero+1500-50 event_zero+1500+50];
-    
-    % % Define trials (reward artifact removal)
-    cleanreward75n = intersect(trials.p75s_25l_short,ndeliv); cleanreward75 = intersect(trials.p75s_25l_short,deliv);
-    cleanreward50n = intersect(trials.p50s_50l_short,ndeliv); cleanreward50 = intersect(trials.p50s_50l_short,deliv);
-    cleanreward25n = intersect(trials.p25s_75l_short,ndeliv); cleanreward25 = intersect(trials.p25s_75l_short,deliv);
+    time_win_contam_b = [event_zero+1500-100 event_zero+1500+100];
+    time_win_clean_b = [event_zero+1500-100 event_zero+1500+100];
     
     % % Clean trials (reward artifact removal)
     Rasters = clean_spk_artifact(Rasters,trials.p75s_25l_short,trials.p75s_25l_long,time_win_contam_a,time_win_clean_a);

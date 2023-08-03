@@ -29,16 +29,19 @@ trials.fractal6201_nd = intersect(trials6201,ndeliv);
 
 % Trials: p(long) = 50%; p(short) = 50%
 trials6102=intersect(find(PDS(1).fractals==6102),completedtrial);
+trials.p50s_50l_all = trials6102;
 trials.p50s_50l_short = intersect(find(durationsuntilreward==1.5),trials6102);
 trials.p50s_50l_long = intersect(find(durationsuntilreward==4.5),trials6102);
 
 % Trials: p(long) = 75%; p(short) = 25%
 trials6101=intersect(find(PDS(1).fractals==6101),completedtrial);
+trials.p25s_75l_all = trials6101;
 trials.p25s_75l_short = intersect(find(durationsuntilreward==1.5),trials6101);
 trials.p25s_75l_long = intersect(find(durationsuntilreward==4.5),trials6101);
 
 % Trials: p(long) = 25%; p(short) = 75%
 trials6103=intersect(find(PDS(1).fractals==6103),completedtrial);
+trials.p75s_25l_all = trials6103;
 trials.p75s_25l_short = intersect(find(durationsuntilreward==1.5),trials6103);
 trials.p75s_25l_long = intersect(find(durationsuntilreward==4.5),trials6103);
 
@@ -46,7 +49,7 @@ trials.p75s_25l_long = intersect(find(durationsuntilreward==4.5),trials6103);
 trials.p100s_0l_short = intersect(find(PDS(1).fractals==6104),completedtrial);
 
 
-% Trials: UNKNOWN <<<?
+% Trials: 100% - time varied
 trials6105 = intersect(find(PDS(1).fractals==6105),completedtrial);
 trials.fractal6105_1500 = intersect(find(durationsuntilreward==1.5),trials6105);
 trials.fractal6105_2500 = intersect(find(durationsuntilreward==2.5),trials6105);
@@ -54,9 +57,12 @@ trials.fractal6105_3500 = intersect(find(durationsuntilreward==3.5),trials6105);
 trials.fractal6105_4500 = intersect(find(durationsuntilreward==4.5),trials6105);
 
 
-trials.uncertain = [trials.p50s_50l_short,trials.p50s_50l_long,...
+trials.uncertain = [trials.p25s_75l_short,trials.p25s_75l_long,...
     trials.p75s_25l_short,trials.p75s_25l_long,...
     trials.p50s_50l_short,trials.p50s_50l_long];
+
+trials.uncertain_long = [trials.p25s_75l_long,trials.p50s_50l_long,trials.p75s_25l_long];
+
 trials.certain = [trials.p100s_0l_short];
 
 trials.prob0 = 0;
