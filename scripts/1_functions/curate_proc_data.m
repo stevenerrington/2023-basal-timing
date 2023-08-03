@@ -83,3 +83,8 @@ bf_datasheet_CS = bf_datasheet_CS(bf_datasheet_CS.cluster_id == 2,:);
 striatum_data_CS([2 6 7 8 9 11 12 15 31 33 38 41 42 44 48 51 52 58], :) = [];
 striatum_datasheet_CS([2 6 7 8 9 11 12 15 31 33 38 41 42 44 48 51 52 58], :) = [];
 
+bf_data_timingTask([5 27 29 34 35 36 37 33 1 22 24 25 26 28 32], :) = [];
+bf_datasheet_timingExp([5 27 29 34 35 36 37 33 1 22 24 25 26 28 32], :) = [];
+
+striatum_data_timingTask([1 8 12 13 16 19 5 6 7 11 15 18 22 24], :) = [];
+striatum_datasheet_timingExp([1 8 12 13 16 19 5 6 7 11 15 18 22 24], :) = [];

@@ -34,7 +34,7 @@ for trial_type_i = 1:length(plot_trial_types)
     plot_spk_data = [plot_spk_data; spkTimes];
     
     
-    plot_fano_data = [plot_fano_data; {data_in.fano{example_neuron_i}.smooth.(trial_type_label)}];
+    plot_fano_data = [plot_fano_data; {data_in.fano(example_neuron_i).smooth.(trial_type_label)}];
     plot_fano_label = [plot_fano_label; {[int2str(trial_type_i) '_' (trial_type_label)]}];
 end
 
@@ -71,7 +71,7 @@ figure_plot(2,1).set_color_options('map',color_scheme);
 figure_plot(2,1).no_legend;
 
 % Fano factor
-figure_plot(3,1)=gramm('x',data_in.fano{example_neuron_i}.time,'y',plot_fano_data,'color',plot_fano_label);
+figure_plot(3,1)=gramm('x',data_in.fano(example_neuron_i).time,'y',plot_fano_data,'color',plot_fano_label);
 figure_plot(3,1).geom_line();
 figure_plot(3,1).axe_property('XLim',xlim_input,'YLim',[0 2.5]);
 figure_plot(3,1).set_names('x','Time from CS Onset (ms)','y','Fano Factor');

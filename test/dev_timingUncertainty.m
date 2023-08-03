@@ -7,11 +7,11 @@ params.plot.colormap = [69, 191, 85; 40, 116, 50; 15, 44, 19]./255;
 params.plot.xlim = [0 1500];
 
 % Basal forebrain SDF
-params.plot.ylim = [-2 2];
+params.plot.ylim = [-2 4];
 [~,~,bf_timing1500_onset] = plot_population_neuron(bf_data_timingTask,plot_trial_types,params,0);
 
 % Striatum SDF
-params.plot.ylim = [-1 2];
+params.plot.ylim = [-1 4];
 [~,~,striatum_timing1500_onset] = plot_population_neuron(striatum_data_timingTask,plot_trial_types,params,0);
 
 %% SDF plot: offset
@@ -20,11 +20,11 @@ params.plot.colormap = [69, 191, 85; 40, 116, 50; 15, 44, 19]./255;
 params.plot.xlim = [1500 2000];
 
 % Basal forebrain SDF
-params.plot.ylim = [-2 2];
+params.plot.ylim = [-2 4];
 [~,~,bf_timing1500_outcome] = plot_population_neuron(bf_data_timingTask,plot_trial_types,params,0);
 
 % Striatum SDF
-params.plot.ylim = [-1 2];
+params.plot.ylim = [-1 4];
 [~,~,striatum_timing1500_outcome] = plot_population_neuron(striatum_data_timingTask,plot_trial_types,params,0);
 
 %% SDF plot: late offset
@@ -33,11 +33,11 @@ params.plot.colormap = [69, 191, 85]./255;
 params.plot.xlim = [2000 4500];
 
 % Basal forebrain SDF
-params.plot.ylim = [-2 2];
+params.plot.ylim = [-2 4];
 [~,~,bf_timing1500_late] = plot_population_neuron(bf_data_timingTask,plot_trial_types,params,0);
 
 % Striatum SDF
-params.plot.ylim = [-1 2];
+params.plot.ylim = [-1 4];
 [~,~,striatum_timing1500_late] = plot_population_neuron(striatum_data_timingTask,plot_trial_types,params,0);
 
 plot_trial_types = {'uncertain_long'};
@@ -81,8 +81,8 @@ figure_plot(1,5).set_names('y',''); figure_plot(1,6).set_names('y','');
 
 figure_plot(1,5).axe_property('XTicks',[],'YColor',[1 1 1]);
 figure_plot(1,6).axe_property('XTicks',[],'YColor',[1 1 1]);
-figure_plot(1,7).axe_property('YLim',[0 1.5]);
-figure_plot(1,8).axe_property('YLim',[-0.5 1.5]);
+figure_plot(1,7).axe_property('YLim',[0 2.5]);
+figure_plot(1,8).axe_property('YLim',[-0.5 3]);
 figure_plot(1,9).axe_property('YLim',[-3 2]);
 figure_plot(1,10).axe_property('YLim',[-3 5]);
 figure_plot(1,11).axe_property('YLim',[-3 2]);

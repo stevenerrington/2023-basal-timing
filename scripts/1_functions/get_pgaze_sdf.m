@@ -39,8 +39,8 @@ for trial_type_i = 1:length(trial_type_list)
         trl_in = []; trl_in = data_in.trials{neuron_i}.(trial_type);
         p_gaze_trl = mean(p_gaze_window{neuron_i}(trl_in,timewin_eye),2);
         
-        low_p_gaze_trl = []; low_p_gaze_trl = trl_in(find(p_gaze_trl < 0.5));
-        high_p_gaze_trl = []; high_p_gaze_trl = trl_in(find(p_gaze_trl > 0.5));
+        low_p_gaze_trl = []; low_p_gaze_trl = trl_in(find(p_gaze_trl < 0.4));
+        high_p_gaze_trl = []; high_p_gaze_trl = trl_in(find(p_gaze_trl > 0.6));
         
         mean_bl_fr = nanmean(nanmean(data_in.sdf{neuron_i}(baseline_trials{neuron_i},5001+[-1000:3500])));
         std_bl_fr = nanstd(nanmean(data_in.sdf{neuron_i}(baseline_trials{neuron_i},5001+[-1000:3500])));
