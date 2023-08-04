@@ -127,8 +127,8 @@ figure_plot(2,1).no_legend;
 
 
 % Bar Plot (sdf) >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-figure_plot(3,1)=gramm('x',plot_group,'y',plot_sdf_window_data,'color',plot_label_rwd);
-figure_plot(3,1).stat_summary('geom',{'point','errorbar','line'});
+figure_plot(3,1)=gramm('x',plot_group,'y',plot_sdf_window_data,'color',plot_label_rwd,'subset',strcmp(plot_label_rwd,'1_omitted'));
+figure_plot(3,1).stat_summary('geom',{'bar','errorbar'});
 % figure_plot(3,1).geom_jitter('alpha',0.2,'dodge',0.5,'width',0.1);
 figure_plot(3,1).set_color_options('map',color_scheme);
 figure_plot(3,1).axe_property('YLim',[-1 1]);
