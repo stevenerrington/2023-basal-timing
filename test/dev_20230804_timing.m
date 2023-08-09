@@ -1,6 +1,6 @@
 % > CS task >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 % Spike density function --------------------------------------------
-for example_neuron_i = 23
+for example_neuron_i = 1:size(bf_data_timingTask,1)
     % > Onset -----------------------------------------------------------
     params.plot.colormap = cool(3);
     close all

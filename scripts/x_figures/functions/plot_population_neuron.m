@@ -49,9 +49,10 @@ for neuron_i = 1:size(data_in,1)
         plot_sdf_data = [plot_sdf_data ; num2cell(sdf_x,2)];
         plot_label = [plot_label; {[int2str(trial_type_i) '_' (trial_type_label)]}];
         
-        plot_fano_data = [plot_fano_data; {data_in.fano(neuron_i).smooth.(trial_type_label)}];
-        plot_fano_label = [plot_fano_label; {[int2str(trial_type_i) '_' (trial_type_label)]}];
-        
+        if ~isempty(data_in.fano(neuron_i).smooth.(trial_type_label))
+            plot_fano_data = [plot_fano_data; {data_in.fano(neuron_i).smooth.(trial_type_label)}];
+            plot_fano_label = [plot_fano_label; {[int2str(trial_type_i) '_' (trial_type_label)]}];
+        end
         plot_time_adjust = [plot_time_adjust; {plot_time}];
         
     end
@@ -64,7 +65,6 @@ plot_data.plot_label = plot_label;
 plot_data.plot_fano_data = plot_fano_data;
 plot_data.plot_fano_label = plot_fano_label;
 plot_data.plot_time_adjust = plot_time_adjust;
-
 
 %% Generate Figure
 % Generate plot using gramm

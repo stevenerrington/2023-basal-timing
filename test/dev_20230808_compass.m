@@ -12,6 +12,9 @@ epoch_labels = epoch_labels(2:end); % Remove the fixation period
 
 clear fano_prob* sdf_prob*
 
+params.plot.colormap_bf = [247 154 154; 244 107 107; 240 59 59; 230 18 18; 182 14 14]./255;
+params.plot.colormap_stri = [221 153 204; 204 85 153; 170 51 102; 85 34 51; 34 17 17]./255;
+
 
 for area_i = 1:2
     
@@ -103,15 +106,17 @@ sdf_all_striatum = [sdf_100_striatum; sdf_75_striatum; sdf_50_striatum; sdf_25_s
 
 
 %% Generate figure space
-AxesPrecision = 0;
-
 spider_fano_cstask_figure = figure('Renderer', 'painters', 'Position', [100 100 600 600]);
+
+AxesPrecision = 0;
+MarkerSize_p = 10;
 
 subplot(2,2,1)
 spider_plot(sdf_all_bf,...
     'AxesLabels', epoch_labels,...
     'AxesLimits', [repmat(0,1,length(epoch_labels)); repmat(80,1,length(epoch_labels))],... % [min axes limits; max axes limits]
-    'AxesPrecision', repmat(AxesPrecision,1,length(epoch_labels)));
+    'AxesPrecision', repmat(AxesPrecision,1,length(epoch_labels)),...
+    'AxesInterval', 4, 'Color',flipud(params.plot.colormap_bf), 'LineWidth', 0.5, 'FillOption', 'on', 'MarkerSize', MarkerSize_p);
 spider_plot_legend = legend({'100%','75%','50%','25%','0%'}, 'Location', 'SouthOutside','Orientation','Horizontal');
 spider_plot_legend.NumColumns = 3;
 title('SDF: BF')
@@ -120,7 +125,8 @@ subplot(2,2,2)
 spider_plot(fano_all_bf,...
     'AxesLabels', epoch_labels,...
     'AxesLimits', [repmat(0,1,length(epoch_labels)); repmat(3,1,length(epoch_labels))],... % [min axes limits; max axes limits]
-    'AxesPrecision', repmat(AxesPrecision,1,length(epoch_labels)));
+    'AxesPrecision', repmat(AxesPrecision,1,length(epoch_labels)),...
+    'AxesInterval', 3, 'Color',flipud(params.plot.colormap_bf), 'LineWidth', 0.5, 'FillOption', 'on', 'MarkerSize', MarkerSize_p);
 spider_plot_legend = legend({'100%','75%','50%','25%','0%'}, 'Location', 'SouthOutside','Orientation','Horizontal');
 spider_plot_legend.NumColumns = 3;
 title('Fano: BF')
@@ -129,7 +135,8 @@ subplot(2,2,3)
 spider_plot(sdf_all_striatum,...
     'AxesLabels', epoch_labels,...
     'AxesLimits', [repmat(0,1,length(epoch_labels)); repmat(80,1,length(epoch_labels))],... % [min axes limits; max axes limits]
-    'AxesPrecision', repmat(AxesPrecision,1,length(epoch_labels)));
+    'AxesPrecision', repmat(AxesPrecision,1,length(epoch_labels)),...
+    'AxesInterval', 4, 'Color',flipud(params.plot.colormap_stri), 'LineWidth', 0.5, 'FillOption', 'on', 'MarkerSize', MarkerSize_p);
 spider_plot_legend = legend({'100%','75%','50%','25%','0%'}, 'Location', 'SouthOutside','Orientation','Horizontal');
 spider_plot_legend.NumColumns = 3;
 title('FR: Striatum')
@@ -138,7 +145,9 @@ subplot(2,2,4)
 spider_plot(fano_all_striatum,...
     'AxesLabels', epoch_labels,...
     'AxesLimits', [repmat(0,1,length(epoch_labels)); repmat(3,1,length(epoch_labels))],... % [min axes limits; max axes limits]
-    'AxesPrecision', repmat(AxesPrecision,1,length(epoch_labels)));
+    'AxesPrecision', repmat(AxesPrecision,1,length(epoch_labels)),...
+    'AxesInterval', 3, 'Color',flipud(params.plot.colormap_stri), 'LineWidth', 0.5, 'FillOption', 'on', 'MarkerSize', MarkerSize_p);
 spider_plot_legend = legend({'100%','75%','50%','25%','0%'}, 'Location', 'SouthOutside','Orientation','Horizontal');
 spider_plot_legend.NumColumns = 3;
 title('Fano: Striatum')
+
