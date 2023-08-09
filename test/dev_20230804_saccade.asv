@@ -1,5 +1,11 @@
-data_in = bf_data_CS;
-datasheet_in = bf_datasheet_CS;
+data_in = striatum_data_CS;
+datasheet_in = striatum_datasheet_CS;
+
+params.plot.xintercept = 1500;
+params.eye.salience_window = params.eye.zero + params.plot.xintercept + [-200:0];
+data_in = []; data_in = bf_data_CS(strcmp(bf_datasheet_CS.site,'nih'),:);
+[p_gaze_window, ~, ~, ~]  =...
+    get_pgaze_window(data_in, trial_type_list, params);
 
 for neuron_i = 1:size(data_in,1)
     
@@ -62,35 +68,34 @@ end
 
 for neuron_i = 1:size(data_in)
     
-%     M(neuron_i,:) = movsum(mean(saccade_raster_out{neuron_i,1}(data_in.trials{neuron_i}.uncertain,:)),[25 25]);
-%     M2(neuron_i,:) = movsum(mean(saccade_raster_out{neuron_i,1}(data_in.trials{neuron_i}.certain,:)),[25 25]);
+    M(neuron_i,:) = movsum(mean(saccade_raster_out{neuron_i,1}(data_in.trials{neuron_i}.uncertain,:)),[25 25]);
+    M2(neuron_i,:) = movsum(mean(saccade_raster_out{neuron_i,1}(data_in.trials{neuron_i}.certain,:)),[25 25]);
+%     
+    M(neuron_i,1:50) = NaN; M2(neuron_i,1:50) = NaN;
+    M(neuron_i,end-50:end) = NaN; M2(neuron_i,end-50:end) = NaN;
+%     
+%     N(neuron_i,:) = nanmean(p_gaze_window{neuron_i}(data_in.trials{neuron_i}.uncertain,:));
+%     N2(neuron_i,:) = nanmean(p_gaze_window{neuron_i}(data_in.trials{neuron_i}.certain,:));
 % %     
-%     M(neuron_i,1:50) = NaN; M2(neuron_i,1:50) = NaN;
-%     M(neuron_i,end-50:end) = NaN; M2(neuron_i,end-50:end) = NaN;
-% %     
-% %     N(neuron_i,:) = nanmean(p_gaze_window{neuron_i}(data_in.trials{neuron_i}.uncertain,:));
-% %     N2(neuron_i,:) = nanmean(p_gaze_window{neuron_i}(data_in.trials{neuron_i}.certain,:));
-% % %     
-% O(neuron_i,:) = nanmean(sacc_trig_sdf{neuron_i,1}(data_in.trials{neuron_i}.uncertain,:))...
-%     ./ nanmean(sacc_trig_sdf{neuron_i,1}(data_in.trials{neuron_i}.uncertain,500));
-% O2(neuron_i,:) = nanmean(sacc_trig_sdf{neuron_i,2}(data_in.trials{neuron_i}.uncertain,:))...
-%     ./ nanmean(sacc_trig_sdf{neuron_i,2}(data_in.trials{neuron_i}.uncertain,500));
-
-        P(neuron_i,:) = nanmean(sacc_trig_sdf{neuron_i,1}(data_in.trials{neuron_i}.uncertain,:))...
+    O(neuron_i,:) = nanmean(sacc_trig_sdf{neuron_i,1}(data_in.trials{neuron_i}.uncertain,:))...
         ./ nanmean(sacc_trig_sdf{neuron_i,1}(data_in.trials{neuron_i}.uncertain,500));
-    P2(neuron_i,:) = nanmean(sacc_trig_sdf{neuron_i,2}(data_in.trials{neuron_i}.uncertain,:))...
+    O2(neuron_i,:) = nanmean(sacc_trig_sdf{neuron_i,2}(data_in.trials{neuron_i}.uncertain,:))...
         ./ nanmean(sacc_trig_sdf{neuron_i,2}(data_in.trials{neuron_i}.uncertain,500));
 end
 
 
 
 figure; hold on
-plot([-500:500],nanmean(P)); 
-plot([-500:500],nanmean(P2)); 
+plot([-500:500],nanmean(O)); 
+plot([-500:500],nanmean(O2)); 
 
 
 
 
+
+
+wustl_idx = strcmp(bf_datasheet_CS.site,'wustl');
+nih_idx = strcmp(bf_datasheet_CS.site,'nih');
 
 figure; 
 subplot(2,2,1); hold on
@@ -105,15 +110,15 @@ plot(params.eye.alignWin,nanmean(M2(wustl_idx,:)));
 vline(0,'k');
 vline(2500,'k--');
 
-% subplot(2,2,3); hold on
-% plot(params.eye.alignWin,nanmean(N(nih_idx,:))); 
-% plot(params.eye.alignWin,nanmean(N2(nih_idx,:))); 
-% vline(0,'k');
-% vline(1500,'k--');
-% 
-% subplot(2,2,4); hold on
-% plot(params.eye.alignWin,nanmean(N(wustl_idx,:))); 
-% plot(params.eye.alignWin,nanmean(N2(wustl_idx,:))); 
-% vline(0,'k');
-% vline(2500,'k--');
+subplot(2,2,3); hold on
+plot(params.eye.alignWin,nanmean(N(nih_idx,:))); 
+plot(params.eye.alignWin,nanmean(N2(nih_idx,:))); 
+vline(0,'k');
+vline(1500,'k--');
+
+subplot(2,2,4); hold on
+plot(params.eye.alignWin,nanmean(N(wustl_idx,:))); 
+plot(params.eye.alignWin,nanmean(N2(wustl_idx,:))); 
+vline(0,'k');
+vline(2500,'k--');
 
