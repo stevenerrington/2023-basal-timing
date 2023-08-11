@@ -80,7 +80,8 @@ figure_plot(3,1).geom_hline('yintercept',1,'style','k--');
 figure_plot(3,1).no_legend;
 
 if fig_flag == 1
-    figure_plot_out = figure('Renderer', 'painters', 'Position', [100 100 400 700]);
+    figure_plot_out = figure('Renderer', 'painters', 'Position', [100 100 400 700],...
+        'Name',['Neuron ' int2str(neuron_i) ' | ' data_in.filename{neuron_i}],'NumberTitle','off');
     figure_plot.draw();
     
 else

@@ -1,3 +1,9 @@
+
+
+
+% Analysis note: I also tried this same analysis on the CS data and it
+% didn't show any meaningful categories
+
 clear pca_sdf_full
 %% PCA: Determine the types of post-outcome neurons
 
@@ -51,6 +57,7 @@ params.plot.xlim = [0 2000]; params.plot.ylim = [-4 6];
 
 % Late delivery
 plot_trial_types = {'p25s_75l_long','p50s_50l_long','p75s_25l_long'};
+% plot_trial_types = {'uncertain_long'};
 params.plot.xlim = [3000 5000]; params.plot.ylim = [-4 6];
 [~,~,cluster_1_late] = plot_population_neuron(bf_data_timingTask(cluster_1_idx,:),plot_trial_types,params,0);
 [~,~,cluster_2_late] = plot_population_neuron(bf_data_timingTask(cluster_2_idx,:),plot_trial_types,params,0);
@@ -118,7 +125,7 @@ figure_plot(5,1).axe_property('XTicks',[],'XColor',[1 1 1]);
 figure_plot(7,1).axe_property('XTicks',[],'XColor',[1 1 1]);
 
 figure('Renderer', 'painters', 'Position', [100 100 500 500]);
-figure_plot.draw
+figure_plot.draw;
 
 %% Tuning curves
 plot_trial_types = {'p25s_75l_short','p50s_50l_short','p75s_25l_short'};
@@ -146,31 +153,31 @@ figure_plot_tuning(1,1).set_layout_options('Position',[0.075 0.65 0.3 0.3],... %
     'margin_height',[0.00 0.00],... %We set custom margins, values must be coordinated between the different elements so that alignment is maintained
     'margin_width',[0.00 0.00],...
     'redraw',false);
-figure_plot_tuning(1,1).axe_property('YLim',[1 3])
+figure_plot_tuning(1,1).axe_property('YLim',[1 3]);
 
 figure_plot_tuning(2,1).set_layout_options('Position',[0.55 0.65 0.3 0.3],... %Set the position in the figure (as in standard 'Position' axe property)
     'legend',false,... % No need to display legend for side histograms
     'margin_height',[0.00 0.00],... %We set custom margins, values must be coordinated between the different elements so that alignment is maintained
     'margin_width',[0.00 0.00],...
     'redraw',false);
-figure_plot_tuning(2,1).axe_property('YLim',[-3 -1])
+figure_plot_tuning(2,1).axe_property('YLim',[-3 -1]);
 
 figure_plot_tuning(3,1).set_layout_options('Position',[0.075 0.1 0.3 0.3],... %Set the position in the figure (as in standard 'Position' axe property)
     'legend',false,... % No need to display legend for side histograms
     'margin_height',[0.00 0.00],... %We set custom margins, values must be coordinated between the different elements so that alignment is maintained
     'margin_width',[0.00 0.00],...
     'redraw',false);
-figure_plot_tuning(3,1).axe_property('YLim',[-1 1])
+figure_plot_tuning(3,1).axe_property('YLim',[-1 1]);
 
 figure_plot_tuning(4,1).set_layout_options('Position',[0.55 0.1 0.3 0.3],... %Set the position in the figure (as in standard 'Position' axe property)
     'legend',false,... % No need to display legend for side histograms
     'margin_height',[0.00 0.00],... %We set custom margins, values must be coordinated between the different elements so that alignment is maintained
     'margin_width',[0.00 0.00],...
     'redraw',false);
-figure_plot_tuning(4,1).axe_property('YLim',[-3 -1])
+figure_plot_tuning(4,1).axe_property('YLim',[-3 -1]);
 
 figure('Renderer', 'painters', 'Position', [100 100 500 500]);
-figure_plot_tuning.draw
+figure_plot_tuning.draw;
 
 
 
