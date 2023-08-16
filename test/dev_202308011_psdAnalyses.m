@@ -1,7 +1,7 @@
 
 neuron_i = 5;
 
-time_window = [-1500:2500];
+time_window = [-2000:-1000];
 
 sdf_in = nanmean(bf_data_CS.sdf{neuron_i}(bf_data_CS.trials{neuron_i}.probAll,5001+time_window));
 

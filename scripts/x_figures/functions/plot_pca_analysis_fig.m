@@ -3,7 +3,7 @@ function plot_pca_analysis_fig(pca_data_out)
 figure('Renderer', 'painters', 'Position', [100 100 600 400]);
 n_pc_plot = 5;
 
-outcome_time = 2500;
+outcome_time = 1500;
 timewin = pca_data_out{1}.timewin;
 % Find the index of CS onset and outcome time relative to the SDF we've extracted
 fix_time_idx = find(timewin == -1000);

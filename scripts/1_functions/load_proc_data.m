@@ -18,12 +18,12 @@ end
 % Neurophysiology files
 load(fullfile(data_dir,'bf_data_CS_spkRemoved.mat')) %bf_data_CS_spkRemoved
 load(fullfile(data_dir,'bf_data_CS2.mat'))
-load(fullfile(data_dir,'bf_data_timingTask.mat')) %_spkRemoved
+load(fullfile(data_dir,'bf_data_timingTask_spkRemoved.mat')) %_spkRemoved
 load(fullfile(data_dir,'bf_data_traceExp.mat'))
 load(fullfile(data_dir,'bf_data_punish.mat'))
 load(fullfile(data_dir,'striatum_data_CS_spkRemoved.mat'))
 load(fullfile(data_dir,'striatum_data_traceExp.mat'))
-load(fullfile(data_dir,'striatum_data_timingTask.mat')) %_spkRemoved
+load(fullfile(data_dir,'striatum_data_timingTask_spkRemoved.mat')) %_spkRemoved
 
 % Datasheet files
 load(fullfile(data_dir,'bf_datasheet_CS.mat'))

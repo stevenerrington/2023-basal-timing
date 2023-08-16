@@ -1,4 +1,4 @@
-function bfstri_timing_uncert(bf_data_timingTask,striatum_data_timingTask)
+function bfstri_timing_uncert(bf_data_timingTask,striatum_data_timingTask,params)
 
 params.sdf.baseline_win = [-1000:4500];
 
@@ -83,7 +83,7 @@ figure_plot(1,5).set_names('y',''); figure_plot(1,6).set_names('y','');
 
 figure_plot(1,5).axe_property('XTicks',[],'YColor',[1 1 1]);
 figure_plot(1,6).axe_property('XTicks',[],'YColor',[1 1 1]);
-figure_plot(1,7).axe_property('YLim',[0 2.5]);
+figure_plot(1,7).axe_property('YLim',[0 2]);
 figure_plot(1,8).axe_property('YLim',[-0.5 3]);
 figure_plot(1,9).axe_property('YLim',[-3 2]);
 figure_plot(1,10).axe_property('YLim',[-3 5]);

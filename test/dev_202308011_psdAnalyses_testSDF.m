@@ -10,7 +10,7 @@ sdf_frequency = 40; % Frequency of the sinusoidal component in Hz
 sdf = sdf_base + sdf_amplitude * sin(2*pi*sdf_frequency*t);
 
 %%
-time_window = [-1500:2500];
+time_window = [-2000:-1000];
 
 sdf_in = sdf(5000+time_window);
 
