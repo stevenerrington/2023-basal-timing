@@ -30,21 +30,16 @@ bfstri_cs_precision(bf_data_CS, bf_datasheet_CS,...
     striatum_data_CS,striatum_datasheet_CS, params);
 
 % Figure 2 ------------------------------------------------------------
-
-
-
-% Figure 3 ------------------------------------------------------------
 % Plot 1500 ms and 2500 ms CS dataset ramping
 bf_cstime_main(bf_data_CS, bf_datasheet_CS, params)
 
 % Plot timing task data
 bfstri_timing_uncert(bf_data_timingTask,striatum_data_timingTask,params)
 
-
-dev_20230804_timingSplit
-
-
-
+% Plot BF & Striatum activity in trace task (trace/no trace; certain/uncertain)
+% > i   | Example SDF, example fano, population SDF, population fano
+% > ii  | Average firing rates and fano factors across conditions
+bfstri_trace_main (bf_data_traceExp, striatum_data_traceExp, params);
 
 
 %% In development
@@ -70,11 +65,6 @@ bfstri_gaze_fr_tuning(bf_data_CS, bf_datasheet_CS,...
 % reward uncertainty task (0%, 25%, 50%, 75%, 100%)
 bfstri_cs_motor(bf_data_CS, bf_datasheet_CS,...
     striatum_data_CS, striatum_datasheet_CS, params)
-
-% Plot BF & Striatum activity in trace task (trace/no trace; certain/uncertain)
-% > i   | Example SDF, example fano, population SDF, population fano
-% > ii  | Average firing rates and fano factors across conditions
-bfstri_trace_main (bf_data_traceExp, striatum_data_traceExp, params);
 
 % Plot outcome in the trace task, based on cued/no cued outcome
 bfstri_trace_cue(bf_data_traceExp, bf_datasheet_traceExp, params);
@@ -126,6 +116,8 @@ test_20230501_linear2 % Plot certain v uncertain activity (raster, sdf; pop and 
 dev_20230505          % Plot main ramping activity and bar plots with precision of ramping (legacy).
 dev_outcome_punish % Plot outcome for delivered omitted for punish and reward.
 bf_striatum_outcome % Plot pre-and-post- outcome fano factor for basal ganglia data.
+dev_20230804_timingSplit
+
 
 % Explore principle components across the bf and striatum during ramping
 % > i  | Plot PCA [1,2,3] individually, and in space.
