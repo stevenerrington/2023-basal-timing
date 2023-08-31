@@ -8,6 +8,7 @@ trial_type_in = 'prob50'; % Corresponds to a trial type in the data_in structure
 sdf_norm = 'zscore'; % zscore or max
 clear sdf_50_max sdf_50_z;
 
+pre_outcome_ext = 1000;
 post_outcome_ext = 500;
 
 for area_in = {'striatum', 'bf_nih', 'bf_wustl'}
@@ -15,7 +16,7 @@ for area_in = {'striatum', 'bf_nih', 'bf_wustl'}
     % Switch the inputted dataset based on the area, and define the outcome
     % times.
     
-    time_step = 5;
+    time_step = 10;
     timewin = [];
     
     switch area_in{1}
@@ -23,15 +24,15 @@ for area_in = {'striatum', 'bf_nih', 'bf_wustl'}
             data_in = []; data_in = striatum_data_CS;
             outcome_time = 2500;
 %             timewin = [0:5:750,outcome_time-750:5:outcome_time+post_outcome_ext]; % Denotes the time window to extract the SDF from (rel to CS onset)
-            timewin = [outcome_time-1000:5:outcome_time+post_outcome_ext]; % Denotes the time window to extract the SDF from (rel to CS onset)
+            timewin = [outcome_time-pre_outcome_ext:time_step:outcome_time+post_outcome_ext]; % Denotes the time window to extract the SDF from (rel to CS onset)
        case 'bf_nih'
             data_in = []; data_in = bf_data_CS(strcmp(bf_datasheet_CS.site,'nih'),:);
             outcome_time = 1500;
-            timewin = [outcome_time-1000:5:outcome_time+post_outcome_ext]; % Denotes the time window to extract the SDF from (rel to CS onset)
+            timewin = [outcome_time-pre_outcome_ext:time_step:outcome_time+post_outcome_ext]; % Denotes the time window to extract the SDF from (rel to CS onset)
         case 'bf_wustl'
             data_in = []; data_in = bf_data_CS(strcmp(bf_datasheet_CS.site,'wustl'),:);
             outcome_time = 2500;
-            timewin = [outcome_time-1000:5:outcome_time+post_outcome_ext]; % Denotes the time window to extract the SDF from (rel to CS onset)
+            timewin = [outcome_time-pre_outcome_ext:time_step:outcome_time+post_outcome_ext]; % Denotes the time window to extract the SDF from (rel to CS onset)
     end
     
     %% Get average SDF
@@ -130,25 +131,25 @@ clear figure_plot
 
 custom_statfun = @(y)([max(y);zeros(1,5);max(y)]); 
 % Spike density function >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-figure_plot(1,1)=gramm('x',[1:5],'y',pca_var_out.striatum.var_exp_bootstrap(:,1:5));
-figure_plot(1,1).stat_summary('type', custom_statfun,'geom',{'area'});
-figure_plot(1,1).axe_property('XLim',[0 6],'XTick',[1:1:5],'YLim',[0 100]);
-figure_plot(1,1).set_names('x','Principal Components','y','Proportion of variance explained');
-
-figure_plot(2,1)=gramm('x',[1:5],'y',pca_var_out.striatum.perc_var_explained(1:5));
-figure_plot(2,1).stat_summary('geom',{'bar'});
-figure_plot(2,1).axe_property('XLim',[0 6],'XTick',[1:1:5],'YLim',[0 100]);
-figure_plot(2,1).set_names('x','Principal Components','y','Proportion of variance explained');
-
-figure_plot(1,2)=gramm('x',[1:5],'y',pca_var_out.bf.var_exp_bootstrap(1:5));
+figure_plot(1,2)=gramm('x',[1:5],'y',pca_var_out.striatum.var_exp_bootstrap(:,1:5));
 figure_plot(1,2).stat_summary('type', custom_statfun,'geom',{'area'});
 figure_plot(1,2).axe_property('XLim',[0 6],'XTick',[1:1:5],'YLim',[0 100]);
 figure_plot(1,2).set_names('x','Principal Components','y','Proportion of variance explained');
 
-figure_plot(2,2)=gramm('x',[1:5],'y',pca_var_out.bf.perc_var_explained(1:5));
+figure_plot(2,2)=gramm('x',[1:5],'y',pca_var_out.striatum.perc_var_explained(1:5));
 figure_plot(2,2).stat_summary('geom',{'bar'});
 figure_plot(2,2).axe_property('XLim',[0 6],'XTick',[1:1:5],'YLim',[0 100]);
 figure_plot(2,2).set_names('x','Principal Components','y','Proportion of variance explained');
+
+figure_plot(1,1)=gramm('x',[1:5],'y',pca_var_out.bf.var_exp_bootstrap(:,1:5));
+figure_plot(1,1).stat_summary('type', custom_statfun,'geom',{'area'});
+figure_plot(1,1).axe_property('XLim',[0 6],'XTick',[1:1:5],'YLim',[0 100]);
+figure_plot(1,1).set_names('x','Principal Components','y','Proportion of variance explained');
+
+figure_plot(2,1)=gramm('x',[1:5],'y',pca_var_out.bf.perc_var_explained(1:5));
+figure_plot(2,1).stat_summary('geom',{'bar'});
+figure_plot(2,1).axe_property('XLim',[0 6],'XTick',[1:1:5],'YLim',[0 100]);
+figure_plot(2,1).set_names('x','Principal Components','y','Proportion of variance explained');
 
 figure_plot(1,1).set_layout_options('Position',[0.1 0.15 0.3 0.3],... %Set the position in the figure (as in standard 'Position' axe property)
     'legend',false,... % No need to display legend for side histograms
@@ -176,7 +177,7 @@ figure_plot.draw;
 
 %% PC: 3D space plot
 
-timewin = -1000:5:0+post_outcome_ext;
+timewin = -pre_outcome_ext:time_step:0+post_outcome_ext;
 axis_lim = 20;
 
 outcome_time_idx = find(timewin == 0);
@@ -184,13 +185,15 @@ outcome_time_idx = find(timewin == 0);
 figure('Renderer', 'painters', 'Position', [100 50 900 900]); 
 subplot(3,2,1); hold on
 plot(timewin,nanmean(sdf_data_bf))
+ylim([-3 4])
 
 subplot(3,2,2); hold on
 plot(timewin,nanmean(sdf_data_striatum))
+ylim([-3 4])
 
 
 subplot(3,2,[3 5]); hold on
-color_line3(pca_var_out.bf.pc1, pca_var_out.bf.pc2, pca_var_out.bf.pc3, timewin,'LineWidth',2)
+color_line3(pca_var_out.bf.pc1, pca_var_out.bf.pc2, pca_var_out.bf.pc3, timewin,'LineWidth',2);
 scatter3(pca_var_out.bf.pc1(outcome_time_idx),pca_var_out.bf.pc2(outcome_time_idx),pca_var_out.bf.pc3(outcome_time_idx),75,'k','v','filled')
 xlabel('PC1'); ylabel('PC2'); zlabel('PC3')
 view(143.2141,15.2454); colorbar('location','SouthOutside')
@@ -198,7 +201,7 @@ xlim([-axis_lim axis_lim]); ylim([-axis_lim axis_lim]); zlim([-axis_lim axis_lim
 grid on
 
 subplot(3,2,[4 6]); hold on
-color_line3(pca_var_out.striatum.pc1, pca_var_out.striatum.pc2, pca_var_out.striatum.pc3, timewin,'LineWidth',2)
+color_line3(pca_var_out.striatum.pc1, pca_var_out.striatum.pc2, pca_var_out.striatum.pc3, timewin,'LineWidth',2);
 scatter3(pca_var_out.striatum.pc1(outcome_time_idx),pca_var_out.striatum.pc2(outcome_time_idx),pca_var_out.striatum.pc3(outcome_time_idx),75,'k','v','filled')
 xlabel('PC1'); ylabel('PC2'); zlabel('PC3')
 view(143.2141,15.2454); colorbar('location','SouthOutside')

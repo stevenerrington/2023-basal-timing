@@ -1,9 +1,17 @@
+clear all; clc
 
-neuron_i = 5;
+% Load in example neuron data
+load('example_neuron_data.mat')
+
+% See example SDF (ramping BF neuron, from fixation (-1000 ms) to CS onset (0)
+% to outcome (1500 ms) + 500).
+figure;
+plot(-5000:5000,nanmean(example_neuron_data.sdf{1}(example_neuron_data.trials{1}.uncertain,:)))
+xlim([-500 2000]); xlabel('Time from CS onset (ms)'); ylabel('Firing rate (spks/sec)')
+
 
 time_window = [-2000:-1000];
-
-sdf_in = nanmean(bf_data_CS.sdf{neuron_i}(bf_data_CS.trials{neuron_i}.probAll,5001+time_window));
+sdf_in = nanmean(example_neuron_data.sdf{1}(example_neuron_data.trials{1}.probAll,5001+time_window));
 
 % Create a sample input signal (you can replace this with your convolved spike train or any other data)
 sampling_rate = 1000; % Sampling rate in Hz

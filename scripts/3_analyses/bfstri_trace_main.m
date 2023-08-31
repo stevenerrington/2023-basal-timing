@@ -8,13 +8,13 @@ plot_trial_types = {'notrace_uncertain','notrace_certain','uncertain','certain'}
 
 % params.plot.colormap = [[0 70 67]./255;[242 165 65]./255];
 params.plot.colormap = [127 191 185; 8 140 133; 193 140 190; 131 40 133]./255;
-params.plot.xlim = [0 2500];
+params.plot.xlim = [1500 2750];
 
 % Plot population averaged ramping neuron activity in the basal forebrain.
-params.plot.ylim = [-3 4]; params.plot.xintercept = [2500];
+params.plot.ylim = [-1 4]; params.plot.xintercept = [2500];
 [~, bf_trace_data, bf_population_trace_ramping] = plot_population_neuron(bf_data_traceExp,plot_trial_types,params,0);
 % Plot population averaged ramping neuron activity in the striatum.
-params.plot.ylim = [-1 6]; params.plot.xintercept = [2500];
+params.plot.ylim = [-1 8]; params.plot.xintercept = [2500];
 [~, striatum_trace_data, striatum_population_trace_ramping] = plot_population_neuron(striatum_data_traceExp,plot_trial_types,params,0);
 
 % Get average firing rate within window:
@@ -66,7 +66,7 @@ figure_plot(4,1).no_legend;
 % Summary plots (ROC)
  % > Basal forebrain & Striatum
 % >> ROC
-figure_plot(5,1)=gramm('x',roc_conditions_area_label,'y',roc_conditions_data,'color',roc_conditions_label);
+figure_plot(5,1)=gramm('x',roc_conditions_label,'y',roc_conditions_data,'color',roc_conditions_area_label);
 figure_plot(5,1).stat_summary('geom',{'bar','errorbar'});
 figure_plot(5,1).axe_property('YLim',[0 1]);
 figure_plot(5,1).set_names('y','AUROC');
@@ -104,48 +104,46 @@ figure_plot(1,1).set_color_options('map',params.plot.colormap);
 figure_plot(2,1).set_color_options('map',params.plot.colormap);
 figure_plot(3,1).set_color_options('map',params.plot.colormap);
 figure_plot(4,1).set_color_options('map',params.plot.colormap);
-figure_plot(5,1).set_color_options('map',params.plot.colormap([2,4],:));
+figure_plot(5,1).set_color_options('map',[247 154 154; 221 153 204]./255);
 figure_plot(6,1).set_color_options('map',[params.plot.colormap;params.plot.colormap]);
+
 
 %% Configure & layout figure
 % Spike density function/activity
-figure_plot(1,1).set_layout_options('Position',[0.075 0.6 0.21 0.2],... %Set the position in the figure (as in standard 'Position' axe property)
-    'legend_position',[0.075 0.3 0.1 0.2],... % No need to display legend for side histograms
+figure_plot(1,1).set_layout_options('Position',[0.085,0.69,0.164,0.161],... %Set the position in the figure (as in standard 'Position' axe property)
+    'legend',false,... % No need to display legend for side histograms
     'margin_height',[0.00 0.00],... %We set custom margins, values must be coordinated between the different elements so that alignment is maintained
     'margin_width',[0.00 0.00],...
     'redraw',false);
 
-figure_plot(2,1).set_layout_options('Position',[0.325 0.6 0.21 0.2],... %Set the position in the figure (as in standard 'Position' axe property)
-    'legend_position',[0.375 0.3 0.1 0.2],... % No need to display legend for side histograms
+figure_plot(2,1).set_layout_options('Position',[0.5,0.69,0.164,0.161],... %Set the position in the figure (as in standard 'Position' axe property)
+    'legend',false,... % No need to display legend for side histograms
     'margin_height',[0.00 0.00],... %We set custom margins, values must be coordinated between the different elements so that alignment is maintained
     'margin_width',[0.00 0.00],...
     'redraw',false);
-
 
 % Summary plots
 % > BF (Firing rate, inset)
-figure_plot(3,1).set_layout_options('Position',[0.095 0.725 0.06 0.06],... %Set the position in the figure (as in standard 'Position' axe property)
+figure_plot(3,1).set_layout_options('Position',[0.285,0.69,0.12,0.161],... %Set the position in the figure (as in standard 'Position' axe property)
     'legend',false,... % No need to display legend for side histograms
     'margin_height',[0.00 0.00],... %We set custom margins, values must be coordinated between the different elements so that alignment is maintained
     'margin_width',[0.00 0.00],...
     'redraw',false);
 
 % > Striatum (Firing rate, inset)
-figure_plot(4,1).set_layout_options('Position',[0.355 0.725 0.06 0.06],... %Set the position in the figure (as in standard 'Position' axe property)
+figure_plot(4,1).set_layout_options('Position',[0.702 0.69 0.12 0.161],... %Set the position in the figure (as in standard 'Position' axe property)
     'legend',false,... % No need to display legend for side histograms
     'margin_height',[0.00 0.00],... %We set custom margins, values must be coordinated between the different elements so that alignment is maintained
     'margin_width',[0.00 0.00],...
     'redraw',false);
 
 % > BF & Striatum (ROC)
-figure_plot(5,1).set_layout_options('Position',[0.625 0.6 0.15 0.2],... %Set the position in the figure (as in standard 'Position' axe property)
-    'legend_position',[0.625 0.3 0.1 0.2],... % No need to display legend for side histograms
+figure_plot(5,1).set_layout_options('Position',[0.085,0.1,0.325,0.5],... %Set the position in the figure (as in standard 'Position' axe property)
     'margin_height',[0.00 0.00],... %We set custom margins, values must be coordinated between the different elements so that alignment is maintained
     'margin_width',[0.00 0.00],...
     'redraw',false);
 
-figure_plot(6,1).set_layout_options('Position',[0.82 0.6 0.15 0.2],... %Set the position in the figure (as in standard 'Position' axe property)
-    'legend_position',[0.85 0.3 0.1 0.2],... % No need to display legend for side histograms
+figure_plot(6,1).set_layout_options('Position',[0.5 0.1 0.325 0.5],... %Set the position in the figure (as in standard 'Position' axe property)
     'margin_height',[0.00 0.00],... %We set custom margins, values must be coordinated between the different elements so that alignment is maintained
     'margin_width',[0.00 0.00],...
     'redraw',false);

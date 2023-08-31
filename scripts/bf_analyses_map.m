@@ -30,16 +30,20 @@ bfstri_cs_precision(bf_data_CS, bf_datasheet_CS,...
     striatum_data_CS,striatum_datasheet_CS, params);
 
 % Figure 2 ------------------------------------------------------------
-% Plot 1500 ms and 2500 ms CS dataset ramping
-bf_cstime_main(bf_data_CS, bf_datasheet_CS, params)
-
-% Plot timing task data
-bfstri_timing_uncert(bf_data_timingTask,striatum_data_timingTask,params)
-
 % Plot BF & Striatum activity in trace task (trace/no trace; certain/uncertain)
 % > i   | Example SDF, example fano, population SDF, population fano
 % > ii  | Average firing rates and fano factors across conditions
 bfstri_trace_main (bf_data_traceExp, striatum_data_traceExp, params);
+
+
+
+% Fano compass plots 
+% Plot dimensionality plot from PCA, for BF and striatum data
+bfstri_pca_dimension(bf_data_CS,bf_datasheet_CS,striatum_data_CS);
+
+
+
+
 
 
 %% In development
@@ -53,9 +57,6 @@ plot_pca_analysis_fig(pca_data_out);
 
 %(!) REPEAT FOR BF AND STRIATUM - MAKE ONE FIGURE
 dev_motor_ramping_relationship_CStask; % Plot relationship between gaze and fr
-
-% Plot dimensionality plot from PCA, for BF and striatum data
-bfstri_pca_dimension(bf_data_CS,bf_datasheet_CS,striatum_data_CS);
 
 % Plot BF, Striatum, and gaze activity in reward uncertainty task (0%, 25%, 50%, 75%, 100%)
 bfstri_gaze_fr_tuning(bf_data_CS, bf_datasheet_CS,...
@@ -84,6 +85,12 @@ bfstri_trace_outcome(bf_data_traceExp, striatum_data_traceExp, params);
 bfstri_cs_tuning(bf_data_CS,bf_datasheet_CS,...
     striatum_data_CS, striatum_datasheet_CS, params);
 % ! CHECK CALL TO dev_eyePos_CSall (line 38)
+
+% Plot 1500 ms and 2500 ms CS dataset ramping
+bf_cstime_main(bf_data_CS, bf_datasheet_CS, params)
+
+% Plot timing task data
+bfstri_timing_uncert(bf_data_timingTask,striatum_data_timingTask,params)
 
 %% Workspace %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Plot/exploration code
