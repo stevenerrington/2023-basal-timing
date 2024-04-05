@@ -78,14 +78,14 @@ clear figure_plot
 figure_plot(1,1)=gramm('x', gaze_time_plot.onset_x,'y',gaze_time_plot.onset_data,'color',gaze_time_plot.onset_label);
 figure_plot(1,1).stat_summary();
 figure_plot(1,1).axe_property('XLim',[0 750],'YLim',[0 1]);
-figure_plot(1,1).set_color_options('map',params.plot.colormap);
+%figure_plot(1,1).set_color_options('map',params.plot.colormap);
 figure_plot(1,1).no_legend;
 
 % Gaze through time (offset)
 figure_plot(1,2)=gramm('x', gaze_time_plot.offset_x,'y',gaze_time_plot.offset_data,'color',gaze_time_plot.offset_label);
 figure_plot(1,2).stat_summary();
 figure_plot(1,2).axe_property('XLim',[-750 0],'YLim',[0 1]);
-figure_plot(1,2).set_color_options('map',params.plot.colormap);
+%figure_plot(1,2).set_color_options('map',params.plot.colormap);
 figure_plot(1,2).no_legend;
 
 figure_plot(1,3)=gramm('x',1:5,...

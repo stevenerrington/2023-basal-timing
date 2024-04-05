@@ -43,9 +43,6 @@ bfstri_pca_dimension(bf_data_CS,bf_datasheet_CS,striatum_data_CS);
 
 
 
-
-
-
 %% In development
 % Explore principle components across the bf and striatum during ramping
 % > i  | Plot PCA in space.

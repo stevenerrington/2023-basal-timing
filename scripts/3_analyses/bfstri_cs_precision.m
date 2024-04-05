@@ -1,5 +1,4 @@
-function bfstri_cs_precision(bf_data_CS, bf_datasheet_CS,...
-    striatum_data_CS,striatum_datasheet_CS, params)
+function bfstri_cs_precision(bf_data_CS, bf_datasheet_CS,striatum_data_CS,striatum_datasheet_CS, params)
 
 global dirs
 
@@ -16,8 +15,8 @@ plot_trial_types = {'uncert_delivered','uncert_omit'};
 
 % Return to baseline latency
 plot_trial_types = {'prob25nd','prob50nd','prob75nd'};
-baseline_latency_bf = get_suppression_latency(bf_data_CS,bf_datasheet_CS,plot_trial_types,params);
-baseline_latency_bg = get_suppression_latency(striatum_data_CS,striatum_datasheet_CS,plot_trial_types,params);
+baseline_latency_bf = get_suppression_latency(bf_data_CS,bf_datasheet_CS,plot_trial_types);
+baseline_latency_bg = get_suppression_latency(striatum_data_CS,striatum_datasheet_CS,plot_trial_types);
 
 plot_latency_bf = [baseline_latency_bf.prob25nd;baseline_latency_bf.prob50nd;baseline_latency_bf.prob75nd];
 plot_latency_bg = [baseline_latency_bg.prob25nd;baseline_latency_bg.prob50nd;baseline_latency_bg.prob75nd];
@@ -72,10 +71,11 @@ end
 
 % Slope analyses >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 plot_trial_types = {'prob25nd','prob50nd','prob75nd'};
+
 % Basal forebrain
 for trial_type_i = 1:length(plot_trial_types)
     for neuron_i = 1:size(bf_data_CS,1)
-           plot_slope_bf = [plot_slope_bf; nanmean(slope_analysis_bf.(plot_trial_types{trial_type_i}).slope{neuron_i}(:))];
+           plot_slope_bf = [plot_slope_bf; nanmean(slope_analysis_bf.raw.(plot_trial_types{trial_type_i}){neuron_i}(:))];
            plot_slope_bf_label = [plot_slope_bf_label; {['1_bf_' int2str(trial_type_i) '_' plot_trial_types{trial_type_i} ]}];
     end
 end
@@ -83,23 +83,25 @@ end
 % Basal ganglia
 for trial_type_i = 1:length(plot_trial_types) 
     for neuron_i = 1:size(bf_data_CS,1)
-           plot_slope_bg = [plot_slope_bg; nanmean(slope_analysis_bg.(plot_trial_types{trial_type_i}).slope{neuron_i}(:))];    
+           plot_slope_bg = [plot_slope_bg; nanmean(slope_analysis_bg.raw.(plot_trial_types{trial_type_i}){neuron_i}(:))];    
            plot_slope_bg_label = [plot_slope_bg_label; {['2_bg_' int2str(trial_type_i) '_' plot_trial_types{trial_type_i} ]}];
     end
 end
+
+plot_peak_prob_label_bf = strcat('1_BF_', plot_peak_prob_label_bf);
+plot_peak_prob_label_bg = strcat('2_BG_', plot_peak_prob_label_bg);
 
 
 %% Figure: Generate bar plots
 
 bar_width = 2;
-plot_peak_prob_label_bf = strcat('1_BF_', plot_peak_prob_label_bf);
-plot_peak_prob_label_bg = strcat('2_BG_', plot_peak_prob_label_bg);
+
 clear figure_plot
 
 figure_plot(1,1)=gramm('x',[plot_peak_prob_label_bf;plot_peak_prob_label_bg],...
 'y',[plot_peak_time_bf; plot_peak_time_bg],'color',[plot_peak_prob_label_bf;plot_peak_prob_label_bg]);
 figure_plot(1,1).stat_summary('geom',{'bar','errorbar'},'width',bar_width);
-figure_plot(1,1).axe_property('YLim',[-75 75],'XTickLabel',[]);
+figure_plot(1,1).axe_property('YLim',[-75 75]);
 figure_plot(1,1).set_names('y','Mean peak time (ms)');
 figure_plot(1,1).no_legend;
 
@@ -107,7 +109,7 @@ figure_plot(1,2)=gramm('x',[plot_peak_prob_label_bf;plot_peak_prob_label_bg],...
 'y',[plot_peak_time_var_bf; plot_peak_time_var_bg],...
 'color',[plot_peak_prob_label_bf;plot_peak_prob_label_bg]);
 figure_plot(1,2).stat_summary('geom',{'bar','errorbar'},'width',bar_width);
-figure_plot(1,2).axe_property('YLim',[0 800],'XTickLabel',[]);
+figure_plot(1,2).axe_property('YLim',[0 800]);
 figure_plot(1,2).set_names('y','Var peak time (ms)');
 figure_plot(1,2).no_legend;
 
@@ -115,17 +117,9 @@ figure_plot(1,3)=gramm('x',[plot_latency_bf_label;plot_latency_bg_label],...
 'y',[plot_latency_bf; plot_latency_bg],...
 'color',[plot_latency_bf_label;plot_latency_bg_label]);
 figure_plot(1,3).stat_summary('geom',{'bar','errorbar'},'width',bar_width+2);
-figure_plot(1,3).axe_property('YLim',[0 500],'XTickLabel',[]);
+figure_plot(1,3).axe_property('YLim',[0 500]);
 figure_plot(1,3).set_names('y','Suppression latency (ms)');
 figure_plot(1,3).no_legend;
-
-figure_plot(1,4)=gramm('x',[plot_slope_bf_label;plot_slope_bg_label],...
-'y',[plot_slope_bf; plot_slope_bg],...
-'color',[plot_slope_bf_label;plot_slope_bg_label]);
-figure_plot(1,4).stat_summary('geom',{'bar','errorbar'},'width',bar_width+2);
-figure_plot(1,4).axe_property('YLim',[-0.25 0.0],'XTickLabel',[]);
-figure_plot(1,4).set_names('y','Suppression latency (ms)');
-figure_plot(1,4).no_legend;
 
 figure('Renderer', 'painters', 'Position', [100 100 900 300]);
 figure_plot.draw;
